@@ -10,10 +10,10 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Prices", href: "/prices" },
-    { name: "FAQ", href: "/faq" },
-    { name: "Contact Us", href: "/contact" },
-    { name: "About Us", href: "/about" },
+    { name: "Prices", href: "/price-page" },
+    { name: "About Us", href: "/about-us" },
+    { name: "Contact Us", href: "/contact-us" },
+    { name: "FAQ", href: "/faq-page" },
   ];
 
   return (
@@ -21,8 +21,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 text-xl font-bold text-yellow-500">
-            <Link href="/">Canberra Express</Link>
+          <div className="flex-shrink-0 text-xl font-bold text-yellow-500 animate-pulse">
+            <Link  href="/">Canberra Express</Link>
           </div>
 
           {/* Desktop Menu */}

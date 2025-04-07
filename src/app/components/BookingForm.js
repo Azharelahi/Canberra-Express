@@ -41,6 +41,21 @@ const BookingForm = () => {
     return [];
   };
 
+  const today = new Date().toISOString().split("T")[0];
+  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let hour = 0; hour < 24; hour++) {
+      ["00", "30"].forEach((minute) => {
+        const h = hour < 10 ? `0${hour}` : hour;
+        times.push(`${h}:${minute}`);
+      });
+    }
+    return times;
+  };
+  const timeOptions = generateTimeOptions();
+
   return (
     <div className="w-full py-16 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +68,7 @@ const BookingForm = () => {
           </p>
         </div>
 
-        <div className="bg-[#fdfdfd] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl w-full max-w-2xl xl:max-w-xl mx-auto overflow-y-auto max-h-[90vh]">
+        <div className="bg-[#fdfdfd] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl w-full max-w-2xl xl:max-w-xl mx-auto overflow-hidden">
           <form onSubmit={handleSubmit} className="space-y-6">
 
             {/* Pickup Section */}
@@ -122,6 +137,8 @@ const BookingForm = () => {
                       name="pickupDate"
                       value={formData.pickupDate}
                       onChange={handleInputChange}
+                      min={today}
+                      max={maxDate}
                       className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                       required
                     />
@@ -135,15 +152,19 @@ const BookingForm = () => {
                   </label>
                   <div className="relative">
                     <FaClock className="absolute left-3 top-3 text-yellow-500" />
-                    <input
-                      type="time"
+                    <select
                       id="pickupTime"
                       name="pickupTime"
                       value={formData.pickupTime}
                       onChange={handleInputChange}
                       className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
                       required
-                    />
+                    >
+                      <option value="" disabled>Select Time</option>
+                      {timeOptions.map((time, i) => (
+                        <option key={i} value={time}>{time}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
