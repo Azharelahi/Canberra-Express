@@ -1,8 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 export default function ContactUsPage() {
+    useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-200 to-yellow-50 py-10 px-4 sm:px-8">
       <div className="max-w-6xl mx-auto">

@@ -1,4 +1,3 @@
-
 import React from "react";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
@@ -13,7 +12,7 @@ const page = () => {
       <HeroSection />
       <CompanyDescription />
       <BookingForm />
-      <WhyChoose/>
+      <WhyChoose />
     </div>
   );
 };

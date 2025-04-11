@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 import {
   FaFacebook,
@@ -23,16 +24,28 @@ const Footer = () => {
               and affordable.
             </p>
             <div className="flex justify-center sm:justify-start space-x-4 mt-4">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a
+                href="#"
+                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
+              >
                 <FaFacebook size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a
+                href="#"
+                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
+              >
                 <FaTwitter size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a
+                href="#"
+                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
+              >
                 <FaInstagram size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              <a
+                href="#"
+                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
+              >
                 <FaLinkedin size={24} />
               </a>
             </div>
@@ -43,24 +56,36 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <Link
+                  href="/about-us"
+                  className="text-gray-400 hover:text-white"
+                >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  Services
-                </a>
+                <Link
+                  href="/price-page"
+                  className="text-gray-400 hover:text-white"
+                >
+                  Prices
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <Link
+                  href="/faq-page"
+                  className="text-gray-400 hover:text-white"
+                >
                   FAQs
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white">
+                <Link
+                  href="/contact-us"
+                  className="text-gray-400 hover:text-white"
+                >
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

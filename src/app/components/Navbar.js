@@ -1,11 +1,16 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { MenuIcon, XIcon } from "@heroicons/react/outline"; // Correct Heroicons v2 import
+import { Menu, X } from "lucide-react";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navLinks = [
@@ -17,38 +22,60 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="navbar bg-cream-white shadow-md sticky top-0 w-full z-50">
+    <nav className="bg-cream-white shadow-md sticky top-0 z-50 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 text-xl font-bold text-yellow-500 animate-pulse">
-            <Link  href="/">Canberra Express</Link>
-          </div>
+          <Link
+            href="/"
+            className="text-xl font-bold text-yellow-500 animate-pulse"
+          >
+            Canberra Express
+          </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6">
+          <div className="hidden md:flex space-x-6 items-center">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-black hover:text-yellow-500 font-medium transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="text-black hover:text-yellow-500 font-medium transition duration-300 transform hover:scale-105"
               >
                 {link.name}
               </Link>
             ))}
+
+            {/* Auth buttons */}
+            <SignedOut>
+              <SignInButton>
+                <button className="ml-4 px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
           </div>
 
-          {/* Mobile Hamburger */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile: Sign In & Hamburger */}
+          <div className="md:hidden flex items-center gap-4">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="px-3 py-1.5 bg-yellow-500 text-white rounded-lg text-sm hover:bg-yellow-600 transition">
+                  Sign In
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+
             <button
               onClick={toggleMenu}
               className="text-black focus:outline-none"
             >
-              {isOpen ? (
-                <XIcon className="h-6 w-6 transition-all duration-300 ease-in-out transform hover:scale-110" />
-              ) : (
-                <MenuIcon className="h-6 w-6 transition-all duration-300 ease-in-out transform hover:scale-110" />
-              )}
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -56,21 +83,22 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`absolute inset-x-0 top-16 bg-cream-white px-4 py-2 space-y-2 transform transition-all duration-500 ease-in-out ${
-          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        {isOpen &&
-          navLinks.map((link) => (
+        <div className="flex flex-col space-y-4 px-6 pb-6 pt-4 bg-cream-white shadow-inner">
+          {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="block text-black hover:text-yellow-500 font-medium transition-all duration-300 ease-in-out transform hover:scale-105"
+              className="text-black hover:text-yellow-500 font-medium transition duration-200 transform hover:scale-105"
             >
               {link.name}
             </Link>
           ))}
+        </div>
       </div>
     </nav>
   );

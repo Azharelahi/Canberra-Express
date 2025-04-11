@@ -1,35 +1,65 @@
+"use client";
 import React from "react";
 import "animate.css";
+import { motion } from "framer-motion";
+
+const headingWords = [
+  "Welcome", "to", "Canberra", "Express"
+];
+const subText = [
+  "Your", "trusted", "car", "rental", "service", "in", "Canberra."
+];
 
 const HeroSection = () => {
   return (
     <div
-      className="relative w-full h-screen bg-cover bg-center overflow-y-hidden"
+      className="relative w-full h-screen bg-cover bg-center overflow-hidden"
       style={{
         backgroundImage:
-          "url(https://images.unsplash.com/photo-1482029255085-35a4a48b7084?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHRheGl8ZW58MHwwfDB8fHww)",
-        backgroundSize: "cover", // Ensures the image covers the entire container
-        backgroundPosition: "center", // Keeps the image centered
+          "url(https://images.unsplash.com/photo-1482029255085-35a4a48b7084?w=600&auto=format&fit=crop&q=60)",
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="absolute inset-0 bg-black opacity-60"></div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center text-white px-4">
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-wide mb-4 animate__animated animate__fadeIn animate__delay-1s">
-          Welcome to Canberra Express
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+        <h1 className="text-4xl sm:text-6xl font-bold mb-6 font-[var(--font-geist-sans)] leading-tight tracking-wide">
+          {headingWords.map((word, index) => (
+            <motion.span
+              key={word}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2, duration: 0.5 }}
+              className="inline-block mr-2"
+            >
+              {word}
+            </motion.span>
+          ))}
         </h1>
-        <p className="text-xl sm:text-2xl mb-6 animate__animated animate__fadeIn animate__delay-2s">
-          Your trusted car rental service in Canberra. Explore the city in
-          comfort and style!
+
+        <p className="text-lg sm:text-2xl mb-8 font-[var(--font-geist-sans)] text-gray-200">
+          {subText.map((word, index) => (
+            <motion.span
+              key={word}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 + index * 0.1, duration: 0.4 }}
+              className="inline-block mr-1"
+            >
+              {word}
+            </motion.span>
+          ))}
         </p>
-        <a
-          href="/contact-us"
-          className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg shadow-lg transition-all transform hover:scale-105 animate__animated animate__headShake animate__infinite animate__delay-1s"
-        >
-          Book Now
-        </a>
+
+<a
+  href="/contact-us"
+  className="animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 bg-yellow-400 text-black font-semibold rounded-xl shadow-lg transition-all duration-300 font-[var(--font-geist-mono)]"
+>
+  Book Now
+</a>
+
+
       </div>
     </div>
   );
