@@ -95,7 +95,7 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-4">Contact Info</h3>
             <div className="flex justify-center sm:justify-start items-center text-gray-400 mb-4">
               <FaPhone size={20} className="mr-3" />
-              <span>(+61) 123-456-789</span>
+              <span>(+61) 451107931</span>
             </div>
             <div className="flex justify-center sm:justify-start items-center text-gray-400">
               <FaEnvelope size={20} className="mr-3" />

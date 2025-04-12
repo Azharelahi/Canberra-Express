@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import ClientLayoutWrapper from "./ClientLayoutWrapper";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,11 +21,11 @@ export const metadata = {
     title: "Canberra Express – Car Rentals in Canberra",
     description:
       "Book premium car rentals in Canberra at affordable prices with Canberra Express.",
-    url: "https://www.canberraexpress.com.au", // Update to your site URL
+    url: "https://www.canberraexpress.com.au",
     type: "website",
     images: [
       {
-        url: "https://www.canberraexpress.com.au/assets/og-image.png", // Update with the correct image URL
+        url: "https://www.canberraexpress.com.au/assets/og-image.png",
         width: 1200,
         height: 630,
         alt: "Canberra Express Logo",
@@ -42,11 +42,7 @@ export default function RootLayout({ children }) {
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning
         >
-          <div className="flex min-h-screen flex-col justify-between">
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-          </div>
+          <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
         </body>
       </html>
     </ClerkProvider>
