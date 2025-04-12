@@ -1,22 +1,15 @@
+// components/HeroSection.jsx or .tsx
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import "animate.css";
 import { motion } from "framer-motion";
 
-const headingWords = [
-  "Welcome", "to", "Canberra", "Express"
-];
-const subText = [
-  "Your", "trusted", "car", "rental", "service", "in", "Canberra."
-];
+const headingWords = ["Welcome", "to", "Canberra", "Express"];
+const subText = ["Your", "trusted", "car", "rental", "service", "in", "Canberra."];
 
-const HeroSection = () => {
-  // Create a reference for the BookingForm component
-  const bookingFormRef = useRef(null);
-
-  // Scroll to the BookingForm when Book Now button is clicked
+const HeroSection = ({ bookingFormRef }) => {
   const scrollToBookingForm = () => {
-    bookingFormRef.current.scrollIntoView({ behavior: "smooth" });
+    bookingFormRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -60,13 +53,12 @@ const HeroSection = () => {
           ))}
         </p>
 
-        <a
-          href="#"
+        <button
           onClick={scrollToBookingForm}
-          className="animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 bg-yellow-400 text-black font-semibold rounded-xl shadow-lg transition-all duration-300 font-[var(--font-geist-mono)]"
+          className="cursor-pointer animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 bg-yellow-400 text-black font-semibold rounded-xl shadow-lg transition-all duration-300 font-[var(--font-geist-mono)]"
         >
           Book Now
-        </a>
+        </button>
       </div>
     </div>
   );

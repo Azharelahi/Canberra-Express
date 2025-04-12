@@ -41,7 +41,7 @@ const CompanyDescription = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => setShowModal(true)}
-                className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg shadow-lg transition-all transform hover:scale-110 animate__animated animate__fadeIn animate__delay-2s"
+                className="cursor-pointer px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg shadow-lg transition-all transform hover:scale-110 animate__animated animate__fadeIn animate__delay-2s"
               >
                 Learn More
               </button>

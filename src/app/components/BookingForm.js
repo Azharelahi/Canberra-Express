@@ -3,7 +3,7 @@ import React, { useState, forwardRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCar } from "react-icons/fa";
 
-const BookingForm = () => {
+const BookingForm = forwardRef((props, ref) => {
   const [formData, setFormData] = useState({
     pickLocation: "",
     dropLocation: "",
@@ -33,7 +33,7 @@ const BookingForm = () => {
   const cities = ["Canberra", "Sydney"];
   const canberraPlaces = ["Belconnen", "Civic", "Woden", "Tuggeranong", "Gungahlin"];
   const sydneyPlaces = ["Bondi", "Manly", "Redfern", "Surry Hills", "Paddington"];
-  const carNames = ["Toyota Camry", "Toyota Kluger", "Toyota Prius V", "Toyota Fielder"];
+  const carNames = ["5 Seater","7 Seater","9 Seater"];
 
   const getPlaces = (city) => {
     if (city === "Canberra") return canberraPlaces;
@@ -57,7 +57,7 @@ const BookingForm = () => {
   const timeOptions = generateTimeOptions();
 
   return (
-    <div className="w-full py-16 bg-gray-100">
+    <div ref={ref} className="w-full py-16 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-4">
@@ -228,7 +228,7 @@ const BookingForm = () => {
             {/* Car Model */}
             <div>
               <label htmlFor="carName" className="block text-sm font-semibold text-gray-700 mb-1">
-                Car Model
+                Car Type
               </label>
               <div className="relative">
                 <FaCar className="absolute left-3 top-3 text-yellow-500" />
@@ -262,6 +262,7 @@ const BookingForm = () => {
       </div>
     </div>
   );
-};
+});
 
+BookingForm.displayName = "BookingForm";
 export default BookingForm;
