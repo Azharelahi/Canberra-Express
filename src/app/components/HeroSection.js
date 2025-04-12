@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import "animate.css";
 import { motion } from "framer-motion";
 
@@ -11,6 +11,14 @@ const subText = [
 ];
 
 const HeroSection = () => {
+  // Create a reference for the BookingForm component
+  const bookingFormRef = useRef(null);
+
+  // Scroll to the BookingForm when Book Now button is clicked
+  const scrollToBookingForm = () => {
+    bookingFormRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div
       className="relative w-full h-screen bg-cover bg-center overflow-hidden"
@@ -52,14 +60,13 @@ const HeroSection = () => {
           ))}
         </p>
 
-<a
-  href="/contact-us"
-  className="animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 bg-yellow-400 text-black font-semibold rounded-xl shadow-lg transition-all duration-300 font-[var(--font-geist-mono)]"
->
-  Book Now
-</a>
-
-
+        <a
+          href="#"
+          onClick={scrollToBookingForm}
+          className="animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 bg-yellow-400 text-black font-semibold rounded-xl shadow-lg transition-all duration-300 font-[var(--font-geist-mono)]"
+        >
+          Book Now
+        </a>
       </div>
     </div>
   );
