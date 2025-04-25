@@ -11,16 +11,25 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = "Mine Secret Key"; // Change this to something more secure in production
 const allowedOrigins = [
-  "https://canberra-express.vercel.app/",
+  "https://canberra-express.vercel.app",
   "http://localhost:4000",
 ];
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Add this if you're using cookies
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.json());
 app.use(cookieParser()); // Use the cookie parser middleware
 
