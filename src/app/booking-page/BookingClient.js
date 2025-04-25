@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 
 export default function BookingClient() {
   const searchParams = useSearchParams();
@@ -49,12 +50,33 @@ export default function BookingClient() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Booking Data:", formData);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const bookingData = {
+    clientName: formData.name,
+    clientEmail: formData.email,
+    clientPhone: formData.phone,
+    pickLocation,
+    pickAddress,
+    dropLocation,
+    dropAddress,
+    pickupDate,
+    pickupTime,
+    carName,
+  };
+
+  try {
+    const res = await axios.post("http://localhost:3000/send-booking-email", bookingData);
+    console.log("Success:", res.data);
     setFormData({ name: "", email: "", phone: "" });
     setIsSubmitted(true);
-  };
+  } catch (err) {
+    console.error("Error:", err.response?.data || err.message);
+  }
+};
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-8">

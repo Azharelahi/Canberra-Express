@@ -99,35 +99,19 @@ const Footer = () => {
             </div>
             <div className="flex justify-center sm:justify-start items-center text-gray-400">
               <FaEnvelope size={20} className="mr-3" />
-              <span>support@canberraexpress.com.au</span>
+              <span>canberraexpress@gmail.com</span>
             </div>
           </div>
 
-          {/* Newsletter Signup */}
+          {/* Why Choose Us */}
           <div className="text-center sm:text-left">
-            <h3 className="text-xl font-semibold mb-4">Stay Updated</h3>
-            <p className="text-gray-400 mb-4">
-              Subscribe to our newsletter to get the latest deals and offers.
-            </p>
-            <form
-              action="#"
-              method="POST"
-              className="flex flex-col sm:flex-row justify-center sm:justify-start gap-4 items-center"
-            >
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                className="p-3 w-full sm:w-auto text-gray-800 rounded-l-md mb-4 sm:mb-0"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-yellow-500 text-white p-3 rounded-r-md hover:bg-yellow-400 transition"
-              >
-                Subscribe
-              </button>
-            </form>
+            <h3 className="text-xl font-semibold mb-4">Why Choose Us</h3>
+            <ul className="text-gray-400 space-y-2">
+              <li>24/7 Customer Support</li>
+              <li>Affordable Rates</li>
+              <li>Wide Range of Vehicles</li>
+              <li>Easy Online Booking</li>
+            </ul>
           </div>
         </div>
 
