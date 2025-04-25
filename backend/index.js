@@ -14,7 +14,6 @@ const allowedOrigins = [
   "https://canberra-express.vercel.app",
   "http://localhost:4000",
 ];
-
 app.use(
   cors({
     origin: function (origin, callback) {
