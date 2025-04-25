@@ -67,7 +67,7 @@ const handleSubmit = async (e) => {
   };
 
   try {
-    const res = await axios.post("http://localhost:3000/send-booking-email", bookingData);
+    const res = await axios.post("http://canberra-express.railway.internal/send-booking-email", bookingData);
     console.log("Success:", res.data);
     setFormData({ name: "", email: "", phone: "" });
     setIsSubmitted(true);
