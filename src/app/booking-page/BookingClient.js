@@ -69,7 +69,12 @@ export default function BookingClient() {
     try {
       const res = await axios.post(
         "https://canberra-express-production.up.railway.app/send-booking-email",
-        bookingData
+        bookingData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log("Success:", res.data);
       setFormData({ name: "", email: "", phone: "" });

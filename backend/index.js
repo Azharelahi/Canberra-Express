@@ -29,6 +29,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.options("*", cors()); 
 
 app.use(express.json());
 app.use(cookieParser()); // Use the cookie parser middleware
@@ -245,10 +246,6 @@ app.post("/send-booking-email", async function (req, res) {
     console.error("Email error:", error);
     res.status(500).json({ message: "Email sending failed", error });
   }
-});
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
 });
 
 app.listen(PORT, () => {
