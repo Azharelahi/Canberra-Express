@@ -68,7 +68,7 @@ export default function BookingClient() {
 
     try {
       const res = await axios.post(
-        "https://canberra-express-production.up.railway.app/send-booking-email",
+        "https://canberra-exprress-backend-production.up.railway.app/send-booking-email",
         bookingData,
         {
           headers: {

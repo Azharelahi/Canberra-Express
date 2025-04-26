@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const AdminModel = require("./models/admin"); // Import the Admin model
+// const AdminModel = require("./models/admin"); // Import the Admin model
 const cookieParser = require("cookie-parser"); // Middleware to parse cookies
 const nodemailer = require("nodemailer");
 const PDFDocument = require("pdfkit");
@@ -38,76 +38,76 @@ app.get("/", (req, res) => {
 });
 
 // Admin Login Route
-app.post("/admin/login", async (req, res) => {
-  const { email, password } = req.body; // Get email and password from request body
+// app.post("/admin/login", async (req, res) => {
+//   const { email, password } = req.body; // Get email and password from request body
 
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required" });
-  }
+//   if (!email || !password) {
+//     return res.status(400).json({ message: "Email and password are required" });
+//   }
 
-  try {
-    // Find the admin by email
-    const admin = await AdminModel.findOne({ email });
+//   try {
+//     // Find the admin by email
+//     const admin = await AdminModel.findOne({ email });
 
-    // If no admin is found, send an error
-    if (!admin) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+//     // If no admin is found, send an error
+//     if (!admin) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
 
-    // Compare the password with the hashed password in the database
-    const isPasswordValid = await bcrypt.compare(password, admin.password);
+//     // Compare the password with the hashed password in the database
+//     const isPasswordValid = await bcrypt.compare(password, admin.password);
 
-    // If password is incorrect, send an error
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+//     // If password is incorrect, send an error
+//     if (!isPasswordValid) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
 
-    // Create a JWT token with the admin's email (or any other identifying info)
-    const token = jwt.sign({ email: admin.email }, JWT_SECRET, {
-      expiresIn: "15d", // Token expiration time (15 days)
-    });
+//     // Create a JWT token with the admin's email (or any other identifying info)
+//     const token = jwt.sign({ email: admin.email }, process.env.JWT_SECRET, {
+//       expiresIn: "15d", // Token expiration time (15 days)
+//     });
 
-    // Set the token as an HTTP-only cookie with a 15-day expiration
-    res.cookie("token", token, {
-      httpOnly: true, // HTTP-only flag ensures the cookie is not accessible via JS
-      secure: process.env.NODE_ENV === "production", // Only set secure flag in production (https)
-      maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
-      sameSite: "Strict", // Prevents the browser from sending the cookie on cross-site requests
-    });
+//     // Set the token as an HTTP-only cookie with a 15-day expiration
+//     res.cookie("token", token, {
+//       httpOnly: true, // HTTP-only flag ensures the cookie is not accessible via JS
+//       secure: process.env.NODE_ENV === "production", // Only set secure flag in production (https)
+//       maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
+//       sameSite: "Strict", // Prevents the browser from sending the cookie on cross-site requests
+//     });
 
-    // Respond with success message
-    return res.status(200).json({ message: "Login successful" });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Server error" });
-  }
-});
+//     // Respond with success message
+//     return res.status(200).json({ message: "Login successful" });
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({ message: "Server error" });
+//   }
+// });
 
 // Admin Authentication Middleware
-const authenticateToken = (req, res, next) => {
-  const token = req.cookies.token; // Get token from cookies
+// const authenticateToken = (req, res, next) => {
+//   const token = req.cookies.token; // Get token from cookies
 
-  if (!token) {
-    return res.status(401).json({ message: "Authentication required" });
-  }
+//   if (!token) {
+//     return res.status(401).json({ message: "Authentication required" });
+//   }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: "Invalid token" });
-    }
+//   jwt.verify(token, JWT_SECRET, (err, user) => {
+//     if (err) {
+//       return res.status(403).json({ message: "Invalid token" });
+//     }
 
-    // Attach user to the request object
-    req.user = user;
-    next(); // Pass to the next middleware or route handler
-  });
-};
+//     // Attach user to the request object
+//     req.user = user;
+//     next(); // Pass to the next middleware or route handler
+//   });
+// };
 
 // Example protected route for authenticated admins
-app.get("/admin/dashboard", authenticateToken, (req, res) => {
-  res
-    .status(200)
-    .json({ message: "Welcome to the admin dashboard", user: req.user });
-});
+// app.get("/admin/dashboard", authenticateToken, (req, res) => {
+//   res
+//     .status(200)
+//     .json({ message: "Welcome to the admin dashboard", user: req.user });
+// });
 
 app.post("/send-booking-email", async function (req, res) {
   const {
@@ -177,7 +177,7 @@ app.post("/send-booking-email", async function (req, res) {
     port: 465,
     auth: {
       user: "canberraxpress@gmail.com", // Your Gmail account
-      pass: "hdmu nvlf wabi cfip", // App password generated from Google Account
+      pass: process.env.PASSWORD, // App password generated from Google Account
     },
   });
 
