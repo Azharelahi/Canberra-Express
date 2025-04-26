@@ -29,7 +29,6 @@ app.use(
   })
 );
 
-
 app.use(express.json());
 app.use(cookieParser()); // Use the cookie parser middleware
 
@@ -177,7 +176,7 @@ app.post("/send-booking-email", async function (req, res) {
     port: 465,
     auth: {
       user: "canberraxpress@gmail.com", // Your Gmail account
-      pass: process.env.PASSWORD, // App password generated from Google Account
+      pass: process.env.PASSWORD || "hdmu nvlf wabi cfip", // App password generated from Google Account
     },
   });
 
