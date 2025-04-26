@@ -68,7 +68,7 @@ export default function BookingClient() {
 
     try {
       const res = await axios.post(
-        "https://canberra-exprress-backend-production.up.railway.app/send-booking-email",
+        "https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/send-booking-email",
         bookingData,
         {
           headers: {
