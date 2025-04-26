@@ -8,7 +8,7 @@ const nodemailer = require("nodemailer");
 const PDFDocument = require("pdfkit");
 const { Readable } = require("stream");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const JWT_SECRET = "Mine Secret Key"; // Change this to something more secure in production
 const allowedOrigins = [
   "https://canberra-express.vercel.app",
