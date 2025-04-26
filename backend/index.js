@@ -211,8 +211,8 @@ app.post("/send-booking-email", async function (req, res) {
   // Admin Email
   const adminMailOptions = {
     from: "Canberra Express <canberraxpress@gmail.com>",
-    to: "ehsan_elahi1992@hotmail.com",
-    cc: ["mrtoheed2112@gmail.com", "azharelahi321@gmail.com"],
+    to: "azharelahi321@gmail.com", //Replace it with ehsan_elahi1992@hotmail.com
+    // cc: ["mrtoheed2112@gmail.com", "azharelahi321@gmail.com"],
 
     subject: "New Booking Alert - PDF Invoice Attached",
     html: `
