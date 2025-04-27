@@ -1,6 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import {
   SignInButton,
@@ -12,6 +14,7 @@ import {
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const pathname = usePathname();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -39,7 +42,9 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-black hover:text-yellow-500 font-medium transition duration-300 transform hover:scale-105"
+                className={`text-black font-medium transition duration-300 transform hover:text-yellow-500 hover:scale-105 ${
+                  pathname === link.href ? "text-yellow-500" : ""
+                }`}
               >
                 {link.name}
               </Link>
@@ -48,7 +53,7 @@ const Navbar = () => {
             {/* Auth buttons */}
             <SignedOut>
               <SignInButton>
-                <button className="ml-4 px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
+                <button className="cursor-pointer ml-4 px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
                   Sign In
                 </button>
               </SignInButton>
@@ -73,7 +78,7 @@ const Navbar = () => {
 
             <button
               onClick={toggleMenu}
-              className="text-black focus:outline-none"
+              className="text-black focus:outline-none z-[60]"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -81,25 +86,37 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
-      <div
-        className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="flex flex-col space-y-4 px-6 pb-6 pt-4 bg-cream-white shadow-inner">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsOpen(false)}
-              className="text-black hover:text-yellow-500 font-medium transition duration-200 transform hover:scale-105"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Mobile Sidebar Menu */}
+     {/* Mobile Sidebar Menu */}
+<div
+  className={`fixed top-0 right-0 h-full w-[70%] 
+    bg-white/30 backdrop-blur-lg 
+    shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
+      isOpen ? "translate-x-0" : "translate-x-full"
+    } flex flex-col items-start p-8 space-y-6`}
+>
+  {navLinks.map((link) => (
+    <Link
+      key={link.name}
+      href={link.href}
+      onClick={() => setIsOpen(false)}
+      className={`text-black text-xl font-semibold hover:text-yellow-500 transition transform hover:scale-110 ${
+        pathname === link.href ? "text-yellow-500" : ""
+      }`}
+    >
+      {link.name}
+    </Link>
+  ))}
+</div>
+
+
+      {/* Optional: Dark overlay behind the sidebar */}
+      {isOpen && (
+        <div
+          onClick={toggleMenu}
+          className="fixed inset-0 bg-black/30 z-30 backdrop-blur-sm transition-opacity duration-300"
+        />
+      )}
     </nav>
   );
 };

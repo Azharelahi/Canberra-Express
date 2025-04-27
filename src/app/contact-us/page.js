@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 export default function ContactUsPage() {
-    useEffect(() => {
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-200 to-yellow-50 py-10 px-4 sm:px-8">
       <div className="max-w-6xl mx-auto">
@@ -29,14 +30,19 @@ export default function ContactUsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1 }}
           >
-            <h3 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 font-poppins">Our Office</h3>
+            <h3 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 font-poppins">
+              Our Office
+            </h3>
             <p className="text-lg sm:text-xl text-gray-600 mb-6">
-              Canberra Express, 123 Travel Lane, Canberra, ACT, Australia
+              Canberra Express, 21 Mary Gillespie Avenue,Gungahlin Canberra,
+              ACT, Australia
             </p>
             <div className="text-4xl text-yellow-500 mb-4">
               <i className="fas fa-map-marker-alt"></i>
             </div>
-            <p className="text-sm text-gray-500">Visit us for any inquiries or just to say hello!</p>
+            <p className="text-sm text-gray-500">
+              Visit us for any inquiries or just to say hello!
+            </p>
           </motion.div>
 
           {/* Phone & Email Card */}
@@ -46,18 +52,33 @@ export default function ContactUsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 1 }}
           >
-            <h3 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 font-poppins">Contact Details</h3>
+            <h3 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 font-poppins">
+              Contact Details
+            </h3>
             <p className="text-lg sm:text-xl text-gray-600 mb-4">
-              Reach out to us via phone or email for any inquiries or assistance.
+              Reach out to us via phone or email for any inquiries or
+              assistance.
             </p>
-            <div className="text-4xl text-yellow-500 mb-4">
-              <i className="fas fa-phone-alt"></i>
+            <div className="flex items-center text-4xl text-yellow-500 mb-4 space-x-4">
+              {/* Phone icon */}
+              <i className="fas fa-phone-alt text-yellow-500"></i>
+              <a
+                href="tel:+61451107931"
+                className="text-xl font-semibold text-gray-700 hover:text-yellow-500 hover:scale-105 transition-all duration-300 cursor-pointer"
+              >
+                +61 451107931
+              </a>
             </div>
-            <p className="text-xl font-semibold text-gray-700 mb-4">+61 412 345 678</p>
-            <div className="text-4xl text-yellow-500 mb-4">
-              <i className="fas fa-envelope"></i>
+            <div className="flex items-center text-4xl text-yellow-500 mb-4 space-x-4">
+              {/* Email icon */}
+              <i className="fas fa-envelope text-yellow-500"></i>
+              <a
+                href="mailto:canberraexpress@gmail.com"
+                className="text-xl font-semibold text-gray-700 hover:text-yellow-500 hover:scale-105 transition-all duration-300 cursor-pointer"
+              >
+                canberraexpress@gmail.com
+              </a>
             </div>
-            <p className="text-xl font-semibold text-gray-700">support@canberraexpress.com</p>
           </motion.div>
         </div>
 
@@ -68,24 +89,42 @@ export default function ContactUsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 1 }}
         >
-       <h3 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-6 text-center font-poppins">
-  Our Office Hours
-</h3>
-<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-  <div>
-    <p className="text-lg sm:text-xl text-gray-600 font-semibold">Monday - Friday</p>
-    <p className="text-lg sm:text-xl text-gray-600">9:00 AM - 6:00 PM</p>
-  </div>
-  <div>
-    <p className="text-lg sm:text-xl text-gray-600 font-semibold">Saturday</p>
-    <p className="text-lg sm:text-xl text-gray-600">10:00 AM - 4:00 PM</p>
-  </div>
-  <div>
-    <p className="text-lg sm:text-xl text-gray-600 font-semibold">Sunday</p>
-    <p className="text-lg sm:text-xl text-gray-600">Closed</p>
-  </div>
-</div>
-
+          <h3 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-6 text-center font-poppins">
+            Our Office Hours
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="flex justify-center items-center mb-2 text-yellow-500">
+                <i className="fas fa-clock mr-2"></i>
+                <p className="text-lg sm:text-xl text-gray-600 font-semibold">
+                  Monday - Friday
+                </p>
+              </div>
+              <p className="text-lg sm:text-xl text-gray-600">
+                9:00 AM - 6:00 PM
+              </p>
+            </div>
+            <div>
+              <div className="flex justify-center items-center mb-2 text-yellow-500">
+                <i className="fas fa-clock mr-2"></i>
+                <p className="text-lg sm:text-xl text-gray-600 font-semibold">
+                  Saturday
+                </p>
+              </div>
+              <p className="text-lg sm:text-xl text-gray-600">
+                10:00 AM - 4:00 PM
+              </p>
+            </div>
+            <div>
+              <div className="flex justify-center items-center mb-2 text-yellow-500">
+                <i className="fas fa-clock mr-2"></i>
+                <p className="text-lg sm:text-xl text-gray-600 font-semibold">
+                  Sunday
+                </p>
+              </div>
+              <p className="text-lg sm:text-xl text-gray-600">Closed</p>
+            </div>
+          </div>
         </motion.div>
 
         {/* Google Map Section */}
