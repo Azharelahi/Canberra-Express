@@ -26,6 +26,12 @@ select {
   display: flex;
   align-items: center; /* Ensure content is aligned vertically */
 }
+.text-gradient {
+  background: linear-gradient(135deg, #fcb045, #adad36);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 
 /* Focused input and select fields */
 input:focus,

@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export default function FAQPage() {
-    useEffect(() => {
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleAccordion = (index) => {
@@ -46,32 +47,50 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-200 to-yellow-50 py-10 px-4 sm:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-50 py-10 px-4 sm:px-8">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-5xl font-extrabold text-yellow-600 mb-8 text-center font-poppins">
+        <motion.h2
+          className="text-5xl font-extrabold text-gradient mb-12 text-center font-poppins tracking-wide"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
           Frequently Asked Questions
-        </h2>
+        </motion.h2>
 
         <div className="space-y-6">
           {faqData.map((faq, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white shadow-lg rounded-3xl p-6 mb-4 cursor-pointer transition-all transform hover:scale-105 duration-300">
+              <div
+                className={`bg-white rounded-2xl p-6 mb-4 cursor-pointer transform transition-all duration-500 ease-in-out ${
+                  activeIndex === index
+                    ? "shadow-2xl shadow-yellow-500/50 border-4 border-yellow-500 scale-105"
+                    : "shadow-lg shadow-gray-300"
+                }`}
+              >
                 <div
                   className="flex justify-between items-center"
                   onClick={() => toggleAccordion(index)}
                 >
-                  <h3 className="text-2xl font-semibold text-gray-800">
+                  <motion.h3
+                    className={`text-2xl font-semibold text-gray-900 transition-colors duration-300 hover:text-yellow-600 tracking-tight relative ${
+                      activeIndex === index
+                        ? "text-yellow-600"
+                        : "text-gray-900"
+                    }`}
+                  >
                     {faq.question}
-                  </h3>
+                  </motion.h3>
                   <motion.div
                     animate={{ rotate: activeIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
+                    className="transition-transform duration-300 transform hover:scale-110"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -89,13 +108,14 @@ export default function FAQPage() {
                     </svg>
                   </motion.div>
                 </div>
+
                 {activeIndex === index && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="mt-4 text-lg text-gray-600"
+                    className="mt-4 text-lg text-gray-700 font-light leading-relaxed"
                   >
                     <p>{faq.answer}</p>
                   </motion.div>
