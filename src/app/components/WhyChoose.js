@@ -80,27 +80,28 @@ const WhyChoose = () => {
           }}
           extensions={{ AutoScroll }}
         >
-          {features.map((feature, index) => (
-            <SplideSlide key={index}>
-              <div className="relative flex flex-col items-center justify-between p-6 bg-white rounded-xl shadow-lg bg-opacity-20 backdrop-blur-md hover:scale-105 transition-all duration-300 ease-in-out h-80">
-                <div className="bg-yellow-500 p-4 rounded-full text-white mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-center text-gray-600">
-                  {feature.description}
-                </p>
-                <div
-                  className="absolute inset-0 bg-opacity-10 bg-center bg-no-repeat bg-cover rounded-xl z-0"
-                  style={{
-                    backgroundImage: "url('/assets/logo2.png')",
-                  }}
-                ></div>
-              </div>
-            </SplideSlide>
-          ))}
+        {features.map((feature, index) => (
+  <SplideSlide key={index}>
+    <div className="relative flex flex-col items-center justify-between p-6 bg-white rounded-xl shadow-lg bg-opacity-20 backdrop-blur-md hover:scale-105 transition-all duration-300 ease-in-out h-80 overflow-hidden">
+      <div className="bg-yellow-500 p-4 rounded-full text-white mb-4 z-10">
+        {feature.icon}
+      </div>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2 z-10">
+        {feature.title}
+      </h3>
+      <p className="text-center text-gray-600 z-10">
+        {feature.description}
+      </p>
+      <div
+        className="absolute inset-0 opacity-10 bg-center bg-no-repeat bg-cover rounded-xl z-0"
+        style={{
+          backgroundImage: "url('/assets/logo2.png')",
+        }}
+      ></div>
+    </div>
+  </SplideSlide>
+))}
+
         </Splide>
       </div>
     </section>
