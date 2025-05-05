@@ -13,6 +13,7 @@ const BookingForm = forwardRef((props, ref) => {
     pickupTime: "",
     carName: "",
   });
+  const [dateError, setDateError] = useState("");
 
   const router = useRouter();
 
@@ -22,18 +23,49 @@ const BookingForm = forwardRef((props, ref) => {
       ...formData,
       [name]: value,
     });
+
+    // If the field being changed is the pickupDate, check if it's in the past
+    if (name === "pickupDate") {
+      const selectedDate = new Date(value);
+      const currentDate = new Date();
+
+      // Check if the selected date is in the past
+      if (selectedDate < currentDate) {
+        setDateError("You cannot select a past date!");
+      } else {
+        setDateError(""); // Clear the error if the date is valid
+      }
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (dateError) {
+      alert(dateError); // Alert the user if there's a date error
+      return;
+    }
+
     const queryString = new URLSearchParams(formData).toString();
     router.push(`/booking-page?${queryString}`);
   };
 
   const cities = ["Canberra", "Sydney"];
-  const canberraPlaces = ["Belconnen", "Civic", "Woden", "Tuggeranong", "Gungahlin"];
-  const sydneyPlaces = ["Bondi", "Manly", "Redfern", "Surry Hills", "Paddington"];
-  const carNames = ["5 Seater","7 Seater","9 Seater"];
+  const canberraPlaces = [
+    "Belconnen",
+    "Civic",
+    "Woden",
+    "Tuggeranong",
+    "Gungahlin",
+  ];
+  const sydneyPlaces = [
+    "Bondi",
+    "Manly",
+    "Redfern",
+    "Surry Hills",
+    "Paddington",
+  ];
+  const carNames = ["5 Seater", "7 Seater", "9 Seater"];
 
   const getPlaces = (city) => {
     if (city === "Canberra") return canberraPlaces;
@@ -42,7 +74,9 @@ const BookingForm = forwardRef((props, ref) => {
   };
 
   const today = new Date().toISOString().split("T")[0];
-  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
 
   const generateTimeOptions = () => {
     const times = [];
@@ -70,15 +104,18 @@ const BookingForm = forwardRef((props, ref) => {
 
         <div className="bg-[#fdfdfd] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl w-full max-w-2xl xl:max-w-xl mx-auto overflow-hidden">
           <form onSubmit={handleSubmit} className="space-y-6">
-
             {/* Pickup Section */}
             <div className="bg-yellow-50 p-4 sm:p-6 rounded-xl border border-yellow-300">
-              <h3 className="text-lg font-semibold text-yellow-700 mb-4">Pickup Details</h3>
+              <h3 className="text-lg font-semibold text-yellow-700 mb-4">
+                Pickup Details
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
                 {/* Pickup Location */}
                 <div>
-                  <label htmlFor="pickLocation" className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label
+                    htmlFor="pickLocation"
+                    className="block text-sm font-semibold text-gray-700 mb-1"
+                  >
                     Pickup Location
                   </label>
                   <div className="relative">
@@ -88,12 +125,16 @@ const BookingForm = forwardRef((props, ref) => {
                       name="pickLocation"
                       value={formData.pickLocation}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
                       required
                     >
-                      <option value="" disabled>Select Pickup City</option>
+                      <option value="" disabled>
+                        Select Pickup City
+                      </option>
                       {cities.map((city, i) => (
-                        <option key={i} value={city}>{city}</option>
+                        <option key={i} value={city}>
+                          {city}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -102,7 +143,10 @@ const BookingForm = forwardRef((props, ref) => {
                 {/* Pickup Address */}
                 {formData.pickLocation && (
                   <div>
-                    <label htmlFor="pickAddress" className="block text-sm font-semibold text-gray-700 mb-1">
+                    <label
+                      htmlFor="pickAddress"
+                      className="block text-sm font-semibold text-gray-700 mb-1"
+                    >
                       Pickup Address
                     </label>
                     <div className="relative">
@@ -112,12 +156,16 @@ const BookingForm = forwardRef((props, ref) => {
                         name="pickAddress"
                         value={formData.pickAddress}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
                         required
                       >
-                        <option value="" disabled>Select Street/Area</option>
+                        <option value="" disabled>
+                          Select Street/Area
+                        </option>
                         {getPlaces(formData.pickLocation).map((place, i) => (
-                          <option key={i} value={place}>{place}</option>
+                          <option key={i} value={place}>
+                            {place}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -126,7 +174,10 @@ const BookingForm = forwardRef((props, ref) => {
 
                 {/* Pickup Date */}
                 <div>
-                  <label htmlFor="pickupDate" className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label
+                    htmlFor="pickupDate"
+                    className="block text-sm font-semibold text-gray-700 mb-1"
+                  >
                     Pickup Date
                   </label>
                   <div className="relative">
@@ -139,15 +190,22 @@ const BookingForm = forwardRef((props, ref) => {
                       onChange={handleInputChange}
                       min={today}
                       max={maxDate}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
                       required
                     />
                   </div>
+                  {/* Show error if date is invalid */}
+                  {dateError && (
+                    <p className="text-red-500 text-sm mt-2">{dateError}</p>
+                  )}
                 </div>
 
                 {/* Pickup Time */}
                 <div>
-                  <label htmlFor="pickupTime" className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label
+                    htmlFor="pickupTime"
+                    className="block text-sm font-semibold text-gray-700 mb-1"
+                  >
                     Pickup Time
                   </label>
                   <div className="relative">
@@ -157,12 +215,16 @@ const BookingForm = forwardRef((props, ref) => {
                       name="pickupTime"
                       value={formData.pickupTime}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
                       required
                     >
-                      <option value="" disabled>Select Time</option>
+                      <option value="" disabled>
+                        Select Time
+                      </option>
                       {timeOptions.map((time, i) => (
-                        <option key={i} value={time}>{time}</option>
+                        <option key={i} value={time}>
+                          {time}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -172,12 +234,16 @@ const BookingForm = forwardRef((props, ref) => {
 
             {/* Drop Section */}
             <div className="bg-blue-50 p-4 sm:p-6 rounded-xl border border-blue-300">
-              <h3 className="text-lg font-semibold text-blue-700 mb-4">Drop Details</h3>
+              <h3 className="text-lg font-semibold text-blue-700 mb-4">
+                Drop Details
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
                 {/* Drop Location */}
                 <div>
-                  <label htmlFor="dropLocation" className="block text-sm font-semibold text-gray-700 mb-1">
+                  <label
+                    htmlFor="dropLocation"
+                    className="block text-sm font-semibold text-gray-700 mb-1"
+                  >
                     Drop Location
                   </label>
                   <div className="relative">
@@ -187,12 +253,16 @@ const BookingForm = forwardRef((props, ref) => {
                       name="dropLocation"
                       value={formData.dropLocation}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
                       required
                     >
-                      <option value="" disabled>Select Drop City</option>
+                      <option value="" disabled>
+                        Select Drop City
+                      </option>
                       {cities.map((city, i) => (
-                        <option key={i} value={city}>{city}</option>
+                        <option key={i} value={city}>
+                          {city}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -201,7 +271,10 @@ const BookingForm = forwardRef((props, ref) => {
                 {/* Drop Address */}
                 {formData.dropLocation && (
                   <div>
-                    <label htmlFor="dropAddress" className="block text-sm font-semibold text-gray-700 mb-1">
+                    <label
+                      htmlFor="dropAddress"
+                      className="block text-sm font-semibold text-gray-700 mb-1"
+                    >
                       Drop Address
                     </label>
                     <div className="relative">
@@ -211,12 +284,16 @@ const BookingForm = forwardRef((props, ref) => {
                         name="dropAddress"
                         value={formData.dropAddress}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
                         required
                       >
-                        <option value="" disabled>Select Street/Area</option>
+                        <option value="" disabled>
+                          Select Street/Area
+                        </option>
                         {getPlaces(formData.dropLocation).map((place, i) => (
-                          <option key={i} value={place}>{place}</option>
+                          <option key={i} value={place}>
+                            {place}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -227,7 +304,10 @@ const BookingForm = forwardRef((props, ref) => {
 
             {/* Car Model */}
             <div>
-              <label htmlFor="carName" className="block text-sm font-semibold text-gray-700 mb-1">
+              <label
+                htmlFor="carName"
+                className="block text-sm font-semibold text-gray-700 mb-1"
+              >
                 Car Type
               </label>
               <div className="relative">
@@ -237,12 +317,16 @@ const BookingForm = forwardRef((props, ref) => {
                   name="carName"
                   value={formData.carName}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
                   required
                 >
-                  <option value="" disabled>Select a car</option>
+                  <option value="" disabled>
+                    Select a car
+                  </option>
                   {carNames.map((car, i) => (
-                    <option key={i} value={car}>{car}</option>
+                    <option key={i} value={car}>
+                      {car}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -252,7 +336,7 @@ const BookingForm = forwardRef((props, ref) => {
             <div className="pt-4 flex justify-center">
               <button
                 type="submit"
-                className="px-6 py-2 bg-yellow-500 text-black font-semibold rounded-lg shadow-md hover:shadow-xl transition hover:scale-105 duration-200"
+                className="px-6 py-2 bg-yellow-500 text-black font-semibold rounded-lg shadow-md hover:shadow-xl transition hover:scale-105 duration-200 cursor-pointer"
               >
                 Confirm Booking
               </button>

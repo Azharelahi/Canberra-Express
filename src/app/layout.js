@@ -26,7 +26,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://canberra-express.vercel.app/assets/logo2.png",
+        url: "https://canberra-express.vercel.app/logo2.png",
         width: 1200,
         height: 630,
         alt: "Canberra Express Logo",

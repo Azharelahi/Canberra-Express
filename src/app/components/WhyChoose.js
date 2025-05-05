@@ -95,7 +95,7 @@ const WhyChoose = () => {
                 <div
                   className="absolute inset-0 bg-opacity-10 bg-center bg-no-repeat bg-cover rounded-xl z-0"
                   style={{
-                    backgroundImage: "url('/path-to-your-logo-image.png')",
+                    backgroundImage: "url('/assets/logo2.png')",
                   }}
                 ></div>
               </div>

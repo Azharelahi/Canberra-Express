@@ -172,7 +172,7 @@ export default function BookingClient() {
               <div className="flex flex-col gap-6">
                 <button
                   onClick={() => setShowForm(true)}
-                  className="w-full bg-yellow-500 hover:bg-yellow-400 text-white text-lg font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg"
+                  className="w-full bg-yellow-500 hover:bg-yellow-400 text-white text-lg font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg cursor-pointer"
                 >
                   Proceed and Book via Site
                 </button>
@@ -181,7 +181,7 @@ export default function BookingClient() {
                   href={`https://wa.me/+61451107931?text=Hi, I want to book a car from ${pickLocation} ${pickAddress} to ${dropLocation} ${dropAddress} on ${pickupDate} at ${pickupTime}. Car Model: ${carName}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-green-500 hover:bg-green-400 text-white text-lg font-semibold py-3 rounded-xl text-center transition-all duration-300 shadow-lg"
+                  className="w-full bg-green-500 hover:bg-green-400 text-white text-lg font-semibold py-3 rounded-xl text-center transition-all duration-300 shadow-lg cursor-pointer"
                 >
                   Book via WhatsApp
                 </a>
@@ -221,7 +221,7 @@ export default function BookingClient() {
 
                 <button
                   type="submit"
-                  className="bg-yellow-500 hover:bg-yellow-400 text-white text-lg font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg"
+                  className="bg-yellow-500 hover:bg-yellow-400 text-white text-lg font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg cursor-pointer"
                 >
                   Confirm Booking
                 </button>
@@ -230,7 +230,7 @@ export default function BookingClient() {
                   href={`https://wa.me/61412345678?text=Hi, I want to book a car from ${pickLocation} to ${dropLocation} on ${pickupDate} at ${pickupTime}. Car Model: ${carName}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-green-500 hover:bg-green-400 text-white text-lg font-semibold py-3 rounded-xl text-center transition-all duration-300 shadow-lg"
+                  className="w-full bg-green-500 hover:bg-green-400 text-white text-lg font-semibold py-3 rounded-xl text-center transition-all duration-300 shadow-lg cursor-pointer"
                 >
                   Book via WhatsApp
                 </a>
