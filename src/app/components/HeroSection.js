@@ -53,12 +53,17 @@ const HeroSection = ({ bookingFormRef }) => {
           ))}
         </p>
 
-        <button
-          onClick={scrollToBookingForm}
-          className="cursor-pointer animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 bg-yellow-400 text-black font-semibold rounded-xl shadow-lg transition-all duration-300 font-[var(--font-geist-mono)]"
-        >
-          Book Now
-        </button>
+       <button
+  onClick={scrollToBookingForm}
+  className="cursor-pointer animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 
+             bg-yellow-400 text-black font-semibold rounded-xl transition-all duration-300
+             font-[var(--font-geist-mono)] shadow-[0_0_10px_rgba(255,223,0,0.7),0_0_20px_rgba(255,223,0,0.5)]
+             hover:shadow-[0_0_15px_rgba(255,223,0,0.9),0_0_30px_rgba(255,223,0,0.6)]
+             hover:scale-105"
+>
+  Book Now
+</button>
+
       </div>
     </div>
   );

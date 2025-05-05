@@ -18,7 +18,7 @@ export default function AboutUsPage() {
           transition={{ duration: 0.7 }}
           className="text-5xl font-extrabold text-gray-800 mb-10 text-center font-poppins drop-shadow-lg"
         >
-          <span className="bg-gradient-to-r from-yellow-500 via-orange-400 to-red-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-yellow-500 to-orange-400  bg-clip-text text-transparent">
             About Us
           </span>
         </motion.h2>

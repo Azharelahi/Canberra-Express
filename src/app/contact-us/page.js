@@ -32,50 +32,51 @@ export default function ContactUsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mb-20">
           {/* Office Location */}
           <motion.div
-            className="bg-white shadow-2xl rounded-3xl p-8 text-center hover:shadow-yellow-400 transition-shadow duration-300 transform hover:-translate-y-2"
+            className="bg-white shadow-xl hover:shadow-yellow-400 rounded-3xl p-8 transition-shadow duration-300 transform hover:-translate-y-2"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeInUp}
             transition={{ delay: 0.2 }}
           >
-            <h3 className="text-3xl font-bold text-gray-900 mb-4 font-poppins drop-shadow-sm">
-              Our Office
-            </h3>
-            <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-              Canberra Express, 21 Mary Gillespie Avenue, Gungahlin, Canberra, ACT, Australia
-            </p>
-            <div className="text-4xl text-yellow-500 mb-4">
-              <i className="fas fa-map-marker-alt"></i>
+            <div className="flex items-center justify-center mb-6">
+              <i className="fas fa-map-marker-alt text-yellow-500 text-3xl mr-3"></i>
+              <h3 className="text-3xl font-bold text-gray-900 font-poppins drop-shadow-sm">
+                Our Office
+              </h3>
             </div>
-            <p className="text-sm text-gray-500">We welcome you anytime!</p>
+            <p className="text-lg text-gray-600 leading-relaxed text-center">
+              Canberra Express, 21 Mary Gillespie Avenue,<br />
+              Gungahlin, Canberra, ACT, Australia
+            </p>
+            <p className="mt-4 text-sm text-gray-500 text-center">We welcome you anytime!</p>
           </motion.div>
 
           {/* Contact Details */}
           <motion.div
-            className="bg-white shadow-2xl rounded-3xl p-8 text-center hover:shadow-yellow-400 transition-shadow duration-300 transform hover:-translate-y-2"
+            className="bg-white shadow-xl hover:shadow-yellow-400 rounded-3xl p-8 transition-shadow duration-300 transform hover:-translate-y-2"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
             variants={fadeInUp}
             transition={{ delay: 0.4 }}
           >
-            <h3 className="text-3xl font-bold text-gray-900 mb-4 font-poppins drop-shadow-sm">
-              Contact Details
-            </h3>
-            <p className="text-lg text-gray-600 mb-6">
-              Connect with us for any queries or bookings.
-            </p>
-            <div className="flex justify-center items-center gap-3 mb-4">
-              <i className="fas fa-phone-alt text-yellow-500 text-2xl"></i>
+            <div className="flex items-center justify-center mb-6">
+              <i className="fas fa-phone-alt text-yellow-500 text-3xl mr-3"></i>
+              <h3 className="text-3xl font-bold text-gray-900 font-poppins drop-shadow-sm">
+                Contact Us
+              </h3>
+            </div>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <i className="fas fa-phone text-yellow-500 text-2xl"></i>
               <a
                 href="tel:+61451107931"
                 className="text-lg font-medium text-gray-800 hover:text-yellow-500 transition-colors duration-300"
               >
-                +61 451107931
+                +61 451 107 931
               </a>
             </div>
-            <div className="flex justify-center items-center gap-3">
+            <div className="flex items-center justify-center gap-3">
               <i className="fas fa-envelope text-yellow-500 text-2xl"></i>
               <a
                 href="mailto:canberraexpress@gmail.com"
@@ -89,7 +90,7 @@ export default function ContactUsPage() {
 
         {/* Office Hours */}
         <motion.div
-          className="bg-white shadow-2xl rounded-3xl p-8 mb-20"
+          className="bg-white shadow-xl rounded-3xl p-8 mb-20 hover:shadow-yellow-400 transition-shadow duration-300"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -100,7 +101,7 @@ export default function ContactUsPage() {
             Office Hours
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            {[ 
+            {[
               { day: "Monday - Friday", time: "9:00 AM - 6:00 PM" },
               { day: "Saturday", time: "10:00 AM - 4:00 PM" },
               { day: "Sunday", time: "Closed" },
@@ -118,7 +119,7 @@ export default function ContactUsPage() {
 
         {/* Google Map */}
         <motion.div
-          className="bg-white shadow-2xl rounded-3xl p-8"
+          className="bg-white shadow-xl rounded-3xl p-8 hover:shadow-yellow-400 transition-shadow duration-300"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -128,7 +129,7 @@ export default function ContactUsPage() {
           <h3 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-6 text-center font-poppins drop-shadow-sm">
             Find Us On The Map
           </h3>
-          <div className="w-full h-64 sm:h-80 rounded-lg overflow-hidden border-4 border-yellow-200 shadow-xl">
+          <div className="w-full h-64 sm:h-80 rounded-lg overflow-hidden border-4 border-yellow-200 shadow-lg">
             <iframe
               title="Google Map"
               className="w-full h-full"
