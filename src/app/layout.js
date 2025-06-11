@@ -15,21 +15,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Canberra Express – Car Rentals in Canberra",
+  title: "OZLYFT – Real-Time Car Rentals in Canberra",
   description:
-    "Book premium car rentals in Canberra at affordable prices with Canberra Express.",
+    "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
   openGraph: {
-    title: "Canberra Express – Car Rentals in Canberra",
+    title: "OZLYFT – Real-Time Car Rentals in Canberra",
     description:
-      "Book premium car rentals in Canberra at affordable prices with Canberra Express.",
-    url: "https://www.canberraexpress.com.au",
+      "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
+    url: "https://www.ozlyft.com.au", // update to your actual domain
     type: "website",
     images: [
       {
-        url: "https://canberra-express.vercel.app/logo2.png",
+        url: "https://ozlyft.vercel.app/logo2.png", // replace if hosted elsewhere
         width: 1200,
         height: 630,
-        alt: "Canberra Express Logo",
+        alt: "OZLYFT Logo",
       },
     ],
   },

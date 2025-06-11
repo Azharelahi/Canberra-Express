@@ -33,7 +33,7 @@ const Navbar = () => {
             href="/"
             className="text-xl font-bold text-yellow-500 animate-pulse"
           >
-            Canberra Express
+            OZLYFT
           </Link>
 
           {/* Desktop Menu */}
