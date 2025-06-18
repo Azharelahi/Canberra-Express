@@ -21,6 +21,9 @@ export const metadata = {
   title: "OZLYFT – Real-Time Car Rentals in Canberra",
   description:
     "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
+    icons: {
+    icon: "/favicon.ico.png", 
+  },
   openGraph: {
     title: "OZLYFT – Real-Time Car Rentals in Canberra",
     description:
@@ -31,7 +34,7 @@ export const metadata = {
     locale: "en_AU",
     images: [
       {
-        url: "https://ozlyft.com.au/logo2.png", // ✅ Replace with correct public URL
+        url: "https://ozlyft.com.au/prev-img.png", // ✅ Replace with correct public URL
         width: 1200,
         height: 630,
         alt: "OZLYFT Logo",
@@ -43,7 +46,7 @@ export const metadata = {
     title: "OZLYFT – Real-Time Car Rentals in Canberra",
     description:
       "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
-    images: ["https://ozlyft.com.au/logo2.png"],
+    images: ["https://ozlyft.com.au/prev-img.png"],
   },
 };
 
