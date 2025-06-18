@@ -23,7 +23,7 @@ export default function AboutUsPage() {
           </span>
         </motion.h2>
 
-        {/* Introduction Section */}
+        {/* Introduction */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0 }}
@@ -31,16 +31,14 @@ export default function AboutUsPage() {
           transition={{ duration: 1 }}
         >
           <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed shadow-sm">
-            We are an Australian-based company, proud to be part of Australia’s
-            vibrant community. With over 5 years of experience in the travel
-            industry, we’ve been committed to providing reliable, safe, and
-            comfortable travel experiences. Now, we’re excited to take our
-            services online, making it easier for you to book, plan, and travel
-            with us from anywhere in the world.
+            OZLYFT is a Canberra-grown company, proudly serving the local community and beyond.
+            With over 5 years of experience in the travel industry, we’ve been committed to providing
+            reliable, safe, and comfortable transportation solutions. Now, we’re bringing our services
+            online to make booking, planning, and riding easier than ever — no matter where you are.
           </p>
         </motion.div>
 
-        {/* Our Story Section */}
+        {/* Our Journey */}
         <section className="mb-20">
           <motion.h3
             className="text-4xl font-semibold text-gray-800 text-center mb-10 font-poppins drop-shadow-md"
@@ -63,10 +61,9 @@ export default function AboutUsPage() {
                 Our Roots
               </h4>
               <p className="text-gray-600 text-lg text-center leading-relaxed">
-                Founded by Australians, for Australians, we began our journey 5
-                years ago with a mission to provide affordable and comfortable
-                travel options for everyone. From humble beginnings, we've grown
-                into a trusted brand known for reliability and care.
+                OZLYFT was born in Canberra with a mission to make travel affordable and comfortable
+                for everyone. From our very first trip, we’ve focused on delivering quality rides and
+                personalized service that keeps people coming back.
               </p>
             </motion.div>
 
@@ -82,15 +79,15 @@ export default function AboutUsPage() {
                 Our Growth
               </h4>
               <p className="text-gray-600 text-lg text-center leading-relaxed">
-                Over the years, we've built lasting relationships with our
-                customers and partners. With growing demand, we’re now online —
-                ready to serve you better with a few effortless clicks.
+                Over the years, OZLYFT has become a trusted name across the region.
+                With growing demand and loyal customers, we’ve taken our platform online — so you
+                can book your next trip with just a few clicks.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* What We Offer */}
         <section className="mb-20">
           <motion.h3
             className="text-4xl font-semibold text-gray-800 text-center mb-10 font-poppins drop-shadow-md"
@@ -148,14 +145,13 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.9 }}
           >
-            Our goal is simple: to provide safe, affordable, and premium travel
-            experiences for all Australians. As a family-owned company, we focus
-            on personalized service and genuine care. With over 5 years of
-            experience, we’re ready to take your journey to the next level.
+            At OZLYFT, we believe travel should be safe, affordable, and premium. As a
+            locally operated, family-rooted company, we’re committed to real customer care.
+            With over 5 years of experience, we’re here to make every ride a smooth and satisfying one.
           </motion.p>
         </section>
 
-        {/* Contact */}
+        {/* Contact Link */}
         <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0 }}

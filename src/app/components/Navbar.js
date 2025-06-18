@@ -4,12 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +24,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-xl font-bold text-yellow-500 animate-pulse"
-          >
-            OZLYFT
+          <Link href="/" className="flex items-center space-x-3 h-full">
+            <span className="text-2xl font-extrabold text-yellow-500 animate-pulse">
+              OZLYFT
+            </span>
+            <span className="hidden sm:inline-block text-sm italic text-gray-600 font-medium tracking-wide animate-slogan-loop">
+              Ride Smart. Ride Fast. Ride Canberra.
+            </span>
           </Link>
 
           {/* Desktop Menu */}
@@ -80,35 +77,38 @@ const Navbar = () => {
               onClick={toggleMenu}
               className="text-black focus:outline-none z-[60]"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Sidebar Menu */}
-     {/* Mobile Sidebar Menu */}
-<div
-  className={`fixed top-0 right-0 h-full w-[70%] 
+      {/* Mobile Sidebar Menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[70%] 
     bg-white/30 backdrop-blur-lg 
     shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
       isOpen ? "translate-x-0" : "translate-x-full"
     } flex flex-col items-start p-8 space-y-6`}
->
-  {navLinks.map((link) => (
-    <Link
-      key={link.name}
-      href={link.href}
-      onClick={() => setIsOpen(false)}
-      className={`text-black text-xl font-semibold hover:text-yellow-500 transition transform hover:scale-110 ${
-        pathname === link.href ? "text-yellow-500" : ""
-      }`}
-    >
-      {link.name}
-    </Link>
-  ))}
-</div>
-
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.name}
+            href={link.href}
+            onClick={() => setIsOpen(false)}
+            className={`text-black text-xl font-semibold hover:text-yellow-500 transition transform hover:scale-110 ${
+              pathname === link.href ? "text-yellow-500" : ""
+            }`}
+          >
+            {link.name}
+          </Link>
+        ))}
+      </div>
 
       {/* Optional: Dark overlay behind the sidebar */}
       {isOpen && (

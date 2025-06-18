@@ -38,7 +38,7 @@ export default function PricesPage() {
             Competitor Prices
           </motion.h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card title="Canberra Express" duration="Approximately 3 hours" route="CBR-SYD" price="$399 (AUD)" />
+            <Card title="OZLYFT" duration="Approximately 3 hours" route="CBR-SYD" price="$399 (AUD)" />
             <Card title="Fly" duration="Approximately 3 hours" route="SYD-CBR" price="$375 - $1000 (AUD)" />
             <Card title="Ride Share Companies" duration="Approximately 3 hours" route="SYD-CBR" price="$550 – $700 (AUD)" />
           </div>

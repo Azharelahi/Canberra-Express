@@ -4,7 +4,7 @@ import React from "react";
 import "animate.css";
 import { motion } from "framer-motion";
 
-const headingWords = ["Welcome", "to", "Canberra", "Express"];
+const headingWords = ["Welcome", "to", "OZ", "LYFT"];
 const subText = ["Your", "trusted", "car", "rental", "service", "in", "Canberra."];
 
 const HeroSection = ({ bookingFormRef }) => {

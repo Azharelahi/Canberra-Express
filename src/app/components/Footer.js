@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 md:gap-16">
           {/* Company Info */}
           <div className="text-center sm:text-left">
-            <h3 className="text-2xl font-semibold mb-4">Canberra Express</h3>
+            <h3 className="text-2xl font-semibold mb-4">OZLYFT</h3>
             <p className="text-gray-400 mb-4">
               Your trusted partner for car rentals in Canberra. Fast, reliable,
               and affordable.

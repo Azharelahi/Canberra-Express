@@ -5,7 +5,6 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 
-// Add icons for each card
 import {
   FaCar,
   FaMoneyBillAlt,
@@ -56,8 +55,8 @@ const WhyChoose = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-12">
-          Why Choose Canberra Express?
+        <h2 className="text-3xl sm:text-4xl font-bold text-center text-yellow-500 mb-12 animate-pulse tracking-wide">
+          Why Choose OZLYFT?
         </h2>
 
         <Splide
@@ -75,33 +74,32 @@ const WhyChoose = () => {
               480: { perPage: 1 },
             },
             autoScroll: {
-              speed: 1, // Adjust speed (higher = faster)
+              speed: 1,
             },
           }}
           extensions={{ AutoScroll }}
         >
-        {features.map((feature, index) => (
-  <SplideSlide key={index}>
-    <div className="relative flex flex-col items-center justify-between p-6 bg-white rounded-xl shadow-lg bg-opacity-20 backdrop-blur-md hover:scale-105 transition-all duration-300 ease-in-out h-80 overflow-hidden">
-      <div className="bg-yellow-500 p-4 rounded-full text-white mb-4 z-10">
-        {feature.icon}
-      </div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2 z-10">
-        {feature.title}
-      </h3>
-      <p className="text-center text-gray-600 z-10">
-        {feature.description}
-      </p>
-      <div
-        className="absolute inset-0 opacity-10 bg-center bg-no-repeat bg-cover rounded-xl z-0"
-        style={{
-          backgroundImage: "url('/assets/logo2.png')",
-        }}
-      ></div>
-    </div>
-  </SplideSlide>
-))}
-
+          {features.map((feature, index) => (
+            <SplideSlide key={index}>
+              <div className="relative flex flex-col items-center justify-between p-6 bg-white rounded-xl shadow-lg bg-opacity-20 backdrop-blur-md hover:scale-105 transition-all duration-300 ease-in-out h-80 overflow-hidden">
+                <div className="bg-yellow-500 p-4 rounded-full text-white mb-4 z-10">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2 z-10">
+                  {feature.title}
+                </h3>
+                <p className="text-center text-gray-600 z-10">
+                  {feature.description}
+                </p>
+                <div
+                  className="absolute inset-0 opacity-10 bg-center bg-no-repeat bg-cover rounded-xl z-0"
+                  style={{
+                    backgroundImage: "url('/assets/logo2.png')",
+                  }}
+                ></div>
+              </div>
+            </SplideSlide>
+          ))}
         </Splide>
       </div>
     </section>

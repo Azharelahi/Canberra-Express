@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Add this if you're deploying on a specific domain (optional)
+export const metadataBase = new URL("https://www.ozlyft.com.au");
+
 export const metadata = {
   title: "OZLYFT – Real-Time Car Rentals in Canberra",
   description:
@@ -22,16 +25,25 @@ export const metadata = {
     title: "OZLYFT – Real-Time Car Rentals in Canberra",
     description:
       "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
-    url: "https://www.ozlyft.com.au", // update to your actual domain
+    url: "https://www.ozlyft.com.au",
+    siteName: "OZLYFT",
     type: "website",
+    locale: "en_AU",
     images: [
       {
-        url: "https://ozlyft.vercel.app/logo2.png", // replace if hosted elsewhere
+        url: "https://ozlyft.vercel.app/logo2.png", // ✅ Replace with correct public URL
         width: 1200,
         height: 630,
         alt: "OZLYFT Logo",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OZLYFT – Real-Time Car Rentals in Canberra",
+    description:
+      "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
+    images: ["https://ozlyft.vercel.app/logo2.png"],
   },
 };
 

@@ -9,23 +9,33 @@
     --cream-white: #fefae0;
   }
 }
+
 /* src/global.css */
 /* Ensure form inputs are 100% of their container width */
 input,
 select {
   width: 100%;
   box-sizing: border-box;
-  font-size: 1rem; /* Ensure text size fits well */
-  height: 40px; /* Standard height for better iPhone alignment */
-  border-radius: 0.375rem; /* Rounded corners */
-  border: 1px solid #d1d5db; /* Light gray border */
-  background-color: #ffffff; /* White background */
+  font-size: 1rem;
+  /* Ensure text size fits well */
+  height: 40px;
+  /* Standard height for better iPhone alignment */
+  border-radius: 0.375rem;
+  /* Rounded corners */
+  border: 1px solid #d1d5db;
+  /* Light gray border */
+  background-color: #ffffff;
+  /* White background */
   transition: border-color 0.3s ease-in-out;
-  padding-left: 2.5rem; /* Space for the icon */
-  padding-right: 1rem; /* Space for right-side button/icon */
+  padding-left: 2.5rem;
+  /* Space for the icon */
+  padding-right: 1rem;
+  /* Space for right-side button/icon */
   display: flex;
-  align-items: center; /* Ensure content is aligned vertically */
+  align-items: center;
+  /* Ensure content is aligned vertically */
 }
+
 .text-gradient {
   background: linear-gradient(135deg, #fcb045, #adad36);
   -webkit-background-clip: text;
@@ -37,11 +47,33 @@ select {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
 
 .animate-fade-in {
   animation: fade-in 1s ease-out;
@@ -50,38 +82,50 @@ select {
 /* Focused input and select fields */
 input:focus,
 select:focus {
-  border-color: #fbbf24; /* Focus color matching theme */
-  outline: none; /* Remove default focus outline */
+  border-color: #fbbf24;
+  /* Focus color matching theme */
+  outline: none;
+  /* Remove default focus outline */
 }
 
 /* Flexbox container for input and icon */
 .input-container {
   position: relative;
   width: 100%;
-  display: flex; /* Ensure flexibility for aligning icon */
-  align-items: center; /* Vertical alignment for icon and input text */
+  display: flex;
+  /* Ensure flexibility for aligning icon */
+  align-items: center;
+  /* Vertical alignment for icon and input text */
 }
 
 /* Icon inside the input field */
 .input-container .icon {
   position: absolute;
-  left: 0.75rem; /* Space between icon and left side of the input */
+  left: 0.75rem;
+  /* Space between icon and left side of the input */
   top: 50%;
-  transform: translateY(-50%); /* Vertically center the icon */
-  font-size: 1.25rem; /* Adjust icon size */
-  color: #6b7280; /* Icon color */
+  transform: translateY(-50%);
+  /* Vertically center the icon */
+  font-size: 1.25rem;
+  /* Adjust icon size */
+  color: #6b7280;
+  /* Icon color */
 }
 
 /* Date and Time Input Fields */
 input[type="date"],
 input[type="time"] {
-  padding-left: 2.5rem; /* Adjust left padding to fit icon */
-  font-size: 1rem; /* Consistent font size */
-  height: 40px; /* Same height as other inputs */
+  padding-left: 2.5rem;
+  /* Adjust left padding to fit icon */
+  font-size: 1rem;
+  /* Consistent font size */
+  height: 40px;
+  /* Same height as other inputs */
   border-radius: 0.375rem;
   border: 1px solid #d1d5db;
   background-color: #ffffff;
-  -webkit-appearance: none; /* Reset iOS specific styles */
+  -webkit-appearance: none;
+  /* Reset iOS specific styles */
   -moz-appearance: none;
   appearance: none;
 }
@@ -89,20 +133,25 @@ input[type="time"] {
 /* Focused state for date/time input */
 input[type="date"]:focus,
 input[type="time"]:focus {
-  border-color: #fbbf24; /* Focused border color */
+  border-color: #fbbf24;
+  /* Focused border color */
   outline: none;
 }
 
 /* Mobile-specific adjustments for smaller screens (e.g., iPhones) */
 @media (max-width: 768px) {
+
   .input-container input,
   .input-container select {
-    font-size: 0.875rem; /* Slightly smaller font size */
-    height: 36px; /* Reduce height for smaller screens */
+    font-size: 0.875rem;
+    /* Slightly smaller font size */
+    height: 36px;
+    /* Reduce height for smaller screens */
   }
 
   .input-container .icon {
-    font-size: 1.1rem; /* Adjust icon size on small screens */
+    font-size: 1.1rem;
+    /* Adjust icon size on small screens */
   }
 
   /* Reduce padding on small screens to prevent overcrowding */
@@ -114,12 +163,15 @@ input[type="time"]:focus {
 
 /* For better visual appearance */
 .form-input-container {
-  max-width: 600px; /* Max width for larger screens */
-  width: 100%; /* Ensure full width */
+  max-width: 600px;
+  /* Max width for larger screens */
+  width: 100%;
+  /* Ensure full width */
 }
 
 /* iOS Input Adjustments */
 @supports (-webkit-appearance: none) {
+
   /* Removing default iOS styles */
   select {
     -webkit-appearance: none;
@@ -132,16 +184,19 @@ input[type="time"]:focus {
 .navbar {
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.3);
-  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  -webkit-backdrop-filter: blur(10px);
+  /* For Safari */
 }
 
 /* Tailwind CSS classes will now recognize the custom color */
 .bg-cream-white {
   background-color: var(--cream-white);
 }
+
 .text-cream-white {
   color: var(--cream-white);
 }
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -255,6 +310,7 @@ input[type="time"]:focus {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

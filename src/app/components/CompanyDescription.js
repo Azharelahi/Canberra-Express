@@ -5,12 +5,14 @@ import Aos from "aos";
 
 const CompanyDescription = () => {
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     Aos.init({
-      duration: 1000, // Animation duration
-      once: true, // Only animate once while scrolling down
+      duration: 1000,
+      once: true,
     });
   }, []);
+
   useEffect(() => {
     document.body.style.overflow = showModal ? "hidden" : "auto";
   }, [showModal]);
@@ -34,7 +36,7 @@ const CompanyDescription = () => {
               About Us
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-6 px-4 lg:px-0">
-              At Canberra Express, we provide top-tier car rentals in the heart
+              At OZLYFT, we provide top-tier car rentals in the heart
               of Canberra, combining style, safety, and affordability.
             </p>
 
@@ -63,7 +65,7 @@ const CompanyDescription = () => {
             </button>
 
             <h2 className="text-3xl font-bold text-yellow-500 mb-6 text-center mt-8 sm:mt-0">
-              Welcome to Canberra Express
+              Welcome to OZLYFT
             </h2>
 
             {/* Card 1: Our Vision */}
@@ -121,7 +123,7 @@ const CompanyDescription = () => {
                 ❤️ Client Love
               </h3>
               <blockquote className="italic text-gray-700">
-                “Canberra Express made my trip so much smoother! The car was
+                “OZLYFT made my trip so much smoother! The car was
                 spotless, the process was effortless, and the service was
                 top-notch.”
               </blockquote>

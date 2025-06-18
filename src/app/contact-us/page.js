@@ -46,7 +46,7 @@ export default function ContactUsPage() {
               </h3>
             </div>
             <p className="text-lg text-gray-600 leading-relaxed text-center">
-              Canberra Express, 21 Mary Gillespie Avenue,<br />
+              OZLYFT, 21 Mary Gillespie Avenue,<br />
               Gungahlin, Canberra, ACT, Australia
             </p>
             <p className="mt-4 text-sm text-gray-500 text-center">We welcome you anytime!</p>
@@ -82,7 +82,7 @@ export default function ContactUsPage() {
                 href="mailto:canberraexpress@gmail.com"
                 className="text-lg font-medium text-gray-800 hover:text-yellow-500 transition-colors duration-300"
               >
-                canberraexpress@gmail.com
+                ozlyft@gmail.com
               </a>
             </div>
           </motion.div>
