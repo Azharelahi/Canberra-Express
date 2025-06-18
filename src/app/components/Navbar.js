@@ -23,12 +23,15 @@ const Navbar = () => {
     <nav className="bg-cream-white shadow-md sticky top-0 z-50 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 h-full">
-            <span className="text-2xl font-extrabold text-yellow-500 animate-pulse">
+          {/* Logo + Slogan (stacked on small screens) */}
+          <Link
+            href="/"
+            className="flex flex-col sm:flex-row items-center justify-center sm:space-x-2 gap-y-[10px] h-full"
+          >
+            <span className="text-2xl font-extrabold text-yellow-500 animate-pulse leading-none">
               OZLYFT
             </span>
-            <span className="hidden sm:inline-block text-sm italic text-gray-600 font-medium tracking-wide animate-slogan-loop">
+            <span className="text-[10px] sm:text-sm text-gray-600 italic font-medium tracking-wide font-poppins animate-slogan leading-none text-center">
               Ride Smart. Ride Fast. Ride Canberra.
             </span>
           </Link>
@@ -47,10 +50,9 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {/* Auth buttons */}
             <SignedOut>
               <SignInButton>
-                <button className="cursor-pointer ml-4 px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
+                <button className="ml-4 px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
                   Sign In
                 </button>
               </SignInButton>
@@ -60,7 +62,7 @@ const Navbar = () => {
             </SignedIn>
           </div>
 
-          {/* Mobile: Sign In & Hamburger */}
+          {/* Mobile Menu */}
           <div className="md:hidden flex items-center gap-4">
             <SignedOut>
               <SignInButton mode="modal">
@@ -87,14 +89,11 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Sidebar Menu */}
-      {/* Mobile Sidebar Menu */}
+      {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-[70%] 
-    bg-white/30 backdrop-blur-lg 
-    shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
-      isOpen ? "translate-x-0" : "translate-x-full"
-    } flex flex-col items-start p-8 space-y-6`}
+        className={`fixed top-0 right-0 h-full w-[70%] bg-white/30 backdrop-blur-lg shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        } flex flex-col items-start p-8 space-y-6`}
       >
         {navLinks.map((link) => (
           <Link
@@ -110,7 +109,7 @@ const Navbar = () => {
         ))}
       </div>
 
-      {/* Optional: Dark overlay behind the sidebar */}
+      {/* Overlay */}
       {isOpen && (
         <div
           onClick={toggleMenu}
