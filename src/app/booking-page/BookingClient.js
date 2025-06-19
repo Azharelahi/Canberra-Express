@@ -9,6 +9,7 @@ import axios from "axios";
 export default function BookingClient() {
   const searchParams = useSearchParams();
   const { user, isSignedIn } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   const pickLocation = searchParams.get("pickLocation");
   const pickAddress = searchParams.get("pickAddress");
@@ -52,6 +53,7 @@ export default function BookingClient() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const bookingData = {
       clientName: formData.name,
@@ -70,17 +72,15 @@ export default function BookingClient() {
       const res = await axios.post(
         "https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/send-booking-email",
         bookingData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        { headers: { "Content-Type": "application/json" } }
       );
       console.log("Success:", res.data);
       setFormData({ name: "", email: "", phone: "" });
       setIsSubmitted(true);
     } catch (err) {
       console.error("Error:", err.response?.data || err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -221,9 +221,38 @@ export default function BookingClient() {
 
                 <button
                   type="submit"
-                  className="bg-yellow-500 hover:bg-yellow-400 text-white text-lg font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg cursor-pointer"
+                  disabled={isLoading}
+                  className={`relative flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-white text-lg font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+                    isLoading ? "animate-pulse scale-[0.98]" : "hover:scale-105"
+                  }`}
                 >
-                  Confirm Booking
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8H4z"
+                        />
+                      </svg>
+                      Booking...
+                    </>
+                  ) : (
+                    "Confirm Booking"
+                  )}
                 </button>
 
                 <a
