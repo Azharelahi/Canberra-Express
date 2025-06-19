@@ -34,7 +34,7 @@ export const metadata = {
     locale: "en_AU",
     images: [
       {
-        url: "https://ozlyft.com.au/prev-img.png", // ✅ Replace with correct public URL
+        url: "https://ozlyft.com.au/prev-img.png", 
         width: 1200,
         height: 630,
         alt: "OZLYFT Logo",
