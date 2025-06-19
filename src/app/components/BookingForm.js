@@ -51,20 +51,36 @@ const BookingForm = forwardRef((props, ref) => {
   };
 
   const cities = ["Canberra", "Sydney"];
-  const canberraPlaces = [
-    "Belconnen",
-    "Civic",
-    "Woden",
-    "Tuggeranong",
-    "Gungahlin",
-  ];
-  const sydneyPlaces = [
-    "Bondi",
-    "Manly",
-    "Redfern",
-    "Surry Hills",
-    "Paddington",
-  ];
+const canberraPlaces = [
+  "Acton", "Ainslie", "Amaroo", "Aranda", "Belconnen", "Braddon", "Campbell",
+  "Casey", "Chapman", "Charnwood", "Chifley", "Cook", "Curtin", "Dickson",
+  "Downer", "Duffy", "Evatt", "Farrer", "Fisher", "Florey", "Flynn",
+  "Fraser", "Fyshwick", "Gilmore", "Gordon", "Gowrie", "Greenway",
+  "Griffith", "Gungahlin", "Hackett", "Hawker", "Higgins", "Holder",
+  "Holt", "Hughes", "Isabella Plains", "Kaleen", "Kambah", "Kingston",
+  "Latham", "Lawson", "Lyneham", "Macgregor", "Macquarie", "Manuka",
+  "Melba", "Monash", "Narrabundah", "Ngunnawal", "Nicholls", "O'Connor",
+  "Oxley", "Page", "Palmerston", "Pearce", "Phillip", "Red Hill", "Reid",
+  "Scullin", "Spence", "Stirling", "Torrens", "Turner", "Tuggeranong",
+  "Watson", "Weetangera", "Weston", "Woden", "Wright", "Yarralumla"
+].sort();
+
+
+const sydneyPlaces = [
+  "Ashfield", "Auburn", "Balmain", "Bankstown", "Baulkham Hills",
+  "Blacktown", "Bondi", "Botany", "Burwood", "Camden", "Campbelltown",
+  "Castle Hill", "Chatswood", "Cherrybrook", "Chippendale", "Coogee",
+  "Cronulla", "Darlinghurst", "Drummoyne", "Epping", "Fairfield", "Five Dock",
+  "Glebe", "Granville", "Greenacre", "Homebush", "Hornsby", "Hurstville",
+  "Kellyville", "Kingsford", "Lane Cove", "Leichhardt", "Lidcombe", "Liverpool",
+  "Macquarie Park", "Manly", "Maroubra", "Mascot", "Merrylands", "Mount Druitt",
+  "Newtown", "North Ryde", "North Sydney", "Paddington", "Parramatta", "Penrith",
+  "Randwick", "Redfern", "Rockdale", "Rose Bay", "Ryde", "St Leonards",
+  "Strathfield", "Surry Hills", "Ultimo", "Wetherill Park", "Woollahra",
+  "Zetland"
+].sort();
+
+
   const carNames = ["5 Seater", "7 Seater", "9 Seater"];
 
   const getPlaces = (city) => {
