@@ -2,11 +2,12 @@
 import React, { useState, forwardRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCar } from "react-icons/fa";
+import PlacesAutocompleteInput from "@/components/PlacesAutocompleteInput";
+import { motion } from "framer-motion";
+import { toast } from "react-hot-toast";
 
 const BookingForm = forwardRef((props, ref) => {
   const [formData, setFormData] = useState({
-    pickLocation: "",
-    dropLocation: "",
     pickAddress: "",
     dropAddress: "",
     pickupDate: "",
@@ -14,7 +15,7 @@ const BookingForm = forwardRef((props, ref) => {
     carName: "",
   });
   const [dateError, setDateError] = useState("");
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleInputChange = (e) => {
@@ -24,75 +25,41 @@ const BookingForm = forwardRef((props, ref) => {
       [name]: value,
     });
 
-    // If the field being changed is the pickupDate, check if it's in the past
     if (name === "pickupDate") {
       const selectedDate = new Date(value);
       const currentDate = new Date();
-
-      // Check if the selected date is in the past
       if (selectedDate < currentDate) {
         setDateError("You cannot select a past date!");
       } else {
-        setDateError(""); // Clear the error if the date is valid
+        setDateError("");
       }
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (dateError) {
-      alert(dateError); // Alert the user if there's a date error
+      toast.error(dateError);
       return;
     }
 
+    const { pickAddress, dropAddress, pickupDate, pickupTime, carName } = formData;
+    if (!pickAddress || !dropAddress || !pickupDate || !pickupTime || !carName) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    toast.success("Booking confirmed! Redirecting...");
     const queryString = new URLSearchParams(formData).toString();
-    router.push(`/booking-page?${queryString}`);
+    setTimeout(() => {
+      router.push(`/booking-page?${queryString}`);
+    }, 1500);
   };
-
-  const cities = ["Canberra", "Sydney"];
-const canberraPlaces = [
-  "Acton", "Ainslie", "Amaroo", "Aranda", "Belconnen", "Braddon", "Campbell",
-  "Casey", "Chapman", "Charnwood", "Chifley", "Cook", "Curtin", "Dickson",
-  "Downer", "Duffy", "Evatt", "Farrer", "Fisher", "Florey", "Flynn",
-  "Fraser", "Fyshwick", "Gilmore", "Gordon", "Gowrie", "Greenway",
-  "Griffith", "Gungahlin", "Hackett", "Hawker", "Higgins", "Holder",
-  "Holt", "Hughes", "Isabella Plains", "Kaleen", "Kambah", "Kingston",
-  "Latham", "Lawson", "Lyneham", "Macgregor", "Macquarie", "Manuka",
-  "Melba", "Monash", "Narrabundah", "Ngunnawal", "Nicholls", "O'Connor",
-  "Oxley", "Page", "Palmerston", "Pearce", "Phillip", "Red Hill", "Reid",
-  "Scullin", "Spence", "Stirling", "Torrens", "Turner", "Tuggeranong",
-  "Watson", "Weetangera", "Weston", "Woden", "Wright", "Yarralumla"
-].sort();
-
-
-const sydneyPlaces = [
-  "Ashfield", "Auburn", "Balmain", "Bankstown", "Baulkham Hills",
-  "Blacktown", "Bondi", "Botany", "Burwood", "Camden", "Campbelltown",
-  "Castle Hill", "Chatswood", "Cherrybrook", "Chippendale", "Coogee",
-  "Cronulla", "Darlinghurst", "Drummoyne", "Epping", "Fairfield", "Five Dock",
-  "Glebe", "Granville", "Greenacre", "Homebush", "Hornsby", "Hurstville",
-  "Kellyville", "Kingsford", "Lane Cove", "Leichhardt", "Lidcombe", "Liverpool",
-  "Macquarie Park", "Manly", "Maroubra", "Mascot", "Merrylands", "Mount Druitt",
-  "Newtown", "North Ryde", "North Sydney", "Paddington", "Parramatta", "Penrith",
-  "Randwick", "Redfern", "Rockdale", "Rose Bay", "Ryde", "St Leonards",
-  "Strathfield", "Surry Hills", "Ultimo", "Wetherill Park", "Woollahra",
-  "Zetland"
-].sort();
-
 
   const carNames = ["5 Seater", "7 Seater", "9 Seater"];
-
-  const getPlaces = (city) => {
-    if (city === "Canberra") return canberraPlaces;
-    if (city === "Sydney") return sydneyPlaces;
-    return [];
-  };
-
   const today = new Date().toISOString().split("T")[0];
-  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
-    .toISOString()
-    .split("T")[0];
+  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
 
   const generateTimeOptions = () => {
     const times = [];
@@ -104,263 +71,134 @@ const sydneyPlaces = [
     }
     return times;
   };
+
   const timeOptions = generateTimeOptions();
 
   return (
-    <div ref={ref} className="w-full py-16 bg-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-yellow-500 mb-4">
-            Book Your Ride with Ease
-          </h2>
-          <p className="text-xl text-gray-700 mb-8">
-            Fill out the essentials below, and we'll handle the rest!
-          </p>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      className="min-h-screen bg-gradient-to-br from-yellow-50 to-white flex items-center justify-center px-4 py-8"
+    >
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white w-full max-w-4xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-6 sm:p-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[95vh] overflow-y-auto"
+      >
+        <h2 className="col-span-1 md:col-span-2 text-3xl font-bold text-yellow-600 text-center mb-4">
+          Book Your Ride
+        </h2>
+
+        <PlacesAutocompleteInput
+          label="Pickup Address"
+          value={formData.pickAddress}
+          onChange={(val) => setFormData({ ...formData, pickAddress: val })}
+          icon={<FaMapMarkerAlt className="text-yellow-500" />}
+          highlight="yellow"
+        />
+
+        <PlacesAutocompleteInput
+          label="Drop Address"
+          value={formData.dropAddress}
+          onChange={(val) => setFormData({ ...formData, dropAddress: val })}
+          icon={<FaMapMarkerAlt className="text-blue-500" />}
+          highlight="blue"
+        />
+
+        <div className="relative">
+          <input
+            type="date"
+            id="pickupDate"
+            name="pickupDate"
+            value={formData.pickupDate}
+            onChange={handleInputChange}
+            min={today}
+            max={maxDate}
+            required
+            className="peer w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-inner focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-yellow-50/70 placeholder-transparent"
+            placeholder="Pickup Date"
+          />
+          {/* <label htmlFor="pickupDate" className="absolute left-10 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-700">
+            Pickup Date
+          </label> */}
+          <FaCalendarAlt className="absolute left-3 top-3 text-yellow-500" />
+          {dateError && <p className="text-red-500 text-sm mt-1">{dateError}</p>}
         </div>
 
-        <div className="bg-[#fdfdfd] p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl w-full max-w-2xl xl:max-w-xl mx-auto overflow-hidden">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Pickup Section */}
-            <div className="bg-yellow-50 p-4 sm:p-6 rounded-xl border border-yellow-300">
-              <h3 className="text-lg font-semibold text-yellow-700 mb-4">
-                Pickup Details
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Pickup Location */}
-                <div>
-                  <label
-                    htmlFor="pickLocation"
-                    className="block text-sm font-semibold text-gray-700 mb-1"
-                  >
-                    Pickup Location
-                  </label>
-                  <div className="relative">
-                    <FaMapMarkerAlt className="absolute left-3 top-3 text-yellow-500" />
-                    <select
-                      id="pickLocation"
-                      name="pickLocation"
-                      value={formData.pickLocation}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
-                      required
-                    >
-                      <option value="" disabled>
-                        Select Pickup City
-                      </option>
-                      {cities.map((city, i) => (
-                        <option key={i} value={city}>
-                          {city}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* Pickup Address */}
-                {formData.pickLocation && (
-                  <div>
-                    <label
-                      htmlFor="pickAddress"
-                      className="block text-sm font-semibold text-gray-700 mb-1"
-                    >
-                      Pickup Address
-                    </label>
-                    <div className="relative">
-                      <FaMapMarkerAlt className="absolute left-3 top-3 text-yellow-500" />
-                      <select
-                        id="pickAddress"
-                        name="pickAddress"
-                        value={formData.pickAddress}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
-                        required
-                      >
-                        <option value="" disabled>
-                          Select Street/Area
-                        </option>
-                        {getPlaces(formData.pickLocation).map((place, i) => (
-                          <option key={i} value={place}>
-                            {place}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                )}
-
-                {/* Pickup Date */}
-                <div>
-                  <label
-                    htmlFor="pickupDate"
-                    className="block text-sm font-semibold text-gray-700 mb-1"
-                  >
-                    Pickup Date
-                  </label>
-                  <div className="relative">
-                    <FaCalendarAlt className="absolute left-3 top-3 text-yellow-500" />
-                    <input
-                      type="date"
-                      id="pickupDate"
-                      name="pickupDate"
-                      value={formData.pickupDate}
-                      onChange={handleInputChange}
-                      min={today}
-                      max={maxDate}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
-                      required
-                    />
-                  </div>
-                  {/* Show error if date is invalid */}
-                  {dateError && (
-                    <p className="text-red-500 text-sm mt-2">{dateError}</p>
-                  )}
-                </div>
-
-                {/* Pickup Time */}
-                <div>
-                  <label
-                    htmlFor="pickupTime"
-                    className="block text-sm font-semibold text-gray-700 mb-1"
-                  >
-                    Pickup Time
-                  </label>
-                  <div className="relative">
-                    <FaClock className="absolute left-3 top-3 text-yellow-500" />
-                    <select
-                      id="pickupTime"
-                      name="pickupTime"
-                      value={formData.pickupTime}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
-                      required
-                    >
-                      <option value="" disabled>
-                        Select Time
-                      </option>
-                      {timeOptions.map((time, i) => (
-                        <option key={i} value={time}>
-                          {time}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Drop Section */}
-            <div className="bg-blue-50 p-4 sm:p-6 rounded-xl border border-blue-300">
-              <h3 className="text-lg font-semibold text-blue-700 mb-4">
-                Drop Details
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Drop Location */}
-                <div>
-                  <label
-                    htmlFor="dropLocation"
-                    className="block text-sm font-semibold text-gray-700 mb-1"
-                  >
-                    Drop Location
-                  </label>
-                  <div className="relative">
-                    <FaMapMarkerAlt className="absolute left-3 top-3 text-blue-500" />
-                    <select
-                      id="dropLocation"
-                      name="dropLocation"
-                      value={formData.dropLocation}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
-                      required
-                    >
-                      <option value="" disabled>
-                        Select Drop City
-                      </option>
-                      {cities.map((city, i) => (
-                        <option key={i} value={city}>
-                          {city}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* Drop Address */}
-                {formData.dropLocation && (
-                  <div>
-                    <label
-                      htmlFor="dropAddress"
-                      className="block text-sm font-semibold text-gray-700 mb-1"
-                    >
-                      Drop Address
-                    </label>
-                    <div className="relative">
-                      <FaMapMarkerAlt className="absolute left-3 top-3 text-blue-500" />
-                      <select
-                        id="dropAddress"
-                        name="dropAddress"
-                        value={formData.dropAddress}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
-                        required
-                      >
-                        <option value="" disabled>
-                          Select Street/Area
-                        </option>
-                        {getPlaces(formData.dropLocation).map((place, i) => (
-                          <option key={i} value={place}>
-                            {place}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Car Model */}
-            <div>
-              <label
-                htmlFor="carName"
-                className="block text-sm font-semibold text-gray-700 mb-1"
-              >
-                Car Type
-              </label>
-              <div className="relative">
-                <FaCar className="absolute left-3 top-3 text-yellow-500" />
-                <select
-                  id="carName"
-                  name="carName"
-                  value={formData.carName}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md text-base font-semibold text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 cursor-pointer"
-                  required
-                >
-                  <option value="" disabled>
-                    Select a car
-                  </option>
-                  {carNames.map((car, i) => (
-                    <option key={i} value={car}>
-                      {car}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="pt-4 flex justify-center">
-              <button
-                type="submit"
-                className="px-6 py-2 bg-yellow-500 text-black font-semibold rounded-lg shadow-md hover:shadow-xl transition hover:scale-105 duration-200 cursor-pointer"
-              >
-                Confirm Booking
-              </button>
-            </div>
-          </form>
+        <div className="relative">
+          <select
+            id="pickupTime"
+            name="pickupTime"
+            value={formData.pickupTime}
+            onChange={handleInputChange}
+            required
+            className="peer w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-inner focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-yellow-50/70"
+          >
+            <option value="" disabled hidden>Select Time</option>
+            {timeOptions.map((time, i) => (
+              <option key={i} value={time}>{time}</option>
+            ))}
+          </select>
+          {/* <label htmlFor="pickupTime" className="absolute left-10 top-2 text-gray-500 text-sm transition-all peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-700">
+            Pickup Time
+          </label> */}
+          <FaClock className="absolute left-3 top-3 text-yellow-500" />
         </div>
-      </div>
-    </div>
+
+        <div className="md:col-span-2 relative">
+          <select
+            id="carName"
+            name="carName"
+            value={formData.carName}
+            onChange={handleInputChange}
+            required
+            className="peer w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-inner focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-yellow-50/70"
+          >
+            <option value="" disabled hidden>Select a car</option>
+            {carNames.map((car, i) => (
+              <option key={i} value={car}>{car}</option>
+            ))}
+          </select>
+          {/* <label htmlFor="carName" className="absolute left-10 top-2 text-gray-500 text-sm transition-all peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-700">
+            Car Type
+          </label> */}
+          <FaCar className="absolute left-3 top-3 text-yellow-500" />
+        </div>
+
+        <div className="col-span-1 md:col-span-2 flex justify-center">
+          <motion.button
+            whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+            whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+            type="submit"
+            disabled={isSubmitting}
+            className={`px-8 py-3 ${
+              isSubmitting ? "bg-yellow-300 cursor-not-allowed" : "bg-gradient-to-r from-yellow-400 to-yellow-500"
+            } text-white font-semibold rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-300 shadow-lg shadow-yellow-300/40 transition duration-300 ease-in-out flex items-center justify-center`}
+          >
+            {isSubmitting ? (
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+            ) : (
+              "Confirm Booking"
+            )}
+          </motion.button>
+        </div>
+      </form>
+    </motion.div>
   );
 });
 

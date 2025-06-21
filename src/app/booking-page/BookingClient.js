@@ -11,9 +11,7 @@ export default function BookingClient() {
   const { user, isSignedIn } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
-  const pickLocation = searchParams.get("pickLocation");
   const pickAddress = searchParams.get("pickAddress");
-  const dropLocation = searchParams.get("dropLocation");
   const dropAddress = searchParams.get("dropAddress");
   const pickupDate = searchParams.get("pickupDate");
   const pickupTime = searchParams.get("pickupTime");
@@ -27,7 +25,6 @@ export default function BookingClient() {
     phone: "",
   });
 
-  // Prefill from Clerk user
   useEffect(() => {
     if (isSignedIn && user) {
       setFormData((prev) => ({
@@ -59,9 +56,7 @@ export default function BookingClient() {
       clientName: formData.name,
       clientEmail: formData.email,
       clientPhone: formData.phone,
-      pickLocation,
       pickAddress,
-      dropLocation,
       dropAddress,
       pickupDate,
       pickupTime,
@@ -87,7 +82,6 @@ export default function BookingClient() {
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-8">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* LEFT SIDE: Booking Summary */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,19 +94,15 @@ export default function BookingClient() {
             <tbody>
               <tr className="border-b">
                 <td className="font-semibold text-gray-900 py-2 pr-4">
-                  Pickup City:
+                  Pickup Address:
                 </td>
-                <td>
-                  {pickAddress} - {pickLocation}
-                </td>
+                <td>{pickAddress}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold text-gray-900 py-2 pr-4">
-                  Drop City:
+                  Drop Address:
                 </td>
-                <td>
-                  {dropAddress} - {dropLocation}
-                </td>
+                <td>{dropAddress}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold text-gray-900 py-2 pr-4">
@@ -139,7 +129,6 @@ export default function BookingClient() {
           </div>
         </motion.div>
 
-        {/* RIGHT SIDE: Actions */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -178,7 +167,7 @@ export default function BookingClient() {
                 </button>
 
                 <a
-                  href={`https://wa.me/+61451107931?text=Hi, I want to book a car from ${pickLocation} ${pickAddress} to ${dropLocation} ${dropAddress} on ${pickupDate} at ${pickupTime}. Car Model: ${carName}`}
+                  href={`https://wa.me/+61451107931?text=Hi, I want to book a car from ${pickAddress} to ${dropAddress} on ${pickupDate} at ${pickupTime}. Car Model: ${carName}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-green-500 hover:bg-green-400 text-white text-lg font-semibold py-3 rounded-xl text-center transition-all duration-300 shadow-lg cursor-pointer"
@@ -254,15 +243,6 @@ export default function BookingClient() {
                     "Confirm Booking"
                   )}
                 </button>
-
-                <a
-                  href={`https://wa.me/61412345678?text=Hi, I want to book a car from ${pickLocation} to ${dropLocation} on ${pickupDate} at ${pickupTime}. Car Model: ${carName}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-green-500 hover:bg-green-400 text-white text-lg font-semibold py-3 rounded-xl text-center transition-all duration-300 shadow-lg cursor-pointer"
-                >
-                  Book via WhatsApp
-                </a>
               </motion.form>
             )}
           </AnimatePresence>
