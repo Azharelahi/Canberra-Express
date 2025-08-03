@@ -63,7 +63,7 @@ const Navbar = () => {
 
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center gap-4">
-            <SignedOut>
+            {/* <SignedOut>
               <SignInButton mode="modal">
                 <button className="px-3 py-1.5 bg-yellow-500 text-white rounded-lg text-sm hover:bg-yellow-600 transition">
                   Sign In
@@ -72,7 +72,7 @@ const Navbar = () => {
             </SignedOut>
             <SignedIn>
               <UserButton afterSignOutUrl="/" />
-            </SignedIn>
+            </SignedIn> */}
 
             <button
               onClick={toggleMenu}
