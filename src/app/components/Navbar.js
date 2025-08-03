@@ -50,7 +50,7 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <SignedOut>
+            {/* <SignedOut>
               <div className="pointer-events-none select-none">
                 <SignInButton>
                   <button className="ml-4 px-4 py-2 bg-yellow-300 text-white rounded-xl opacity-50 cursor-not-allowed">
@@ -58,7 +58,7 @@ const Navbar = () => {
                   </button>
                 </SignInButton>
               </div>
-            </SignedOut>
+            </SignedOut> */}
           </div>
 
           {/* Mobile Menu */}
