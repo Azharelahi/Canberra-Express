@@ -51,14 +51,13 @@ const Navbar = () => {
             ))}
 
             <SignedOut>
-              <SignInButton>
-                <button
-                  disabled
-                  className="ml-4 px-4 py-2 bg-gray-400 text-white rounded-xl cursor-not-allowed opacity-60"
-                >
-                  Sign In
-                </button>
-              </SignInButton>
+              <div className="pointer-events-none select-none">
+                <SignInButton>
+                  <button className="ml-4 px-4 py-2 bg-yellow-300 text-white rounded-xl opacity-50 cursor-not-allowed">
+                    Sign In
+                  </button>
+                </SignInButton>
+              </div>
             </SignedOut>
           </div>
 
