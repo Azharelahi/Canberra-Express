@@ -52,14 +52,14 @@ const Navbar = () => {
 
             <SignedOut>
               <SignInButton>
-                <button className="ml-4 px-4 py-2 bg-yellow-500 text-white rounded-xl hover:bg-yellow-600 transition">
+                <button
+                  disabled
+                  className="ml-4 px-4 py-2 bg-gray-400 text-white rounded-xl cursor-not-allowed opacity-60"
+                >
                   Sign In
                 </button>
               </SignInButton>
             </SignedOut>
-            <SignedIn>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
           </div>
 
           {/* Mobile Menu */}
