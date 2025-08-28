@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Importing `Head` to inject custom scripts
 import Script from "next/script";
+import FloatingButtons from "./components/FloatingButtons";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,7 +67,10 @@ export default function RootLayout({ children }) {
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning
         >
-          <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+          <ClientLayoutWrapper>
+            {children}
+            <FloatingButtons />
+          </ClientLayoutWrapper>
         </body>
       </html>
     </ClerkProvider>
