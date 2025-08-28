@@ -19,22 +19,29 @@ const BookingForm = forwardRef((props, ref) => {
   const router = useRouter();
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
 
-    if (name === "pickupDate") {
-      const selectedDate = new Date(value);
-      const currentDate = new Date();
-      if (selectedDate < currentDate) {
-        setDateError("You cannot select a past date!");
-      } else {
-        setDateError("");
-      }
+  if (name === "pickupDate") {
+    const selectedDate = new Date(value);
+    const currentDate = new Date();
+    const today = new Date(currentDate.toDateString()); // strip time
+    const maxDate = new Date();
+    maxDate.setDate(currentDate.getDate() + 15);
+
+    if (selectedDate <= today) {
+      setDateError("Same-day and past bookings are not allowed!");
+    } else if (selectedDate > maxDate) {
+      setDateError("Bookings can only be made up to 15 days in advance!");
+    } else {
+      setDateError("");
     }
-  };
+  }
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
