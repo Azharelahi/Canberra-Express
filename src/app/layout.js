@@ -3,11 +3,10 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ClientLayoutWrapper from "./ClientLayoutWrapper";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
-// Importing `Head` to inject custom scripts
 import Script from "next/script";
 import FloatingButtons from "./components/FloatingButtons";
 
+// Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,6 +17,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Metadata
 export const metadataBase = new URL("https://www.ozlyft.com.au");
 export const metadata = {
   title: "OZLYFT – Real-Time Car Rentals in Canberra",
@@ -57,12 +57,33 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <head>
-          {/* Google Maps Script */}
+          {/* ✅ Google AdSense Site Verification */}
+          <meta
+            name="google-adsense-account"
+            content="ca-pub-8190577317299613"
+          />
+
+          {/* ✅ Google Maps Script */}
           <Script
             src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
             strategy="beforeInteractive"
           />
+
+          {/* ✅ Google AdSense Script */}
+          <Script
+            id="adsbygoogle-init"
+            strategy="afterInteractive"
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            crossOrigin="anonymous"
+          />
+          <Script id="adsbygoogle-config" strategy="afterInteractive">
+            {`(adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8190577317299613",
+              enable_page_level_ads: true
+            });`}
+          </Script>
         </head>
+
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning
