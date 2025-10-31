@@ -28,7 +28,7 @@ const BookingForm = forwardRef((props, ref) => {
   if (name === "pickupDate") {
     const selectedDate = new Date(value);
     const currentDate = new Date();
-    const today = new Date(currentDate.toDateString()); // strip time
+    const today = new Date(currentDate.toDateString()); 
     const maxDate = new Date();
     maxDate.setDate(currentDate.getDate() + 15);
 
