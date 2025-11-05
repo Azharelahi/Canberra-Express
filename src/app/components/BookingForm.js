@@ -19,29 +19,28 @@ const BookingForm = forwardRef((props, ref) => {
   const router = useRouter();
 
   const handleInputChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({
-    ...formData,
-    [name]: value,
-  });
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
 
-  if (name === "pickupDate") {
-    const selectedDate = new Date(value);
-    const currentDate = new Date();
-    const today = new Date(currentDate.toDateString()); 
-    const maxDate = new Date();
-    maxDate.setDate(currentDate.getDate() + 15);
+    if (name === "pickupDate") {
+      const selectedDate = new Date(value);
+      const currentDate = new Date();
+      const today = new Date(currentDate.toDateString());
+      const maxDate = new Date();
+      maxDate.setDate(currentDate.getDate() + 15);
 
-    if (selectedDate <= today) {
-      setDateError("Same-day and past bookings are not allowed!");
-    } else if (selectedDate > maxDate) {
-      setDateError("Bookings can only be made up to 15 days in advance!");
-    } else {
-      setDateError("");
+      if (selectedDate <= today) {
+        setDateError("Same-day and past bookings are not allowed!");
+      } else if (selectedDate > maxDate) {
+        setDateError("Bookings can only be made up to 15 days in advance!");
+      } else {
+        setDateError("");
+      }
     }
-  }
-};
-
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,8 +49,15 @@ const BookingForm = forwardRef((props, ref) => {
       return;
     }
 
-    const { pickAddress, dropAddress, pickupDate, pickupTime, carName } = formData;
-    if (!pickAddress || !dropAddress || !pickupDate || !pickupTime || !carName) {
+    const { pickAddress, dropAddress, pickupDate, pickupTime, carName } =
+      formData;
+    if (
+      !pickAddress ||
+      !dropAddress ||
+      !pickupDate ||
+      !pickupTime ||
+      !carName
+    ) {
       toast.error("Please fill in all required fields.");
       return;
     }
@@ -64,16 +70,15 @@ const BookingForm = forwardRef((props, ref) => {
     }, 1500);
   };
 
-const carNames = [
-  "Compact (Hatchback)",
-  "Standard (Sedan)",
-  "SUV (7 Seater)",
-  "Van (Family/Group)"
-];
-
+  const carNames = [
+    "Comfort Car (Sedan 5 seater)",
+    "SUV (7 Seater)",
+  ];
 
   const today = new Date().toISOString().split("T")[0];
-  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .split("T")[0];
 
   const generateTimeOptions = () => {
     const times = [];
@@ -137,7 +142,9 @@ const carNames = [
             Pickup Date
           </label> */}
           <FaCalendarAlt className="absolute left-3 top-3 text-yellow-500" />
-          {dateError && <p className="text-red-500 text-sm mt-1">{dateError}</p>}
+          {dateError && (
+            <p className="text-red-500 text-sm mt-1">{dateError}</p>
+          )}
         </div>
 
         <div className="relative">
@@ -149,9 +156,13 @@ const carNames = [
             required
             className="peer w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-inner focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-yellow-50/70"
           >
-            <option value="" disabled hidden>Select Time</option>
+            <option value="" disabled hidden>
+              Select Time
+            </option>
             {timeOptions.map((time, i) => (
-              <option key={i} value={time}>{time}</option>
+              <option key={i} value={time}>
+                {time}
+              </option>
             ))}
           </select>
           {/* <label htmlFor="pickupTime" className="absolute left-10 top-2 text-gray-500 text-sm transition-all peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-700">
@@ -169,9 +180,13 @@ const carNames = [
             required
             className="peer w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-inner focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-yellow-50/70"
           >
-            <option value="" disabled hidden>Car Type</option>
+            <option value="" disabled hidden>
+              Car Type
+            </option>
             {carNames.map((car, i) => (
-              <option key={i} value={car}>{car}</option>
+              <option key={i} value={car}>
+                {car}
+              </option>
             ))}
           </select>
           {/* <label htmlFor="carName" className="absolute left-10 top-2 text-gray-500 text-sm transition-all peer-focus:top-2 peer-focus:text-sm peer-focus:text-gray-700">
@@ -187,11 +202,18 @@ const carNames = [
             type="submit"
             disabled={isSubmitting}
             className={`px-8 py-3 ${
-              isSubmitting ? "bg-yellow-300 cursor-not-allowed" : "bg-gradient-to-r from-yellow-400 to-yellow-500"
+              isSubmitting
+                ? "bg-yellow-300 cursor-not-allowed"
+                : "bg-gradient-to-r from-yellow-400 to-yellow-500"
             } text-white font-semibold rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-300 shadow-lg shadow-yellow-300/40 transition duration-300 ease-in-out flex items-center justify-center`}
           >
             {isSubmitting ? (
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
                 <circle
                   className="opacity-25"
                   cx="12"
