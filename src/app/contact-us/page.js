@@ -105,7 +105,7 @@ export default function ContactUsPage() {
   <p className="text-lg text-gray-700 text-center leading-relaxed max-w-3xl mx-auto mb-10 px-4">
     Our team at <span className="font-semibold text-yellow-500">OZLYFT</span> is always ready to assist you — whether you need 
     help booking a ride, renting a car, or getting travel support across{" "}
-    <span className="font-semibold">Canberra, Sydney, and NSW</span>. 
+    <span className="font-semibold">Canberra, Sydney.</span>. 
     We’re committed to delivering reliable, on-time, and friendly service every day of the week.
   </p>
 

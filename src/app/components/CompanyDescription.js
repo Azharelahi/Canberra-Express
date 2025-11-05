@@ -37,8 +37,8 @@ const CompanyDescription = () => {
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed mb-6 px-4 lg:px-0">
               At <span className="font-semibold text-yellow-500">OZLYFT</span>, we make urban travel effortless with our premium{" "}
-              <span className="font-semibold">car hire and rideshare services</span> operating across{" "}
-              <span className="font-semibold">Canberra, Sydney, and NSW</span>. Whether you need a compact hatchback for quick errands or a 7-seater SUV for family trips, we offer a modern, reliable, and affordable fleet tailored to your lifestyle.
+              <span className="font-semibold">car rental and rideshare services</span> operating across{" "}
+              <span className="font-semibold">Canberra, Sydney</span>. Whether you need a compact hatchback for quick errands or a 7-seater SUV for family trips, we offer a modern, reliable, and affordable fleet tailored to your lifestyle.
             </p>
 
             <div className="flex justify-center">
@@ -83,7 +83,7 @@ const CompanyDescription = () => {
             <div className="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6 mb-6" data-aos="fade-right">
               <h3 className="text-2xl font-semibold text-yellow-500 mb-2">🚗 What We Offer</h3>
               <ul className="list-disc pl-6 text-gray-800 space-y-2">
-                <li>Instant car hire and rideshare options in Canberra, Sydney.</li>
+                <li>Instant car hire and rideshare options in Canberra, Sydney</li>
                 <li>Flexible rental durations — hourly, daily, or weekly</li>
                 <li>Wide range of vehicles: compact, sedan, SUV, and family vans</li>
                 <li>Transparent pricing with zero hidden fees</li>
@@ -97,7 +97,7 @@ const CompanyDescription = () => {
               <p className="text-gray-800">
                 OZLYFT stands out with its local expertise and customer-first approach. 
                 We don’t just provide cars — we connect communities. Whether you’re a tourist exploring Sydney, 
-                a local commuting in Canberra, or a family traveling across NSW, our rides are built 
+                a local commuting in Canberra, our rides are built 
                 for your comfort, safety, and convenience.
               </p>
             </div>

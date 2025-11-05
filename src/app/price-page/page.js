@@ -64,7 +64,7 @@ export default function PricesPage() {
   {/* Intro paragraph */}
   <p className="text-center text-gray-700 max-w-3xl mx-auto mb-14 text-lg leading-relaxed">
     Whether you’re heading to the airport, commuting across Canberra, or taking a 
-    day trip to Sydney or NSW, <span className="font-semibold text-yellow-500">OZLYFT</span> 
+    day trip to Sydney<span className="font-semibold text-yellow-500">OZLYFT</span> 
     offers a range of reliable car hire options to suit your comfort and budget.
   </p>
 
@@ -115,7 +115,7 @@ export default function PricesPage() {
 
   {/* Note */}
   <p className="text-center text-gray-600 mt-10 text-sm">
-    All prices are fixed for Canberra, Sydney, and NSW routes — no hidden fees, just book and go.
+    All prices are fixed for Canberra, Sydney routes — no hidden fees, just book and go.
   </p>
 </motion.div>
 
