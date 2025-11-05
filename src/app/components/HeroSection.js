@@ -5,7 +5,7 @@ import "animate.css";
 import { motion } from "framer-motion";
 
 const headingWords = ["Welcome", "to", "OZ", "LYFT"];
-const subText = ["Your", "trusted", "car", "rental", "service", "in", "Canberra."];
+const subText = ["Your", "Trusted", "Ride", "Share", "Service", "in", "Australia."];
 
 const HeroSection = ({ bookingFormRef }) => {
   const scrollToBookingForm = () => {

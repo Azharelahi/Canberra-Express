@@ -89,33 +89,54 @@ export default function ContactUsPage() {
         </div>
 
         {/* Office Hours */}
-        <motion.div
-          className="bg-white shadow-xl rounded-3xl p-8 mb-20 hover:shadow-yellow-400 transition-shadow duration-300"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeInUp}
-          transition={{ delay: 0.6 }}
-        >
-          <h3 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-8 text-center font-poppins drop-shadow-sm">
-            Office Hours
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            {[
-              { day: "Monday - Friday", time: "9:00 AM - 6:00 PM" },
-              { day: "Saturday", time: "10:00 AM - 4:00 PM" },
-              { day: "Sunday", time: "Closed" },
-            ].map(({ day, time }, idx) => (
-              <div key={idx}>
-                <div className="flex justify-center items-center gap-2 text-yellow-500 text-xl mb-2">
-                  <i className="fas fa-clock" />
-                  <p className="text-gray-700 font-semibold">{day}</p>
-                </div>
-                <p className="text-md text-gray-600">{time}</p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+      <motion.div
+  className="bg-white shadow-xl rounded-3xl p-10 mb-20 hover:shadow-yellow-400 transition-shadow duration-300"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  variants={fadeInUp}
+  transition={{ delay: 0.6 }}
+>
+  <h3 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-8 text-center font-poppins drop-shadow-sm">
+    Office Hours
+  </h3>
+
+  {/* Business Description */}
+  <p className="text-lg text-gray-700 text-center leading-relaxed max-w-3xl mx-auto mb-10 px-4">
+    Our team at <span className="font-semibold text-yellow-500">OZLYFT</span> is always ready to assist you — whether you need 
+    help booking a ride, renting a car, or getting travel support across{" "}
+    <span className="font-semibold">Canberra, Sydney, and NSW</span>. 
+    We’re committed to delivering reliable, on-time, and friendly service every day of the week.
+  </p>
+
+  {/* Timings */}
+  <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+    {[
+      { day: "Monday - Friday", time: "9:00 AM - 6:00 PM" },
+      { day: "Saturday", time: "10:00 AM - 4:00 PM" },
+      { day: "Sunday", time: "Closed (24/7 Online Support Available)" },
+    ].map(({ day, time }, idx) => (
+      <div
+        key={idx}
+        className="bg-yellow-50 rounded-2xl py-6 shadow-md hover:shadow-lg transition-all duration-300"
+      >
+        <div className="flex justify-center items-center gap-2 text-yellow-500 text-xl mb-2">
+          <i className="fas fa-clock" />
+          <p className="text-gray-800 font-semibold">{day}</p>
+        </div>
+        <p className="text-md text-gray-600">{time}</p>
+      </div>
+    ))}
+  </div>
+
+  {/* Support Info */}
+  <p className="text-center text-gray-600 mt-10 text-sm sm:text-base">
+    For urgent inquiries or roadside support, contact us anytime via{" "}
+    <span className="font-semibold text-yellow-500">WhatsApp or our 24/7 helpline</span>. 
+    We’re here to keep your journey smooth, safe, and stress-free.
+  </p>
+</motion.div>
+
 
         {/* Google Map */}
         <motion.div

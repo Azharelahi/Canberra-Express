@@ -44,29 +44,81 @@ export default function PricesPage() {
           </div>
         </motion.div>
 
-        {/* Our Services Section */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1.7 }}
-        >
-          <motion.h3
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl font-bold text-gray-800 mb-10 text-center font-poppins drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)]"
-          >
-            Our Services
-          </motion.h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card title="Standard Service" duration="One-Way" price="$399 (AUD)" />
-            <Card title="Premium Service" duration="One-Way" price="$750 (AUD)" />
-            <Card title="XL SUV Service" duration="One-Way" price="$750 (AUD)" />
-            <Card title="XL Van Service" duration="One-Way" price="$850 (AUD)" />
-            <Card title="XL Mini Bus Service" duration="One-Way" price="$900 (AUD)" />
-          </div>
-        </motion.div>
+      {/* Our Services Section */}
+<motion.div
+  className="mb-20"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ duration: 1.2 }}
+>
+  {/* Heading */}
+  <motion.h3
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="text-4xl font-bold text-gray-900 mb-12 text-center font-poppins drop-shadow-[0_3px_6px_rgba(0,0,0,0.2)]"
+  >
+    Our Services
+  </motion.h3>
+
+  {/* Intro paragraph */}
+  <p className="text-center text-gray-700 max-w-3xl mx-auto mb-14 text-lg leading-relaxed">
+    Whether you’re heading to the airport, commuting across Canberra, or taking a 
+    day trip to Sydney or NSW, <span className="font-semibold text-yellow-500">OZLYFT</span> 
+    offers a range of reliable car hire options to suit your comfort and budget.
+  </p>
+
+  {/* Service Cards */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      className="bg-white rounded-3xl shadow-xl p-8 text-center hover:shadow-yellow-300 transition-all duration-300"
+    >
+      <h4 className="text-2xl font-semibold text-gray-900 mb-3">Standard Service</h4>
+      <p className="text-gray-600 text-base mb-4">
+        5-seater sedan or hatchback — perfect for city rides, airport transfers, and daily travel with great comfort.
+      </p>
+      <div className="mt-4">
+        <p className="text-sm text-gray-500 font-medium">SYD - CAN</p>
+        <p className="text-xl font-bold text-yellow-500">{`$399 (AUD)`}</p>
+      </div>
+    </motion.div>
+
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      className="bg-white rounded-3xl shadow-xl p-8 text-center hover:shadow-yellow-300 transition-all duration-300"
+    >
+      <h4 className="text-2xl font-semibold text-gray-900 mb-3">Premium Service</h4>
+      <p className="text-gray-600 text-base mb-4">
+        Mid-size to large SUV with extra space, smooth ride, and top-tier comfort for business or family travel.
+      </p>
+      <div className="mt-4">
+        <p className="text-sm text-gray-500 font-medium">SYD - CAN</p>
+        <p className="text-xl font-bold text-yellow-500">{`$750 (AUD)`}</p>
+      </div>
+    </motion.div>
+
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      className="bg-white rounded-3xl shadow-xl p-8 text-center hover:shadow-yellow-300 transition-all duration-300"
+    >
+      <h4 className="text-2xl font-semibold text-gray-900 mb-3">XL SUV Service</h4>
+      <p className="text-gray-600 text-base mb-4">
+        Spacious 7-seater SUV — ideal for groups, families, or travelers with luggage who prefer room and comfort.
+      </p>
+      <div className="mt-4">
+        <p className="text-sm text-gray-500 font-medium">SYD - CAN</p>
+        <p className="text-xl font-bold text-yellow-500">{`$750 (AUD)`}</p>
+      </div>
+    </motion.div>
+  </div>
+
+  {/* Note */}
+  <p className="text-center text-gray-600 mt-10 text-sm">
+    All prices are fixed for Canberra, Sydney, and NSW routes — no hidden fees, just book and go.
+  </p>
+</motion.div>
+
 
         {/* Why Choose Us Section */}
         <motion.div
