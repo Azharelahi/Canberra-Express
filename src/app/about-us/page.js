@@ -18,7 +18,7 @@ export default function AboutUsPage() {
           transition={{ duration: 0.7 }}
           className="text-5xl font-extrabold text-gray-800 mb-10 text-center font-poppins drop-shadow-lg"
         >
-          <span className="bg-gradient-to-r from-yellow-500 to-orange-400  bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-yellow-500 to-orange-400 bg-clip-text text-transparent">
             About Us
           </span>
         </motion.h2>
@@ -31,10 +31,10 @@ export default function AboutUsPage() {
           transition={{ duration: 1 }}
         >
           <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed shadow-sm">
-            OZLYFT is a Canberra-grown company, proudly serving the local community and beyond.
-            With over 5 years of experience in the travel industry, we’ve been committed to providing
-            reliable, safe, and comfortable transportation solutions. Now, we’re bringing our services
-            online to make booking, planning, and riding easier than ever — no matter where you are.
+            OZLYFT is Canberra’s trusted car hire service — built for locals, by locals. 
+            For over 5 years, we’ve focused on one simple idea: make it effortless to hire a car, 
+            hit the road, and go wherever life takes you. 
+            Now, with our easy online platform, you can book your ride in seconds and start your journey right away.
           </p>
         </motion.div>
 
@@ -61,9 +61,10 @@ export default function AboutUsPage() {
                 Our Roots
               </h4>
               <p className="text-gray-600 text-lg text-center leading-relaxed">
-                OZLYFT was born in Canberra with a mission to make travel affordable and comfortable
-                for everyone. From our very first trip, we’ve focused on delivering quality rides and
-                personalized service that keeps people coming back.
+                Born in Canberra, OZLYFT began with a vision to make car hire fast, flexible, 
+                and completely hassle-free. 
+                From our very first day, we’ve focused on delivering clean, well-maintained cars 
+                and friendly local support — so you can just book and go.
               </p>
             </motion.div>
 
@@ -79,9 +80,10 @@ export default function AboutUsPage() {
                 Our Growth
               </h4>
               <p className="text-gray-600 text-lg text-center leading-relaxed">
-                Over the years, OZLYFT has become a trusted name across the region.
-                With growing demand and loyal customers, we’ve taken our platform online — so you
-                can book your next trip with just a few clicks.
+                As word spread, OZLYFT became a local favourite for quick and reliable car hire. 
+                Today, we’re proud to serve individuals, families, and professionals 
+                across Canberra — offering instant online booking, transparent pricing, 
+                and a ride-ready fleet that fits every need.
               </p>
             </motion.div>
           </div>
@@ -100,16 +102,16 @@ export default function AboutUsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Affordable Travel",
-                desc: "Competitive prices and seamless travel experiences, designed for comfort and reliability.",
+                title: "Quick Booking",
+                desc: "Choose your car, set your time, and confirm in seconds — no long forms or waiting around.",
               },
               {
-                title: "Reliable Fleet",
-                desc: "From everyday rides to premium vehicles — we maintain a top-notch fleet for every occasion.",
+                title: "Reliable Cars",
+                desc: "Every vehicle in our fleet is carefully maintained and inspected for a smooth driving experience.",
               },
               {
-                title: "Seamless Booking",
-                desc: "With our new online platform, booking is just a few clicks away — easy, fast, and secure.",
+                title: "Local Support",
+                desc: "We’re Canberra locals — ready to assist whenever you need help or guidance on the go.",
               },
             ].map((service, i) => (
               <motion.div
@@ -145,9 +147,11 @@ export default function AboutUsPage() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.9 }}
           >
-            At OZLYFT, we believe travel should be safe, affordable, and premium. As a
-            locally operated, family-rooted company, we’re committed to real customer care.
-            With over 5 years of experience, we’re here to make every ride a smooth and satisfying one.
+            OZLYFT makes car hire refreshingly simple. 
+            We don’t do complications — just reliable cars, 
+            fair prices, and instant booking. 
+            Whether it’s a quick errand or a weekend trip, 
+            you can count on us for a smooth “book and go” experience every time.
           </motion.p>
         </section>
 
@@ -159,7 +163,7 @@ export default function AboutUsPage() {
           transition={{ duration: 0.8 }}
         >
           <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-            Ready to book your next trip with us? <br />
+            Ready to hit the road? <br />
             Visit our{" "}
             <a
               href="/contact-us"
@@ -167,7 +171,7 @@ export default function AboutUsPage() {
             >
               Contact
             </a>{" "}
-            page to get in touch and learn more.
+            page to book your next car hire with ease.
           </p>
         </motion.div>
       </div>

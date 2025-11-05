@@ -64,7 +64,14 @@ const BookingForm = forwardRef((props, ref) => {
     }, 1500);
   };
 
-  const carNames = ["5 Seater", "7 Seater", "9 Seater"];
+const carNames = [
+  "Compact (Hatchback)",
+  "Standard (Sedan)",
+  "SUV (7 Seater)",
+  "Van (Family/Group)"
+];
+
+
   const today = new Date().toISOString().split("T")[0];
   const maxDate = new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
 
@@ -162,7 +169,7 @@ const BookingForm = forwardRef((props, ref) => {
             required
             className="peer w-full pl-10 pr-4 py-2 border border-gray-200 rounded-xl shadow-inner focus:ring-2 focus:ring-yellow-400 focus:outline-none bg-yellow-50/70"
           >
-            <option value="" disabled hidden>Select a car</option>
+            <option value="" disabled hidden>Car Type</option>
             {carNames.map((car, i) => (
               <option key={i} value={car}>{car}</option>
             ))}
