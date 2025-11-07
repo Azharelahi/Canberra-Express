@@ -99,7 +99,7 @@ const Footer = () => {
             </div>
             <div className="flex justify-center sm:justify-start items-center text-gray-400">
               <FaEnvelope size={20} className="mr-3" />
-              <span>canberraexpress@gmail.com</span>
+              <span>ozlyft@gmail.com</span>
             </div>
           </div>
 

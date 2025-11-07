@@ -79,7 +79,7 @@ export default function ContactUsPage() {
             <div className="flex items-center justify-center gap-3">
               <i className="fas fa-envelope text-yellow-500 text-2xl"></i>
               <a
-                href="mailto:canberraexpress@gmail.com"
+                href="mailto:ozlyft@gmail.com"
                 className="text-lg font-medium text-gray-800 hover:text-yellow-500 transition-colors duration-300"
               >
                 ozlyft@gmail.com

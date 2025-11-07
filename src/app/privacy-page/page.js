@@ -126,7 +126,7 @@ const PrivacyPolicy = () => {
           >
             You have the right to access, correct, or delete your personal
             information stored by us. If you wish to exercise any of these
-            rights, please contact us at info@canberraexpress.com.
+            rights, please contact us at ozlyft@gmail.com.
           </motion.p>
 
           {/* Section 6 */}
@@ -164,7 +164,7 @@ const PrivacyPolicy = () => {
             className="text-lg text-gray-700 mb-6"
           >
             If you have any questions about this Privacy Policy or our
-            practices, please contact us at info@canberraexpress.com.
+            practices, please contact us at ozlyft@gmail.com.
           </motion.p>
         </div>
 
