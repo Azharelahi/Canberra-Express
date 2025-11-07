@@ -27,28 +27,28 @@ const WhyChoose = () => {
       icon: <FaMoneyBillAlt size={30} />,
       title: "Affordable Rates",
       description:
-        "Get the best deals in Canberra with our competitive pricing and flexible rental options.",
+        "Get the best deals in Canberra with our competitive pricing and flexible hire options.",
     },
     {
       id: 2,
       icon: <FaHeadset size={30} />,
       title: "24/7 Customer Support",
       description:
-        "Our dedicated team is available anytime to help with your rental needs, ensuring a seamless experience.",
+        "Our dedicated team is available anytime to help with your travel needs, ensuring a seamless experience.",
     },
     {
       id: 3,
       icon: <FaShieldAlt size={30} />,
       title: "Fully Insured Rentals",
       description:
-        "All of our rentals come fully insured, giving you peace of mind on your travels around Canberra.",
+        "All of our vehicles come fully insured, giving you peace of mind on your travels around Canberra.",
     },
     {
       id: 4,
       icon: <FaStar size={30} />,
       title: "Trusted by Locals & Tourists",
       description:
-        "Join hundreds of satisfied customers who trust us for their car rental needs, both local and visiting travelers.",
+        "Join hundreds of satisfied customers who trust us for their car hire needs, both local and visiting travelers.",
     },
   ];
 
