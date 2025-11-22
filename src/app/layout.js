@@ -5,7 +5,7 @@ import ClientLayoutWrapper from "./ClientLayoutWrapper";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Script from "next/script";
 import FloatingButtons from "./components/FloatingButtons";
-
+import GoogleAnalytics from "./GoogleAnalytics";
 // Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,9 +23,7 @@ export const metadata = {
   title: "OZLYFT – Real-Time Car Rentals in Canberra",
   description:
     "Experience hassle-free car rentals in Canberra with OZLYFT. Book rides instantly like Uber or InDrive.",
-  icons: {
-    icon: "/favicon.png",
-  },
+  icons: { icon: "/favicon.png" },
   openGraph: {
     title: "OZLYFT – Real-Time Car Rentals in Canberra",
     description:
@@ -82,12 +80,27 @@ export default function RootLayout({ children }) {
               enable_page_level_ads: true
             });`}
           </Script>
+
+          {/* ✅ Google Tag (Analytics) */}
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-2ZGD8PL18G"
+            strategy="afterInteractive"
+          />
+          <Script id="google-gtag" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-2ZGD8PL18G');
+            `}
+          </Script>
         </head>
 
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning
         >
+          <GoogleAnalytics />
           <ClientLayoutWrapper>
             {children}
             <FloatingButtons />
