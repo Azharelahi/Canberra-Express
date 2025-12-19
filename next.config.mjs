@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ["lh3.googleusercontent.com"],
+  },
+  // any other Next.js options
+};
 
 export default nextConfig;

@@ -224,7 +224,7 @@ function Card({ title, duration, route, price }) {
       <h4 className="text-2xl font-semibold text-gray-700 mb-2">{title}</h4>
       {duration && <p className="text-gray-600">{duration}</p>}
       {route && <p className="text-gray-600">{route}</p>}
-      <p className="text-3xl font-bold text-yellow-500 mt-4">{price}</p>
+      <div className="text-3xl font-bold text-yellow-500 mt-4">{price}</div>
     </motion.div>
   );
 }

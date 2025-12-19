@@ -4,11 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-
+import {signIn,signOut,useSession} from "next-auth/react"
+import Image from "next/image";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const {data:session,status}=useSession();
   const pathname = usePathname();
 
   const navLinks = [
@@ -36,43 +37,66 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6 items-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-black font-medium transition duration-300 transform hover:text-yellow-500 hover:scale-105 ${
-                  pathname === link.href ? "text-yellow-500" : ""
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+         
+         {/* Desktop Menu */}
+<div className="hidden md:flex space-x-6 items-center">
+  {navLinks.map((link) => (
+    <Link
+      key={link.name}
+      href={link.href}
+      className={`text-black font-medium transition duration-300 transform hover:text-yellow-500 hover:scale-105 ${
+        pathname === link.href ? "text-yellow-500" : ""
+      }`}
+    >
+      {link.name}
+    </Link>
+  ))}
 
-            {/* <SignedOut>
-              <div className="pointer-events-none select-none">
-                <SignInButton>
-                  <button className="ml-4 px-4 py-2 bg-yellow-300 text-white rounded-xl opacity-50 cursor-not-allowed">
-                    Sign In
-                  </button>
-                </SignInButton>
-              </div>
-            </SignedOut> */}
-          </div>
+  {/* AUTH BUTTON */}
+  {status !== "loading" && (
+    session?.user ? (
+      <button onClick={() => signOut()} className="ml-4">
+        <Image
+          src={session.user.image || "/avatar.png"}
+          alt="User"
+          width={36}
+          height={36}
+          className="rounded-full border border-yellow-500"
+        />
+      </button>
+    ) : (
+      <button
+        onClick={() => signIn("google")}
+        className="ml-4 p-2 rounded-full hover:bg-yellow-100 transition"
+        aria-label="Sign in with Google"
+      >
+<img src="/assets/google.jpg" alt="Google" width={22} height={22} style={{cursor:"pointer"}} />
+      </button>
+    )
+  )}
+</div>
+
 
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center gap-4">
-            {/* <SignedOut>
-              <SignInButton mode="modal">
-                <button className="px-3 py-1.5 bg-yellow-500 text-white rounded-lg text-sm hover:bg-yellow-600 transition">
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn> */}
+         {status !== "loading" && (
+  session?.user ? (
+    <button onClick={() => signOut()}>
+      <Image
+        src={session.user.image || "/avatar.png"}
+        alt="User"
+        width={32}
+        height={32}
+        className="rounded-full"
+      />
+    </button>
+  ) : (
+    <button onClick={() => signIn("google")}>
+      <img src="/google.svg" alt="Google" width={20} height={20} />
+    </button>
+  )
+)}
+
 
             <button
               onClick={toggleMenu}
