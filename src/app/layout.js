@@ -3,7 +3,12 @@ import "./globals.css";
 import Providers from "./../lib/Provider.jsx";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Script from "next/script";
+import FloatingButtons from "./components/FloatingButtons";
+import GoogleAnalytics from "./GoogleAnalytics";
+import ClientLayoutWrapper from "./ClientLayoutWrapper"; // make sure this is imported
+import { ClerkProvider } from "@clerk/nextjs";
 
+// Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,7 +18,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Metadata
 export const metadataBase = new URL("https://www.ozlyft.com.au");
 export const metadata = {
   title: "OZLYFT – Real-Time Car Rentals in Canberra",
@@ -40,27 +44,17 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return (
+    return (
     <html lang="en">
       <head>
-        {/* Google Ads and Maps Scripts */}
-        <meta name="google-adsense-account" content="ca-pub-8190577317299613" />
-        <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
-          strategy="beforeInteractive"
-        />
-        <Script
-          id="adsbygoogle-init"
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          crossOrigin="anonymous"
-        />
-        <Script id="adsbygoogle-config" strategy="afterInteractive">
-          {`(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: "ca-pub-8190577317299613", enable_page_level_ads: true });`}
-        </Script>
+        {/* Google Ads & Analytics Scripts */}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <Providers>{children}</Providers>
+        <GoogleAnalytics />
+        <Providers>
+          {children}
+          <FloatingButtons />
+        </Providers>
       </body>
     </html>
   );
