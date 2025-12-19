@@ -2,11 +2,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./../lib/Provider.jsx";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Script from "next/script";
+
 import FloatingButtons from "./components/FloatingButtons";
 import GoogleAnalytics from "./GoogleAnalytics";
-import ClientLayoutWrapper from "./ClientLayoutWrapper"; // make sure this is imported
-import { ClerkProvider } from "@clerk/nextjs";
+
 
 // Fonts
 const geistSans = Geist({

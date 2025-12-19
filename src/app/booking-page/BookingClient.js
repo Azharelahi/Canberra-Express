@@ -2,7 +2,6 @@
 
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
