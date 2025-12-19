@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import FloatingButtons from "./components/FloatingButtons";
 import GoogleAnalytics from "./GoogleAnalytics";
+import GoogleMapsProvider from "@/lib/GoogleMapsProvider";
 
 
 // Fonts
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
         {/* Google Ads & Analytics Scripts */}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
+        <GoogleMapsProvider/>
         <GoogleAnalytics />
         <Providers>
           {children}
