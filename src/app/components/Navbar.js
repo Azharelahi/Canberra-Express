@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const [showLoginHint, setShowLoginHint] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   const { data: session, status } = useSession();
@@ -20,6 +21,32 @@ const Navbar = () => {
   ];
 
   const getFirstName = (fullName) => fullName?.split(" ")[0] || "";
+
+const AuthButton = ({ className = "" }) => {
+  if (status === "loading") return null;
+  return session?.user ? (
+    <button
+      onClick={() => signOut()}
+      className={`px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 font-semibold rounded-xl sm:rounded-2xl
+                 bg-[#FFF7E8] text-yellow-600 border border-yellow-400/40 shadow-md shadow-yellow-400/20
+                 hover:-translate-y-0.5 hover:scale-[1.04] hover:shadow-xl hover:shadow-yellow-400/40
+                 active:scale-[0.95] transition-all duration-300 ${className}`}
+    >
+      {getFirstName(session.user.name)}
+    </button>
+  ) : (
+    <button
+      onClick={() => signIn("google")}
+      className={`px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 font-semibold rounded-xl sm:rounded-2xl
+                 bg-[#FFF7E8] text-yellow-600 border border-yellow-400/40 shadow-md shadow-yellow-400/20
+                 hover:-translate-y-0.5 hover:scale-[1.04] hover:shadow-xl hover:shadow-yellow-400/40
+                 active:scale-[0.95] transition-all duration-300 ${className}`}
+    >
+      Sign In
+    </button>
+  );
+};
+
 
   return (
     <nav className="bg-cream-white shadow-md sticky top-0 z-50 w-full">
@@ -51,106 +78,12 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-
-            {/* AUTH BUTTON */}
-            {status !== "loading" &&
-              (session?.user ? (
-                <button
-                  onClick={() => signOut()}
-                  className="ml-4 px-5 py-2 font-semibold rounded-xl text-white bg-yellow-400 bg-opacity-30 backdrop-blur-sm shadow-lg hover:shadow-2xl hover:bg-yellow-400 hover:bg-opacity-40 transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  {getFirstName(session.user.name)}
-                </button>
-              ) : (
-                <button
-                  onClick={() => signIn("google")}
-                  className="ml-4 px-5 py-2 font-semibold rounded-xl text-white bg-yellow-400 bg-opacity-30 backdrop-blur-sm shadow-lg hover:shadow-2xl hover:bg-yellow-400 hover:bg-opacity-40 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
-                >
-                  Sign In
-                </button>
-              ))}
+            <AuthButton className="ml-4" />
           </div>
 
           {/* Mobile Menu */}
-          <div className="md:hidden flex items-center gap-4">
-            {status !== "loading" &&
-              (session?.user ? (
-                <button
-                  onClick={() => signOut()}
-                  className="px-4 py-2 font-medium rounded-xl text-white bg-yellow-400 bg-opacity-30 backdrop-blur-sm shadow-md hover:shadow-lg hover:bg-opacity-40 transition-all duration-300 cursor-pointer"
-                >
-                  {getFirstName(session.user.name)}
-                </button>
-              ) : (
-       <button
-  onClick={() => signIn("google")}
-  className="
-    group relative overflow-hidden
-    ml-4 px-7 py-2.5 rounded-2xl
-    font-semibold tracking-wide
-
-    bg-[#FFF7E8]
-    text-yellow-600
-
-    border border-yellow-400/40
-    shadow-md shadow-yellow-400/20
-
-    transition-all duration-300 ease-out
-    hover:-translate-y-1 hover:scale-[1.04]
-    hover:shadow-xl hover:shadow-yellow-400/40
-
-    active:scale-[0.96]
-
-    focus-visible:outline-none
-    focus-visible:ring-2 focus-visible:ring-yellow-400/60
-
-    cursor-pointer
-  "
->
-  {/* diagonal motion sweep */}
-  <span
-    className="
-      pointer-events-none absolute inset-0
-      bg-gradient-to-tr from-transparent via-yellow-300/30 to-transparent
-      translate-x-[-120%] translate-y-[120%]
-      group-hover:translate-x-[120%] group-hover:translate-y-[-120%]
-      transition-transform duration-700 ease-out
-    "
-  />
-
-  {/* glow trail */}
-  <span
-    className="
-      pointer-events-none absolute inset-0 rounded-2xl
-      opacity-0 group-hover:opacity-100
-      bg-yellow-400/10
-      transition-opacity duration-300
-    "
-  />
-
-  {/* content */}
-  <span className="relative z-10 flex items-center gap-2">
-    <span className="transition-colors duration-300 group-hover:text-yellow-700">
-      Sign In
-    </span>
-
-    {/* arrow motion */}
-    <span
-      className="
-        inline-block transform
-        transition-transform duration-300
-        group-hover:translate-x-1
-      "
-    >
-      →
-    </span>
-  </span>
-</button>
-
-
-
-
-              ))}
+          <div className="md:hidden flex items-center gap-2">
+            <AuthButton />
             <button
               onClick={toggleMenu}
               className="text-black focus:outline-none z-[60]"
@@ -163,9 +96,9 @@ const Navbar = () => {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-[70%] bg-white/30 backdrop-blur-lg shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-[70%] bg-white/30 backdrop-blur-lg shadow-lg z-40 transform transition-transform duration-300 ease-in-out flex flex-col items-start p-8 space-y-6 ${
           isOpen ? "translate-x-0" : "translate-x-full"
-        } flex flex-col items-start p-8 space-y-6`}
+        }`}
       >
         {navLinks.map((link) => (
           <Link
