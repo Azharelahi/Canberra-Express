@@ -1,4 +1,4 @@
-import BookingClient from "./BookingClient";
+import BookingClient from "./BookingClient.js";
 import { Suspense } from "react";
 
 export default function BookingPage() {
@@ -8,7 +8,7 @@ export default function BookingPage() {
         <div className="p-10 text-center">Loading booking details...</div>
       }
     >
-      <BookingClient />
+      <BookingClient/>
     </Suspense>
   );
 }

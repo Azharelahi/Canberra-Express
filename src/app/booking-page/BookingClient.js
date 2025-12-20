@@ -7,7 +7,6 @@ import axios from "axios";
 
 export default function BookingClient() {
   const searchParams = useSearchParams();
-  const { user, isSignedIn } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const pickAddress = searchParams.get("pickAddress");
@@ -24,20 +23,15 @@ export default function BookingClient() {
     phone: "",
   });
 
+  // Load saved data from localStorage on mount
   useEffect(() => {
-    if (isSignedIn && user) {
-      setFormData((prev) => ({
-        ...prev,
-        name: user.fullName || "",
-        email: user.emailAddresses?.[0]?.emailAddress || "",
-        phone: user.phoneNumbers?.[0]?.phoneNumber || "",
-      }));
-    } else {
-      const saved = localStorage.getItem("bookingUserInfo");
-      if (saved) setFormData(JSON.parse(saved));
+    const saved = localStorage.getItem("bookingUserInfo");
+    if (saved) {
+      setFormData(JSON.parse(saved));
     }
-  }, [isSignedIn, user]);
+  }, []);
 
+  // Save to localStorage whenever formData changes
   useEffect(() => {
     localStorage.setItem("bookingUserInfo", JSON.stringify(formData));
   }, [formData]);
@@ -188,6 +182,7 @@ export default function BookingClient() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your Name"
+                  required
                   className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 font-semibold shadow-md"
                 />
                 <input
@@ -196,6 +191,7 @@ export default function BookingClient() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Your Email"
+                  required
                   className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 font-semibold shadow-md"
                 />
                 <input
@@ -204,6 +200,7 @@ export default function BookingClient() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="Your Phone"
+                  required
                   className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 font-semibold shadow-md"
                 />
 
