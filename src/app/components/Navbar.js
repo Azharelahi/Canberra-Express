@@ -82,17 +82,53 @@ const Navbar = () => {
                   {getFirstName(session.user.name)}
                 </button>
               ) : (
-           <button
+          <button
   onClick={() => signIn("google")}
-  className="ml-4 px-6 py-2 font-semibold rounded-2xl text-white
-             bg-yellow-400/25 backdrop-blur-lg border border-white/30
-             shadow-lg shadow-yellow-400/40
-             hover:shadow-xl hover:shadow-yellow-400/50
-             hover:bg-yellow-400/40 transition-all duration-300
-             transform hover:-translate-y-1 cursor-pointer"
+  className="
+    relative overflow-hidden
+    ml-4 px-7 py-2.5 rounded-2xl
+    font-semibold text-white tracking-wide
+
+    bg-gradient-to-r from-yellow-400/30 via-yellow-300/40 to-yellow-400/30
+    backdrop-blur-xl border border-white/30
+
+    shadow-lg shadow-yellow-400/40
+    transition-all duration-300 ease-out
+
+    hover:shadow-xl hover:shadow-yellow-400/60
+    hover:-translate-y-1 hover:scale-[1.03]
+
+    active:scale-[0.97] active:translate-y-0
+
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-yellow-400/60
+
+    cursor-pointer
+  "
 >
-  Sign In
+  {/* shimmer layer */}
+  <span
+    className="
+      pointer-events-none absolute inset-0
+      bg-gradient-to-r from-transparent via-white/30 to-transparent
+      translate-x-[-100%]
+      hover:translate-x-[100%]
+      transition-transform duration-700 ease-in-out
+    "
+  />
+
+  {/* glow pulse */}
+  <span
+    className="
+      pointer-events-none absolute inset-0 rounded-2xl
+      animate-pulse bg-yellow-400/10
+    "
+  />
+
+  {/* text */}
+  <span className="relative z-10">Sign In</span>
 </button>
+
 
               ))}
             <button
