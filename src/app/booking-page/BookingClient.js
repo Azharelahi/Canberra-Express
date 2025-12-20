@@ -4,9 +4,11 @@ import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { useSession } from "next-auth/react"; // Import NextAuth hook
 
 export default function BookingClient() {
   const searchParams = useSearchParams();
+  const { data: session, status } = useSession(); // Get session data
   const [isLoading, setIsLoading] = useState(false);
 
   const pickAddress = searchParams.get("pickAddress");
@@ -23,18 +25,33 @@ export default function BookingClient() {
     phone: "",
   });
 
-  // Load saved data from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem("bookingUserInfo");
-    if (saved) {
-      setFormData(JSON.parse(saved));
-    }
-  }, []);
+  // Check if user is logged in
+  const isLoggedIn = status === "authenticated" && session?.user;
 
-  // Save to localStorage whenever formData changes
+  // Auto-fill form data based on session or localStorage
   useEffect(() => {
-    localStorage.setItem("bookingUserInfo", JSON.stringify(formData));
-  }, [formData]);
+    if (isLoggedIn) {
+      // If user is logged in, pre-fill from session
+      setFormData({
+        name: session.user.name || "",
+        email: session.user.email || "",
+        phone: "", // Phone still needs to be entered
+      });
+    } else {
+      // If not logged in, try to load from localStorage
+      const saved = localStorage.getItem("bookingUserInfo");
+      if (saved) {
+        setFormData(JSON.parse(saved));
+      }
+    }
+  }, [isLoggedIn, session]);
+
+  // Save to localStorage only if user is not logged in
+  useEffect(() => {
+    if (!isLoggedIn) {
+      localStorage.setItem("bookingUserInfo", JSON.stringify(formData));
+    }
+  }, [formData, isLoggedIn]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,7 +80,14 @@ export default function BookingClient() {
         { headers: { "Content-Type": "application/json" } }
       );
       console.log("Success:", res.data);
-      setFormData({ name: "", email: "", phone: "" });
+      
+      // Clear phone but keep name/email if logged in
+      if (isLoggedIn) {
+        setFormData((prev) => ({ ...prev, phone: "" }));
+      } else {
+        setFormData({ name: "", email: "", phone: "" });
+      }
+      
       setIsSubmitted(true);
     } catch (err) {
       console.error("Error:", err.response?.data || err.message);
@@ -176,30 +200,68 @@ export default function BookingClient() {
                 className="flex flex-col gap-4 mt-4"
                 onSubmit={handleSubmit}
               >
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your Name"
-                  required
-                  className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 font-semibold shadow-md"
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Your Email"
-                  required
-                  className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 font-semibold shadow-md"
-                />
+                {/* Show logged in status */}
+                {isLoggedIn && (
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-2">
+                    <p className="text-sm text-green-700 font-medium">
+                      ✓ Logged in as {session.user.name}
+                    </p>
+                  </div>
+                )}
+
+                {/* Name Input - Disabled if logged in */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Name"
+                    required
+                    disabled={isLoggedIn}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all font-semibold shadow-md ${
+                      isLoggedIn
+                        ? "border-gray-300 bg-gray-100 text-gray-600 cursor-not-allowed"
+                        : "border-yellow-500 focus:ring-yellow-500 text-gray-800"
+                    }`}
+                  />
+                  {isLoggedIn && (
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+                      🔒
+                    </span>
+                  )}
+                </div>
+
+                {/* Email Input - Disabled if logged in */}
+                <div className="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Your Email"
+                    required
+                    disabled={isLoggedIn}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all font-semibold shadow-md ${
+                      isLoggedIn
+                        ? "border-gray-300 bg-gray-100 text-gray-600 cursor-not-allowed"
+                        : "border-yellow-500 focus:ring-yellow-500 text-gray-800"
+                    }`}
+                  />
+                  {isLoggedIn && (
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+                      🔒
+                    </span>
+                  )}
+                </div>
+
+                {/* Phone Input - Always editable */}
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="Your Phone"
+                  placeholder="Your Phone Number"
                   required
                   className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-gray-800 font-semibold shadow-md"
                 />
