@@ -82,23 +82,24 @@ const Navbar = () => {
                   {getFirstName(session.user.name)}
                 </button>
               ) : (
-          <button
+       <button
   onClick={() => signIn("google")}
   className="
-    relative overflow-hidden
+    group relative overflow-hidden
     ml-4 px-7 py-2.5 rounded-2xl
-    font-semibold text-white tracking-wide
+    font-semibold tracking-wide
 
-    bg-gradient-to-r from-yellow-400/30 via-yellow-300/40 to-yellow-400/30
-    backdrop-blur-xl border border-white/30
+    bg-[#FFF7E8]
+    text-yellow-600
 
-    shadow-lg shadow-yellow-400/40
+    border border-yellow-400/40
+    shadow-md shadow-yellow-400/20
+
     transition-all duration-300 ease-out
+    hover:-translate-y-1 hover:scale-[1.04]
+    hover:shadow-xl hover:shadow-yellow-400/40
 
-    hover:shadow-xl hover:shadow-yellow-400/60
-    hover:-translate-y-1 hover:scale-[1.03]
-
-    active:scale-[0.97] active:translate-y-0
+    active:scale-[0.96]
 
     focus-visible:outline-none
     focus-visible:ring-2 focus-visible:ring-yellow-400/60
@@ -106,28 +107,47 @@ const Navbar = () => {
     cursor-pointer
   "
 >
-  {/* shimmer layer */}
+  {/* diagonal motion sweep */}
   <span
     className="
       pointer-events-none absolute inset-0
-      bg-gradient-to-r from-transparent via-white/30 to-transparent
-      translate-x-[-100%]
-      hover:translate-x-[100%]
-      transition-transform duration-700 ease-in-out
+      bg-gradient-to-tr from-transparent via-yellow-300/30 to-transparent
+      translate-x-[-120%] translate-y-[120%]
+      group-hover:translate-x-[120%] group-hover:translate-y-[-120%]
+      transition-transform duration-700 ease-out
     "
   />
 
-  {/* glow pulse */}
+  {/* glow trail */}
   <span
     className="
       pointer-events-none absolute inset-0 rounded-2xl
-      animate-pulse bg-yellow-400/10
+      opacity-0 group-hover:opacity-100
+      bg-yellow-400/10
+      transition-opacity duration-300
     "
   />
 
-  {/* text */}
-  <span className="relative z-10">Sign In</span>
+  {/* content */}
+  <span className="relative z-10 flex items-center gap-2">
+    <span className="transition-colors duration-300 group-hover:text-yellow-700">
+      Sign In
+    </span>
+
+    {/* arrow motion */}
+    <span
+      className="
+        inline-block transform
+        transition-transform duration-300
+        group-hover:translate-x-1
+      "
+    >
+      →
+    </span>
+  </span>
 </button>
+
+
 
 
               ))}
