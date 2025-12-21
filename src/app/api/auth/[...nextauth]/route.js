@@ -12,7 +12,7 @@ const handler = NextAuth({
     async signIn({ user }) {
       try {
         // Send user info to backend
-        const response = await fetch("http://localhost:8080/v1/user/login", {
+        const response = await fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: user.name, email: user.email }),
