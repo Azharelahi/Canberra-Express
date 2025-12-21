@@ -31,7 +31,7 @@ const handler = NextAuth({
     async session({ session }) {
       // Here you fetch the backend JWT for this user
       try {
-        const response = await fetch("http://localhost:8080/v1/user/login-jwt", {
+        const response = await fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login-jwt", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: session.user.email }),
