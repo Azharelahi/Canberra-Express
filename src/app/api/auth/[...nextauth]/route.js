@@ -10,13 +10,41 @@ const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      console.log("User signed in:", user); // just log info
-      return true; // allow login
+      try {
+        // Send user info to backend
+        const response = await fetch("http://localhost:8080/v1/user/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: user.name, email: user.email }),
+        });
+
+        const data = await response.json();
+        console.log("Backend response:", data);
+
+        return true;
+      } catch (err) {
+        console.error("Error sending user to backend:", err);
+        return false;
+      }
     },
+
     async session({ session }) {
-      return session; // make session available
+      // Here you fetch the backend JWT for this user
+      try {
+        const response = await fetch("http://localhost:8080/v1/user/login-jwt", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: session.user.email }),
+        });
+        const data = await response.json();
+        session.jwt = data.token; // attach backend JWT to session
+      } catch (err) {
+        console.error("Failed to get backend JWT:", err);
+      }
+
+      return session;
     },
   },
 });
 
-export { handler as GET, handler as POST }; // App Router requirement
+export { handler as GET, handler as POST };
