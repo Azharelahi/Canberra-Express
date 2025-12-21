@@ -8,42 +8,76 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+
+  // Enable JWT session
+  session: {
+    strategy: "jwt",
+  },
+
   callbacks: {
+    /**
+     * Fires when user successfully signs in with Google
+     * We send user info to backend asynchronously (fire-and-forget)
+     */
     async signIn({ user }) {
       try {
-        // Send user info to backend
-        const response = await fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login", {
+        // Fire-and-forget: don't await to avoid Vercel timeout
+        fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: user.name, email: user.email }),
-        });
+        }).catch(console.error);
 
-        const data = await response.json();
-        console.log("Backend response:", data);
-
-        return true;
+        return true; // allow login
       } catch (err) {
         console.error("Error sending user to backend:", err);
         return false;
       }
     },
 
-    async session({ session }) {
-      // Here you fetch the backend JWT for this user
+    /**
+     * Called whenever a session is checked/created.
+     * Fetch backend JWT asynchronously and attach to session
+     */
+    async session({ session, token }) {
       try {
-        const response = await fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login-jwt", {
+        // Fire-and-forget fetch
+        fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login-jwt", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: session.user.email }),
-        });
-        const data = await response.json();
-        session.jwt = data.token; // attach backend JWT to session
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data?.token) {
+              session.jwt = data.token; // attach backend JWT
+            }
+          })
+          .catch(console.error);
+
+        return session;
       } catch (err) {
         console.error("Failed to get backend JWT:", err);
+        return session;
       }
-
-      return session;
     },
+
+    /**
+     * JWT callback ensures token persists across requests
+     */
+    async jwt({ token, user }) {
+      if (user) {
+        token.email = user.email;
+        token.name = user.name;
+      }
+      return token;
+    },
+  },
+
+  // Optional: custom pages
+  pages: {
+    signIn: "/auth/signin",
+    error: "/auth/error",
   },
 });
 
