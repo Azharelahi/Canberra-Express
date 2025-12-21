@@ -2,12 +2,20 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-  ],
+providers: [
+  GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    authorization: {
+      params: {
+        prompt: "consent",       // forces Google to show consent screen every time
+        access_type: "offline",   // optional: allows refresh token
+        response_type: "code",    // required for offline access
+      },
+    },
+  }),
+],
+
 
   // Enable JWT session
   session: {
