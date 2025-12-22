@@ -30,7 +30,7 @@ providers: [
     async signIn({ user }) {
       try {
         // Fire-and-forget: don't await to avoid Vercel timeout
-        fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login", {
+        fetch("http://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: user.name, email: user.email }),
@@ -50,7 +50,7 @@ providers: [
     async session({ session, token }) {
       try {
         // Fire-and-forget fetch
-        fetch("https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login-jwt", {
+        fetch("http://canberra-express-backend-git-main-azharelahis-projects.vercel.app/v1/user/login-jwt", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: session.user.email }),
