@@ -58,43 +58,52 @@ export default function BookingClient() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-    const bookingData = {
-      clientName: formData.name,
-      clientEmail: formData.email,
-      clientPhone: formData.phone,
-      pickAddress,
-      dropAddress,
-      pickupDate,
-      pickupTime,
-      carName,
-    };
-
-    try {
-      const res = await axios.post(
-        "https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/send-booking-email",
-        bookingData,
-        { headers: { "Content-Type": "application/json" } }
-      );
-      console.log("Success:", res.data);
-      
-      // Clear phone but keep name/email if logged in
-      if (isLoggedIn) {
-        setFormData((prev) => ({ ...prev, phone: "" }));
-      } else {
-        setFormData({ name: "", email: "", phone: "" });
-      }
-      
-      setIsSubmitted(true);
-    } catch (err) {
-      console.error("Error:", err.response?.data || err.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const bookingData = {
+    clientName: formData.name,
+    clientEmail: formData.email,
+    clientPhone: formData.phone,
+    pickAddress,
+    dropAddress,
+    pickupDate,
+    pickupTime,
+    carName,
   };
+
+  try {
+    const res = await axios.post(
+      "https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/send-booking-email",
+      bookingData,
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log("Success:", res.data);
+
+    // --- FACEBOOK PIXEL PURCHASE EVENT ---
+    // Make sure the booking amount comes from backend response
+    if (typeof window !== "undefined" && window.fbTrackBooking) {
+      // If your backend returns the amount as res.data.amount
+      const bookingAmount = res.data.amount || 50; // default 50 AUD if not returned
+      window.fbTrackBooking(bookingAmount);
+    }
+    // -------------------------------------
+
+    // Clear phone but keep name/email if logged in
+    if (isLoggedIn) {
+      setFormData((prev) => ({ ...prev, phone: "" }));
+    } else {
+      setFormData({ name: "", email: "", phone: "" });
+    }
+
+    setIsSubmitted(true);
+  } catch (err) {
+    console.error("Error:", err.response?.data || err.message);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-8">
