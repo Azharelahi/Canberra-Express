@@ -2,11 +2,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "./../lib/Provider.jsx";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import dynamic from "next/dynamic";
 
 import FloatingButtons from "./components/FloatingButtons";
 import GoogleAnalytics from "./GoogleAnalytics";
 import GoogleMapsProvider from "@/lib/GoogleMapsProvider";
-const FacebookPixels = dynamic(() => import('../components/FacebookPixels'),);
+const FacebookPixels = dynamic(() => import('./../../components/FacebookPixels'),);
 
 // Fonts
 const geistSans = Geist({
