@@ -18,29 +18,33 @@ const BookingForm = forwardRef((props, ref) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setFormData({
+    ...formData,
+    [name]: value,
+  });
 
-    if (name === "pickupDate") {
-      const selectedDate = new Date(value);
-      const currentDate = new Date();
-      const today = new Date(currentDate.toDateString());
-      const maxDate = new Date();
-      maxDate.setDate(currentDate.getDate() + 15);
+  if (name === "pickupDate") {
+    // Parse as local date parts to avoid UTC vs local timezone mismatch
+    const [year, month, day] = value.split("-").map(Number);
+    const selectedDate = new Date(year, month - 1, day); // local midnight
 
-      if (selectedDate <= today) {
-        setDateError("Same-day and past bookings are not allowed!");
-      } else if (selectedDate > maxDate) {
-        setDateError("Bookings can only be made up to 15 days in advance!");
-      } else {
-        setDateError("");
-      }
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // local midnight
+
+    const maxDate = new Date(today);
+    maxDate.setDate(today.getDate() + 15);
+
+    if (selectedDate <= today) {
+      setDateError("Same-day and past bookings are not allowed!");
+    } else if (selectedDate > maxDate) {
+      setDateError("Bookings can only be made up to 15 days in advance!");
+    } else {
+      setDateError("");
     }
-  };
+  }
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
