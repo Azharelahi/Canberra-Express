@@ -54,6 +54,7 @@ const HeroSection = ({ bookingFormRef }) => {
         </p>
 
        <button
+       
   onClick={scrollToBookingForm}
   className="cursor-pointer animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 
              bg-yellow-400 text-black font-semibold rounded-xl transition-all duration-300
