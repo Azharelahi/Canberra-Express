@@ -4,6 +4,7 @@ import Providers from "./../lib/Provider.jsx";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import FloatingButtons from "@/components/layout/FloatingButtons";
+import { Analytics } from "@vercel/analytics/next";
 
 // Fonts
 const geistSans = Geist({
@@ -47,6 +48,7 @@ export default function RootLayout({ children }) {
         <Providers>
           {children}
           <FloatingButtons />
+          <Analytics />
         </Providers>
       </body>
     </html>
