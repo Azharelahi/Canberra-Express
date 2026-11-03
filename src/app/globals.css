@@ -698,8 +698,13 @@ input:focus,select:focus { border-color: #b18b00; }
 @media (max-width: 640px) { .benefits-heading { margin-bottom: 1.5rem; }.benefits-heading h2 { margin-top: 1rem; font-size: clamp(2rem,9vw,3rem); }.benefits-heading-rule { margin-top: 1rem; } }
 @media (max-width: 700px) {
   .hero-shell { align-items: center; }
-  .hero-content { width: 100%; padding-block: 2rem 4.5rem; }
-  .hero-copy { margin-inline: auto; }
+  .hero-content.page-container { width: min(calc(100% - 2rem),78rem); max-width: 100%; margin-inline: auto; padding-block: 2rem 4.5rem; }
+  .hero-copy { width: 100%; max-width: 100%; min-width: 0; margin-inline: auto; padding-left: 2vw; }
+  .hero-copy h1,.hero-copy > p,.hero-actions { max-width: 100%; min-width: 0; }
+}
+@media (max-width: 380px) {
+  .hero-actions { align-items: flex-start; flex-direction: column; }
+  .hero-actions .button { max-width: 100%; }
 }
 .booking-details-page { background: #f7f6f1; }
 .booking-flow-progress { display: flex; align-items: center; max-width: 760px; margin: 0 auto 1.5rem; padding: 1rem 1.25rem; border: 1px solid #e9e4d4; border-radius: 18px; background: #fffefa; box-shadow: 0 8px 25px rgba(25,26,24,.06); list-style: none; }
