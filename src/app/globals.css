@@ -696,6 +696,11 @@ input:focus,select:focus { border-color: #b18b00; }
 .benefits-heading h2 em { display: inline-block; margin-top: .12em; color: #76611c; font-family: Georgia,"Times New Roman",serif; font-size: 1.03em; font-weight: 400; letter-spacing: -.035em; }
 .benefits-heading-rule { display: block; width: 54px; height: 4px; margin: 1.2rem auto 0; border-radius: 4px; background: linear-gradient(90deg,#f2c21a,#d7ad17); box-shadow: 0 3px 10px rgba(113,87,0,.2); }
 @media (max-width: 640px) { .benefits-heading { margin-bottom: 1.5rem; }.benefits-heading h2 { margin-top: 1rem; font-size: clamp(2rem,9vw,3rem); }.benefits-heading-rule { margin-top: 1rem; } }
+@media (max-width: 700px) {
+  .hero-shell { align-items: center; }
+  .hero-content { width: 100%; padding-block: 2rem 4.5rem; }
+  .hero-copy { margin-inline: auto; }
+}
 
 /* Card typography and motion */
 .reason-card { min-height: 248px; padding: 1.5rem 1.35rem; border: 1px solid #e5e1d5; border-radius: 20px; background-color: #fffdf7; box-shadow: 0 8px 24px rgba(25,26,24,.045); transition: transform .28s cubic-bezier(.2,.75,.25,1),box-shadow .28s ease,border-color .28s ease; }
