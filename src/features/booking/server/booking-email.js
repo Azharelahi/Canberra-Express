@@ -149,6 +149,11 @@ export async function sendBookingEmails(booking) {
   const transporter = createTransporter();
   const fromAddress = process.env.BOOKING_EMAIL_FROM || process.env.SMTP_USER;
   const adminEmail = process.env.BOOKING_ADMIN_EMAIL || "azharelahi321@gmail.com";
+  const adminCc = [
+    "ehsan_elahi1992@hotmail.com",
+    "farhanelahi123@gmail.com",
+    process.env.BOOKING_ADMIN_CC,
+  ].filter(Boolean);
   const from = `"OZLYFT" <${fromAddress}>`;
 
   const customerHtml = emailLayout({
@@ -199,7 +204,7 @@ export async function sendBookingEmails(booking) {
     transporter.sendMail({
       from,
       to: adminEmail,
-      cc: process.env.BOOKING_ADMIN_CC || undefined,
+      cc: adminCc,
       subject: `OZLYFT | New request &#183; ${booking.clientName} &#183; ${booking.pickupDate}`,
       text: adminText,
       html: adminHtml,
