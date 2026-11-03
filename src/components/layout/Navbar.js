@@ -1,95 +1,83 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 
-const Navbar = () => {
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Services & prices", href: "/price-page" },
+  { name: "About", href: "/about-us" },
+  { name: "FAQs", href: "/faq-page" },
+  { name: "Contact", href: "/contact-us" },
+];
+
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Prices", href: "/price-page" },
-    { name: "About Us", href: "/about-us" },
-    { name: "Contact Us", href: "/contact-us" },
-    { name: "FAQ", href: "/faq-page" },
-  ];
+  useEffect(() => setIsOpen(false), [pathname]);
+  useEffect(() => {
+    const updateProgress = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) : 0);
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, [pathname]);
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event) => event.key === "Escape" && setIsOpen(false);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isOpen]);
 
   return (
-    <nav className="bg-cream-white shadow-md sticky top-0 z-50 w-full">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex flex-col sm:flex-row items-center justify-center sm:space-x-2 gap-y-[10px] h-full"
-          >
-            <span className="text-2xl font-extrabold text-yellow-500 animate-pulse leading-none">
-              OZLYFT
-            </span>
-            <span className="text-[10px] sm:text-sm text-gray-600 italic font-medium tracking-wide font-poppins animate-slogan leading-none text-center">
-              Ride Smart. Ride Fast. Ride Canberra.
-            </span>
+    <>
+      <div className="reading-progress" aria-hidden="true"><span style={{ width: `${scrollProgress}%` }} /></div>
+      <header className="site-header">
+        <nav className="site-nav" aria-label="Main navigation">
+          <Link href="/" className="brand" aria-label="OZLYFT home">
+            <span className="brand-mark">O</span>
+            <span className="brand-copy"><strong>OZLYFT</strong><small>Move with confidence</small></span>
           </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-6 items-center">
+          <div className="desktop-nav">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-black font-medium transition duration-300 transform hover:text-yellow-500 hover:scale-105 ${
-                  pathname === link.href ? "text-yellow-500" : ""
-                }`}
-              >
-                {link.name}
-              </Link>
+              <Link key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : undefined} className={pathname === link.href ? "nav-link active" : "nav-link"}>{link.name}</Link>
             ))}
           </div>
-
-          {/* Mobile Menu */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={toggleMenu}
-              className="text-black focus:outline-none z-[60]"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+          <Link href="/#book" className="nav-cta">Book a ride <ArrowUpRight size={16} /></Link>
+          <button className="menu-toggle" type="button" aria-label={isOpen ? "Close menu" : "Open menu"} aria-expanded={isOpen} aria-controls="mobile-navigation" onClick={() => setIsOpen((open) => !open)}>
+            {isOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </nav>
+      </header>
+      <div className={`mobile-menu ${isOpen ? "open" : ""}`} id="mobile-navigation" aria-hidden={!isOpen}>
+        <div className="mobile-menu-inner">
+          <button className="mobile-menu-close" type="button" tabIndex={isOpen ? 0 : -1} aria-label="Close menu" onClick={() => setIsOpen(false)}><X size={20} /></button>
+          <p className="eyebrow">Explore OZLYFT</p>
+          {navLinks.map((link, index) => (
+            <Link key={link.href} href={link.href} tabIndex={isOpen ? 0 : -1} aria-current={pathname === link.href ? "page" : undefined} className={pathname === link.href ? "mobile-link active" : "mobile-link"}>
+              <span>0{index + 1}</span>{link.name}<ArrowUpRight size={17} />
+            </Link>
+          ))}
+          <Link href="/#book" tabIndex={isOpen ? 0 : -1} className="button button-primary mobile-book">Book a ride <ArrowUpRight size={17} /></Link>
+          <p className="mobile-menu-note">Local rides, airport transfers &amp; Canberra to Sydney trips.</p>
         </div>
       </div>
-
-      {/* Mobile Sidebar */}
-      <div
-        className={`fixed top-0 right-0 h-full w-[70%] bg-white/30 backdrop-blur-lg shadow-lg z-40 transform transition-transform duration-300 ease-in-out flex flex-col items-start p-8 space-y-6 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        {navLinks.map((link) => (
-          <Link
-            key={link.name}
-            href={link.href}
-            onClick={() => setIsOpen(false)}
-            className={`text-black text-xl font-semibold hover:text-yellow-500 transition transform hover:scale-110 ${
-              pathname === link.href ? "text-yellow-500" : ""
-            }`}
-          >
-            {link.name}
-          </Link>
-        ))}
-      </div>
-
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          onClick={toggleMenu}
-          className="fixed inset-0 bg-black/30 z-30 backdrop-blur-sm transition-opacity duration-300"
-        />
-      )}
-    </nav>
+      {isOpen && <button className="mobile-scrim" aria-label="Close navigation" onClick={() => setIsOpen(false)} />}
+    </>
   );
-};
-
-export default Navbar;
+}

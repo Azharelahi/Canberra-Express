@@ -1,9 +1,10 @@
 "use client";
-import React, { useState, forwardRef, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCar, FaChevronDown } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { ArrowRight } from "lucide-react";
 import { readBookingDraft, saveBookingDraft } from "@/features/booking/lib/booking-draft";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -97,7 +98,7 @@ function CityAreaPicker({ side, label, iconColor, city, area, customAddress, onC
   const showCustom = area === "__custom__";
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`location-field location-${side} flex flex-col gap-2`}>
       <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">{label}</span>
 
       <div className="flex gap-3 items-start">
@@ -166,7 +167,7 @@ function CityAreaPicker({ side, label, iconColor, city, area, customAddress, onC
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 
-const BookingForm = forwardRef((props, ref) => {
+export default function BookingForm() {
   const router = useRouter();
 
   // Location state
@@ -307,24 +308,28 @@ const BookingForm = forwardRef((props, ref) => {
     toast.success("Booking submitted! Redirecting..." + sameDayNote);
 
     const params = new URLSearchParams({ pickAddress, dropAddress, pickupDate, pickupTime, carName }).toString();
-    setTimeout(() => {
-      router.push(`/booking-page?${params}`);
-    }, 1500);
+    router.push(`/booking-page?${params}`);
   }
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="min-h-screen bg-gradient-to-br from-yellow-50 to-white flex items-center justify-center px-4 py-8"
+      className="booking-section flex items-center justify-center px-4 py-8"
     >
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full max-w-4xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-6 sm:p-10 flex flex-col gap-6 max-h-[95vh] overflow-y-auto"
+        className="booking-form-card bg-white w-full max-w-4xl rounded-3xl p-6 sm:p-10 flex flex-col gap-6"
       >
-        <h2 className="text-3xl font-bold text-yellow-600 text-center">Book Your Ride</h2>
+        <div className="booking-heading">
+          <span className="eyebrow">A few details, then you’re on your way</span>
+          <h2>Book your <em>ride.</em></h2>
+          <p>Share your route and preferred time. We’ll take it from there.</p>
+        </div>
+        <div className="booking-steps" aria-label="Booking steps">
+          <span className="current"><i>1</i> Trip details</span><b /><span><i>2</i> Your details</span><b /><span><i>3</i> Request sent</span>
+        </div>
         {storageError && (
           <p role="alert" className="text-center text-sm text-red-600">
             {storageError}
@@ -348,7 +353,7 @@ const BookingForm = forwardRef((props, ref) => {
         <CityAreaPicker
           side="drop"
           label="🏁 Drop Location"
-          iconColor="text-blue-500"
+          iconColor="text-[var(--forest)]"
           city={dropCity}
           area={dropArea}
           customAddress={dropCustom}
@@ -376,7 +381,7 @@ const BookingForm = forwardRef((props, ref) => {
               />
             </div>
             {isSameDay && (
-              <p className="text-blue-600 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 text-xs mt-1">
+              <p className="text-[var(--forest)] bg-[#edf0e9] border border-[#d9e2d6] rounded-lg px-3 py-2 text-xs mt-1">
                 ℹ️ For same-day booking, please contact us for confirmation.
               </p>
             )}
@@ -430,32 +435,25 @@ const BookingForm = forwardRef((props, ref) => {
         </div>
 
         {/* Submit */}
-        <div className="flex justify-center cursor-pointer">
+        <div className="booking-submit flex justify-center">
           <motion.button
-            whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
-            whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+            whileHover={{ y: isSubmitting ? 0 : -1 }}
+            whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
             type="submit"
             disabled={isSubmitting}
-            className={`px-8 py-3 ${
-              isSubmitting
-                ? "bg-yellow-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-yellow-400 to-yellow-500 cursor-pointer"
-            } text-white font-semibold rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-300 shadow-lg shadow-yellow-300/40 transition duration-300 flex items-center justify-center`}
+            className="booking-continue"
           >
             {isSubmitting ? (
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
             ) : (
-              "Confirm Booking"
+              <><span>Continue to your details</span><ArrowRight size={18} aria-hidden="true" /></>
             )}
           </motion.button>
         </div>
       </form>
     </motion.div>
   );
-});
-
-BookingForm.displayName = "BookingForm";
-export default BookingForm;
+}

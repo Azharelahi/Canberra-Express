@@ -1,130 +1,27 @@
-"use client";
-
 import Link from "next/link";
-import React from "react";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaLinkedin,
-  FaPhone,
-  FaEnvelope,
-} from "react-icons/fa";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 
-const Footer = () => {
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Services & prices", href: "/price-page" },
+  { label: "Our story", href: "/about-us" },
+  { label: "Frequently asked", href: "/faq-page" },
+  { label: "Contact", href: "/contact-us" },
+];
+
+export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-12">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 md:gap-16">
-          {/* Company Info */}
-          <div className="text-center sm:text-left">
-            <h3 className="text-2xl font-semibold mb-4">OZLYFT</h3>
-            <p className="text-gray-400 mb-4">
-              Your trusted partner for car rentals in Canberra. Fast, reliable,
-              and affordable.
-            </p>
-            <div className="flex justify-center sm:justify-start space-x-4 mt-4">
-              <a
-                href="#"
-                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
-              >
-                <FaFacebook size={24} />
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
-              >
-                <FaTwitter size={24} />
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
-              >
-                <FaInstagram size={24} />
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 opacity-50 cursor-not-allowed pointer-events-none"
-              >
-                <FaLinkedin size={24} />
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="text-center sm:text-left">
-            <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/about-us"
-                  className="text-gray-400 hover:text-white"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/price-page"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Prices
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/faq-page"
-                  className="text-gray-400 hover:text-white"
-                >
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact-us"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="text-center sm:text-left">
-            <h3 className="text-xl font-semibold mb-4">Contact Info</h3>
-            <div className="flex justify-center sm:justify-start items-center text-gray-400 mb-4">
-              <FaPhone size={20} className="mr-3" />
-              <span>(+61) 451107931</span>
-            </div>
-            <div className="flex justify-center sm:justify-start items-center text-gray-400">
-              <FaEnvelope size={20} className="mr-3" />
-              <span>ozlyft@gmail.com</span>
-            </div>
-          </div>
-
-          {/* Why Choose Us */}
-          <div className="text-center sm:text-left">
-            <h3 className="text-xl font-semibold mb-4">Why Choose Us</h3>
-            <ul className="text-gray-400 space-y-2">
-              <li>24/7 Customer Support</li>
-              <li>Affordable Rates</li>
-              <li>Wide Range of Vehicles</li>
-              <li>Easy Online Booking</li>
-            </ul>
-          </div>
+    <footer className="site-footer">
+      <div className="footer-main page-container">
+        <div className="footer-brand-block">
+          <Link href="/" className="brand footer-brand"><span className="brand-mark">O</span><span className="brand-copy"><strong>OZLYFT</strong><small>Move with confidence</small></span></Link>
+          <p>Good journeys start with feeling looked after. We make getting there feel easy.</p>
+          <a className="footer-email" href="mailto:ozlyft@gmail.com"><Mail size={16} /> ozlyft@gmail.com <ArrowUpRight size={14} /></a>
         </div>
-
-        {/* Bottom Footer */}
-        <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm">
-          <p>
-            &copy; {new Date().getFullYear()} Canberra Express. All Rights
-            Reserved.
-          </p>
-        </div>
+        <div className="footer-links-block"><h2>Explore</h2>{links.map((link) => <Link key={link.href} href={link.href}>{link.label}<ArrowUpRight size={13} /></Link>)}</div>
+        <div className="footer-contact-block"><h2>Here when you need us</h2><a href="tel:+61451107931"><Phone size={16} /><span><small>Call our team</small>+61 451 107 931</span></a><div><MapPin size={16} /><span><small>Our home base</small>Canberra, ACT</span></div><Link href="/contact-us" className="footer-contact-cta">Get in touch <ArrowUpRight size={15} /></Link></div>
       </div>
+      <div className="footer-bottom page-container"><span>© {new Date().getFullYear()} OZLYFT. All rights reserved.</span><div><Link href="/privacy-page">Privacy</Link><Link href="/terms-of-services">Terms</Link><span>Made for the road ahead.</span></div></div>
     </footer>
   );
-};
-
-export default Footer;
+}

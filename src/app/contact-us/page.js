@@ -15,7 +15,7 @@ export default function ContactUsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-white to-yellow-50 py-12 px-4 sm:px-8">
+    <div className="min-h-screen info-page contact-page px-4 sm:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Main Heading */}
         <motion.h2

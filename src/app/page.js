@@ -10,8 +10,8 @@ const page = () => {
   return (
     <div>
        <HeroSection bookingFormRef={bookingFormRef} />
+      <div id="book" ref={bookingFormRef} className="booking-anchor"><BookingForm /></div>
       <CompanyDescription />
-       <BookingForm ref={bookingFormRef} />
       <WhyChoose />
     </div>
   );

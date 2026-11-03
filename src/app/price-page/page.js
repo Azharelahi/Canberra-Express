@@ -9,13 +9,13 @@ export default function PricesPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-100 via-yellow-50 to-white py-12 px-4 sm:px-8">
+    <div className="min-h-screen info-page pricing-page px-4 sm:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1 }}
+          transition={{ duration: 0.7 }}
           className="text-5xl font-extrabold text-yellow-600 mb-12 text-center font-poppins drop-shadow-[0_5px_10px_rgba(0,0,0,0.25)]"
         >
           Price Comparison
@@ -58,9 +58,9 @@ export default function PricesPage() {
       opacity: 1,
       scale: [1, 1.1, 1],
       textShadow: [
-        "0 0 0px #facc15",
-        "0 0 6px #facc15",
-        "0 0 0px #facc15",
+        "0 0 0px #9ab19d",
+        "0 0 6px #9ab19d",
+        "0 0 0px #9ab19d",
       ],
     }}
     transition={{

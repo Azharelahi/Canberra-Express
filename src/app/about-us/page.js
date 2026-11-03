@@ -9,7 +9,7 @@ export default function AboutUsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-100 via-white to-yellow-50 py-12 px-4 sm:px-8">
+    <div className="min-h-screen info-page about-page px-4 sm:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <motion.h2

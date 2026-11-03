@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-8">
+    <div className="min-h-screen info-page legal-page px-4 sm:px-8">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}

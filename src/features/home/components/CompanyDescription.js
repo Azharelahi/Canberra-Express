@@ -17,6 +17,13 @@ const CompanyDescription = () => {
     document.body.style.overflow = showModal ? "hidden" : "auto";
   }, [showModal]);
 
+  useEffect(() => {
+    if (!showModal) return;
+    const closeOnEscape = (event) => event.key === "Escape" && setShowModal(false);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [showModal]);
+
   return (
     <div className="w-full py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,17 +62,18 @@ const CompanyDescription = () => {
 
       {/* MODAL */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center px-4 py-10 backdrop-blur-md bg-white/10 transition-all duration-300">
-          <div className="relative max-w-4xl w-full max-h-[85vh] overflow-y-auto rounded-2xl bg-white/60 backdrop-blur-xl border border-gray-200 shadow-[0_8px_32px_0_rgba(31,38,135,0.2)] p-6 md:p-10 text-gray-800 animate__animated animate__fadeInUp">
+        <div className="fixed inset-0 z-50 flex items-start justify-center px-4 py-10 backdrop-blur-md bg-black/40 transition-all duration-300" onClick={() => setShowModal(false)}>
+          <div role="dialog" aria-modal="true" aria-labelledby="about-dialog-title" onClick={(event) => event.stopPropagation()} className="relative max-w-4xl w-full max-h-[85vh] overflow-y-auto rounded-2xl bg-white border border-gray-200 shadow-2xl p-6 md:p-10 text-gray-800 animate__animated animate__fadeInUp">
             {/* Close Button */}
             <button
+              aria-label="Close about OZLYFT"
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-6 text-gray-600 text-2xl font-bold hover:text-red-400 transition"
             >
               &times;
             </button>
 
-            <h2 className="text-3xl font-bold text-yellow-500 mb-6 text-center mt-8 sm:mt-0">
+            <h2 id="about-dialog-title" className="text-3xl font-bold text-yellow-500 mb-6 text-center mt-8 sm:mt-0">
               Welcome to OZLYFT
             </h2>
 

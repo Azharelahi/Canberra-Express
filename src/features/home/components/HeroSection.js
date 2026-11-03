@@ -1,73 +1,38 @@
-// components/HeroSection.jsx or .tsx
 "use client";
-import React from "react";
-import "animate.css";
-import { motion } from "framer-motion";
 
-const headingWords = ["Welcome", "to", "OZ", "LYFT"];
-const subText = ["Your", "Trusted", "Ride", "Share", "Service", "in", "Australia."];
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight, Check, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 
-const HeroSection = ({ bookingFormRef }) => {
-  const scrollToBookingForm = () => {
-    bookingFormRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+export default function HeroSection({ bookingFormRef }) {
+  const scrollToBooking = () => bookingFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
-    <div
-      className="relative w-full h-screen bg-cover bg-center overflow-hidden"
-      style={{
-        backgroundImage:
-          "url(https://images.unsplash.com/photo-1482029255085-35a4a48b7084?w=600&auto=format&fit=crop&q=60)",
-      }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-60"></div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-        <h1 className="text-4xl sm:text-6xl font-bold mb-6 font-[var(--font-geist-sans)] leading-tight tracking-wide">
-          {headingWords.map((word, index) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.5 }}
-              className="inline-block mr-2"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
-
-        <p className="text-lg sm:text-2xl mb-8 font-[var(--font-geist-sans)] text-gray-200">
-          {subText.map((word, index) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1 + index * 0.1, duration: 0.4 }}
-              className="inline-block mr-1"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </p>
-
-       <button
-       
-  onClick={scrollToBookingForm}
-  className="cursor-pointer animate__animated animate__zoomInDown animate__delay-2s px-6 py-3 
-             bg-yellow-400 text-black font-semibold rounded-xl transition-all duration-300
-             font-[var(--font-geist-mono)] shadow-[0_0_10px_rgba(255,223,0,0.7),0_0_20px_rgba(255,223,0,0.5)]
-             hover:shadow-[0_0_15px_rgba(255,223,0,0.9),0_0_30px_rgba(255,223,0,0.6)]
-             hover:scale-105"
->
-  Book Now
-</button>
-
+    <section className="hero-shell">
+      <div className="hero-photo" role="img" aria-label="A premium vehicle ready for a road trip" />
+      <div className="hero-shade" />
+      <div className="hero-grain" />
+      <div className="hero-content page-container">
+        <div className="hero-copy">
+          <div className="hero-kicker"><span className="status-dot" /> Canberra rides, made personal</div>
+          <h1>Go further.<br /><span>Feel right at home.</span></h1>
+          <p>Thoughtful rides and reliable transfers for the journeys that matter — across Canberra, to Sydney, and beyond.</p>
+          <div className="hero-actions">
+            <button type="button" className="button button-primary button-large" onClick={scrollToBooking}>Book a ride <ArrowUpRight size={18} /></button>
+            <Link href="/price-page" className="hero-secondary">Explore our services <ArrowDown size={16} /></Link>
+          </div>
+          <div className="hero-proof">
+            <div className="proof-icon"><ShieldCheck size={19} /></div>
+            <div><strong>Ride with peace of mind</strong><span>Clear details. Friendly local support.</span></div>
+          </div>
+        </div>
+        <div className="hero-side-note"><span>01</span><i /> Built around your journey</div>
       </div>
-    </div>
+      <div className="hero-bottom page-container">
+        <span><MapPin size={15} /> Canberra <span className="hero-route-line" /> Sydney</span>
+        <span><Sparkles size={15} /> Your trip, your way</span>
+        <button type="button" className="hero-scroll" onClick={scrollToBooking}>Start booking <ArrowDown size={14} /></button>
+      </div>
+      <div className="hero-float-card"><span className="float-icon"><Check size={17} /></span><span><strong>Easy from the first step</strong><small>Tell us where you’re headed</small></span></div>
+    </section>
   );
-};
-
-export default HeroSection;
+}

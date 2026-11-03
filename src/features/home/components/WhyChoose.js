@@ -1,109 +1,68 @@
-"use client";
-
-import React from "react";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css";
-import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
-
+import Image from "next/image";
 import {
-  FaCar,
-  FaMoneyBillAlt,
-  FaHeadset,
-  FaShieldAlt,
-  FaStar,
-} from "react-icons/fa";
+  CarFront,
+  CircleDollarSign,
+  Clock3,
+  Sparkles,
+  ShieldCheck,
+  Star,
+} from "lucide-react";
 
-const WhyChoose = () => {
-  const features = [
-    {
-      id: 0,
-      icon: <FaCar size={30} />,
-      title: "Wide Fleet of Vehicles",
-      description:
-        "Choose from a variety of vehicles, from compact cars to luxury options, tailored for your travel needs in Canberra.",
-    },
-    {
-      id: 1,
-      icon: <FaMoneyBillAlt size={30} />,
-      title: "Affordable Rates",
-      description:
-        "Get the best deals in Canberra with our competitive pricing and flexible hire options.",
-    },
-    {
-      id: 2,
-      icon: <FaHeadset size={30} />,
-      title: "24/7 Customer Support",
-      description:
-        "Our dedicated team is available anytime to help with your travel needs, ensuring a seamless experience.",
-    },
-    {
-      id: 3,
-      icon: <FaShieldAlt size={30} />,
-      title: "Fully Insured Rentals",
-      description:
-        "All of our vehicles come fully insured, giving you peace of mind on your travels around Canberra.",
-    },
-    {
-      id: 4,
-      icon: <FaStar size={30} />,
-      title: "Trusted by Locals & Tourists",
-      description:
-        "Join hundreds of satisfied customers who trust us for their car hire needs, both local and visiting travelers.",
-    },
-  ];
+const benefits = [
+  {
+    icon: CarFront,
+    title: "Wide Fleet of Vehicles",
+    description: "Choose from a variety of vehicles, from compact cars to luxury options, tailored for your travel needs in Canberra.",
+  },
+  {
+    icon: CircleDollarSign,
+    title: "Affordable Rates",
+    description: "Get the best deals in Canberra with our competitive pricing and flexible hire options.",
+  },
+  {
+    icon: Clock3,
+    title: "24/7 Customer Support",
+    description: "Our dedicated team is available anytime to help with your travel needs, ensuring a seamless experience.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Fully Insured Rentals",
+    description: "All of our vehicles come fully insured, giving you peace of mind on your travels around Canberra.",
+  },
+  {
+    icon: Star,
+    title: "Trusted by Locals & Tourists",
+    description: "Join hundreds of satisfied customers who trust us for their car hire needs, both local and visiting travelers.",
+  },
+];
+
+export default function WhyChoose() {
+  const renderBenefitCards = (copy = false) => benefits.map(({ icon: Icon, title, description }) => (
+    <article className="benefit-card" key={`${copy ? "copy-" : ""}${title}`}>
+      <Image className="benefit-card-brand" src="/assets/logo2.png" alt="" width={256} height={256} aria-hidden="true" />
+      <span className="benefit-card-icon"><Icon size={22} strokeWidth={1.8} /></span>
+      <div className="benefit-card-copy">
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </div>
+    </article>
+  ));
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-yellow-500 mb-12 animate-pulse tracking-wide">
-          Why Choose OZLYFT?
-        </h2>
-
-        <Splide
-          options={{
-            type: "loop",
-            perPage: 4,
-            perMove: 1,
-            gap: "1rem",
-            pagination: false,
-            arrows: false,
-            breakpoints: {
-              1024: { perPage: 4 },
-              991: { perPage: 3 },
-              600: { perPage: 2 },
-              480: { perPage: 1 },
-            },
-            autoScroll: {
-              speed: 1,
-            },
-          }}
-          extensions={{ AutoScroll }}
-        >
-          {features.map((feature, index) => (
-            <SplideSlide key={index}>
-              <div className="relative flex flex-col items-center justify-between p-6 bg-white rounded-xl shadow-lg bg-opacity-20 backdrop-blur-md hover:scale-105 transition-all duration-300 ease-in-out h-80 overflow-hidden">
-                <div className="bg-yellow-500 p-4 rounded-full text-white mb-4 z-10">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 z-10">
-                  {feature.title}
-                </h3>
-                <p className="text-center text-gray-600 z-10">
-                  {feature.description}
-                </p>
-                <div
-                  className="absolute inset-0 opacity-10 bg-center bg-no-repeat bg-cover rounded-xl z-0"
-                  style={{
-                    backgroundImage: "url('/assets/logo2.png')",
-                  }}
-                ></div>
-              </div>
-            </SplideSlide>
-          ))}
-        </Splide>
+    <section className="reasons-section" aria-labelledby="reasons-heading">
+      <div className="page-container">
+        <header className="section-heading benefits-heading">
+          <span className="eyebrow"><Sparkles size={15} /> The OZLYFT difference</span>
+          <h2 id="reasons-heading">Comfort on the road.<br /><em>Care at every step.</em></h2>
+          <span className="benefits-heading-rule" aria-hidden="true" />
+        </header>
+        <div className="benefits-marquee" role="region" aria-label="Reasons to choose OZLYFT">
+          <div className="benefits-track">
+            <div className="benefits-group">{renderBenefitCards()}</div>
+            <div className="benefits-group" aria-hidden="true">{renderBenefitCards(true)}</div>
+          </div>
+        </div>
       </div>
     </section>
   );
-};
-
-export default WhyChoose;
+}
