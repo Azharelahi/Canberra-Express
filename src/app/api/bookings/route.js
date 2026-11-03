@@ -17,6 +17,15 @@ export async function POST(request) {
     return NextResponse.json({ message: "Booking emails sent successfully." });
   } catch (error) {
     console.error("Booking email delivery failed:", error);
+    if (error?.message === "Email service is not configured.") {
+      return NextResponse.json(
+        {
+          message:
+            "Booking email is not configured. Set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASSWORD in .env.local, then restart the Next.js server.",
+        },
+        { status: 503 }
+      );
+    }
     return NextResponse.json({ message: "Failed to send booking emails." }, { status: 500 });
   }
 }

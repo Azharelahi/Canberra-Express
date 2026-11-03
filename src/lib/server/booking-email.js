@@ -34,8 +34,7 @@ export async function sendBookingEmails(booking) {
   const safe = Object.fromEntries(requiredFields.map((field) => [field, escapeHtml(booking[field])]));
   const transporter = createTransporter();
   const from = process.env.BOOKING_EMAIL_FROM || process.env.SMTP_USER;
-  const adminEmail = process.env.BOOKING_ADMIN_EMAIL;
-  if (!adminEmail) throw new Error("BOOKING_ADMIN_EMAIL is not configured.");
+  const adminEmail = process.env.BOOKING_ADMIN_EMAIL || "azharelahi321@gmail.com";
 
   const details = `
     <li><strong>Name:</strong> ${safe.clientName}</li>
