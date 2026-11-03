@@ -3,107 +3,123 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
-import { useSession } from "next-auth/react"; // Import NextAuth hook
+import {
+  clearBookingDraft,
+  readBookingDraft,
+  saveBookingDraft,
+} from "@/lib/booking-draft";
 
 export default function BookingClient() {
   const searchParams = useSearchParams();
-  const { data: session, status } = useSession(); // Get session data
   const [isLoading, setIsLoading] = useState(false);
 
-  const pickAddress = searchParams.get("pickAddress");
-  const dropAddress = searchParams.get("dropAddress");
-  const pickupDate = searchParams.get("pickupDate");
-  const pickupTime = searchParams.get("pickupTime");
-  const carName = searchParams.get("carName");
+  const pickAddress = searchParams.get("pickAddress") || "";
+  const dropAddress = searchParams.get("dropAddress") || "";
+  const pickupDate = searchParams.get("pickupDate") || "";
+  const pickupTime = searchParams.get("pickupTime") || "";
+  const carName = searchParams.get("carName") || "";
 
   const [showForm, setShowForm] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+  const [draftLoaded, setDraftLoaded] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
+  const [storageError, setStorageError] = useState("");
+  const [bookingData, setBookingData] = useState({
+    clientName: "",
+    clientEmail: "",
+    clientPhone: "",
+    pickAddress: "",
+    dropAddress: "",
+    pickupDate: "",
+    pickupTime: "",
+    carName: "",
   });
 
-  // Check if user is logged in
-  const isLoggedIn = status === "authenticated" && session?.user;
-
-  // Auto-fill form data based on session or localStorage
   useEffect(() => {
-    if (isLoggedIn) {
-      // If user is logged in, pre-fill from session
-      setFormData({
-        name: session.user.name || "",
-        email: session.user.email || "",
-        phone: "", // Phone still needs to be entered
-      });
-    } else {
-      // If not logged in, try to load from localStorage
-      const saved = localStorage.getItem("bookingUserInfo");
-      if (saved) {
-        setFormData(JSON.parse(saved));
-      }
+    let savedDraft = {};
+    try {
+      savedDraft = readBookingDraft();
+    } catch (error) {
+      console.error("Unable to load saved booking details:", error);
+      setStorageError("Saved booking details could not be loaded.");
     }
-  }, [isLoggedIn, session]);
 
-  // Save to localStorage only if user is not logged in
+    const fields = [
+      "clientName",
+      "clientEmail",
+      "clientPhone",
+      "pickAddress",
+      "dropAddress",
+      "pickupDate",
+      "pickupTime",
+      "carName",
+    ];
+    const restoredDraft = Object.fromEntries(
+      fields.map((field) => [
+        field,
+        typeof savedDraft[field] === "string" ? savedDraft[field] : "",
+      ])
+    );
+
+    setBookingData({
+      ...restoredDraft,
+      pickAddress: pickAddress || restoredDraft.pickAddress,
+      dropAddress: dropAddress || restoredDraft.dropAddress,
+      pickupDate: pickupDate || restoredDraft.pickupDate,
+      pickupTime: pickupTime || restoredDraft.pickupTime,
+      carName: carName || restoredDraft.carName,
+    });
+    setDraftLoaded(true);
+  }, [pickAddress, dropAddress, pickupDate, pickupTime, carName]);
+
   useEffect(() => {
-    if (!isLoggedIn) {
-      localStorage.setItem("bookingUserInfo", JSON.stringify(formData));
+    if (!draftLoaded || isSubmitted) return;
+
+    try {
+      saveBookingDraft(bookingData);
+      setStorageError("");
+    } catch (error) {
+      console.error("Unable to save booking details:", error);
+      setStorageError("Booking details could not be saved in this browser.");
     }
-  }, [formData, isLoggedIn]);
+  }, [bookingData, draftLoaded, isSubmitted]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setBookingData((prev) => ({ ...prev, [name]: value }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setSubmissionError("");
 
-  const bookingData = {
-    clientName: formData.name,
-    clientEmail: formData.email,
-    clientPhone: formData.phone,
-    pickAddress,
-    dropAddress,
-    pickupDate,
-    pickupTime,
-    carName,
+    try {
+      const response = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.message || "Unable to submit booking.");
+      }
+
+      setIsSubmitted(true);
+      try {
+        clearBookingDraft();
+        setStorageError("");
+      } catch (error) {
+        console.error("Unable to clear the submitted booking draft:", error);
+        setStorageError("Your booking was sent, but saved details could not be cleared.");
+      }
+    } catch (error) {
+      console.error("Booking submission failed:", error);
+      setSubmissionError(error.message || "Unable to submit booking.");
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  try {
-    const res = await axios.post(
-      "https://canberra-express-backend-git-main-azharelahis-projects.vercel.app/send-booking-email",
-      bookingData,
-      { headers: { "Content-Type": "application/json" } }
-    );
-    console.log("Success:", res.data);
-
-    // --- FACEBOOK PIXEL PURCHASE EVENT ---
-    // Make sure the booking amount comes from backend response
-    if (typeof window !== "undefined" && window.fbTrackBooking) {
-      // If your backend returns the amount as res.data.amount
-      const bookingAmount = res.data.amount || 50; // default 50 AUD if not returned
-      window.fbTrackBooking(bookingAmount);
-    }
-    // -------------------------------------
-
-    // Clear phone but keep name/email if logged in
-    if (isLoggedIn) {
-      setFormData((prev) => ({ ...prev, phone: "" }));
-    } else {
-      setFormData({ name: "", email: "", phone: "" });
-    }
-
-    setIsSubmitted(true);
-  } catch (err) {
-    console.error("Error:", err.response?.data || err.message);
-  } finally {
-    setIsLoading(false);
-  }
-};
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-8">
@@ -122,31 +138,31 @@ const handleSubmit = async (e) => {
                 <td className="font-semibold text-gray-900 py-2 pr-4">
                   Pickup Address:
                 </td>
-                <td>{pickAddress}</td>
+                <td>{bookingData.pickAddress || pickAddress}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold text-gray-900 py-2 pr-4">
                   Drop Address:
                 </td>
-                <td>{dropAddress}</td>
+                <td>{bookingData.dropAddress || dropAddress}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold text-gray-900 py-2 pr-4">
                   Pickup Date:
                 </td>
-                <td>{pickupDate}</td>
+                <td>{bookingData.pickupDate || pickupDate}</td>
               </tr>
               <tr className="border-b">
                 <td className="font-semibold text-gray-900 py-2 pr-4">
                   Pickup Time:
                 </td>
-                <td>{pickupTime}</td>
+                <td>{bookingData.pickupTime || pickupTime}</td>
               </tr>
               <tr>
                 <td className="font-semibold text-gray-900 py-2 pr-4">
                   Car Model:
                 </td>
-                <td>{carName}</td>
+                <td>{bookingData.carName || carName}</td>
               </tr>
             </tbody>
           </table>
@@ -209,66 +225,45 @@ const handleSubmit = async (e) => {
                 className="flex flex-col gap-4 mt-4"
                 onSubmit={handleSubmit}
               >
-                {/* Show logged in status */}
-                {isLoggedIn && (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-2">
-                    <p className="text-sm text-green-700 font-medium">
-                      ✓ Logged in as {session.user.name}
-                    </p>
-                  </div>
+                {storageError && (
+                  <p role="alert" className="text-sm text-red-600">
+                    {storageError}
+                  </p>
+                )}
+                {submissionError && (
+                  <p role="alert" className="text-sm text-red-600">
+                    {submissionError}
+                  </p>
                 )}
 
-                {/* Name Input - Disabled if logged in */}
-                <div className="relative">
+                <div>
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="clientName"
+                    value={bookingData.clientName}
                     onChange={handleChange}
                     placeholder="Your Name"
                     required
-                    disabled={isLoggedIn}
-                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all font-semibold shadow-md ${
-                      isLoggedIn
-                        ? "border-gray-300 bg-gray-100 text-gray-600 cursor-not-allowed"
-                        : "border-yellow-500 focus:ring-yellow-500 text-gray-800"
-                    }`}
+                    className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all font-semibold shadow-md text-gray-800"
                   />
-                  {isLoggedIn && (
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
-                      🔒
-                    </span>
-                  )}
                 </div>
 
-                {/* Email Input - Disabled if logged in */}
-                <div className="relative">
+                <div>
                   <input
                     type="email"
-                    name="email"
-                    value={formData.email}
+                    name="clientEmail"
+                    value={bookingData.clientEmail}
                     onChange={handleChange}
                     placeholder="Your Email"
                     required
-                    disabled={isLoggedIn}
-                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 transition-all font-semibold shadow-md ${
-                      isLoggedIn
-                        ? "border-gray-300 bg-gray-100 text-gray-600 cursor-not-allowed"
-                        : "border-yellow-500 focus:ring-yellow-500 text-gray-800"
-                    }`}
+                    className="w-full border-2 border-yellow-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all font-semibold shadow-md text-gray-800"
                   />
-                  {isLoggedIn && (
-                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
-                      🔒
-                    </span>
-                  )}
                 </div>
 
-                {/* Phone Input - Always editable */}
                 <input
                   type="tel"
-                  name="phone"
-                  value={formData.phone}
+                  name="clientPhone"
+                  value={bookingData.clientPhone}
                   onChange={handleChange}
                   placeholder="Your Phone Number"
                   required
@@ -307,7 +302,7 @@ const handleSubmit = async (e) => {
                       Booking...
                     </>
                   ) : (
-                    "Confirm Booking"
+                    "Send Booking Request"
                   )}
                 </button>
               </motion.form>

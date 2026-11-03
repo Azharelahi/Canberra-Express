@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OZLYFT Web
 
-## Getting Started
+The customer-facing OZLYFT website and booking email flow, built with the Next.js App Router.
 
-First, run the development server:
+## Requirements
+
+- Node.js 20.9 or newer
+- npm
+
+## Setup
 
 ```bash
+npm ci
+Copy-Item .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set the SMTP and booking-recipient values in `.env.local` to enable booking
+emails. Booking drafts are kept only in the visitor's browser `localStorage`
+until the booking email request succeeds; the app does not save bookings to a
+database. Never commit `.env.local` or production credentials.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+| Variable | Purpose |
+| --- | --- |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` | SMTP server credentials |
+| `BOOKING_EMAIL_FROM` | Optional sender address |
+| `BOOKING_ADMIN_EMAIL` | Admin recipient of booking notifications |
+| `BOOKING_ADMIN_CC` | Optional additional admin recipients |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Use the development server at [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev       # Start the local development server
+npm run lint      # Run Next.js ESLint checks
+npm run test:e2e  # Run Playwright end-to-end tests
+npm run build     # Create an optimized production build
+npm run start     # Serve the production build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Playwright configuration starts the development server automatically. Set
+`CI=true` to enable CI retry and worker behavior.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project layout
 
-## Deploy on Vercel
+```text
+public/                   Static files served from the site root
+src/
+  app/                    App Router pages, layouts, and API routes
+    api/bookings/         Booking email endpoint
+  components/
+    layout/               Shared navigation, footer, and layout components
+  features/               Public page and booking UI
+  lib/                    Shared utilities and booking email service
+tests/                    Playwright end-to-end tests
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Keep URL and route-specific files in `src/app`, reusable site-wide UI in
+`src/components`, and product-specific UI and logic in `src/features`. Static
+assets belong in `public/`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Production
+
+Configure the SMTP and recipient variables above in the deployment platform.
+The booking email endpoint sends a confirmation to the client and a notification
+to the configured admin recipient.

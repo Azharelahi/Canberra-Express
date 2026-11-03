@@ -1,10 +1,9 @@
 "use client";
 import React, { useRef } from "react";
-import HeroSection from "./components/HeroSection";
-import CompanyDescription from "./components/CompanyDescription";
-import BookingForm from "./components/BookingForm";
-import Footer from "./components/Footer";
-import WhyChoose from "./components/WhyChoose";
+import HeroSection from "@/features/home/components/HeroSection";
+import CompanyDescription from "@/features/home/components/CompanyDescription";
+import BookingForm from "@/features/home/components/BookingForm";
+import WhyChoose from "@/features/home/components/WhyChoose";
 
 const page = () => {
     const bookingFormRef = useRef(null);

@@ -6,36 +6,30 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
-    "@heroicons/react": "^1.0.6",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
-    "@tanstack/react-query": "^5.72.2",
     "animate.css": "^4.1.1",
     "aos": "^2.3.4",
-    "axios": "^1.13.2",
-    "backend": "file:..",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "emailjs-com": "^3.2.0",
-    "font-awesome": "^4.7.0",
     "framer-motion": "^12.6.3",
     "lucide-react": "^0.487.0",
     "next": "^16.1.0",
-    "next-auth": "^4.24.13",
     "nodemailer": "^7.0.11",
     "react": "^19.2.3",
-    "react-datepicker": "^8.8.0",
     "react-dom": "^19.2.3",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
-    "react-scroll": "^1.9.3",
-    "react-select": "^5.10.1",
-    "tailwind-merge": "^3.2.0",
-    "use-places-autocomplete": "^4.0.1"
+    "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",

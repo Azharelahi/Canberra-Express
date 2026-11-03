@@ -1,9 +1,10 @@
 "use client";
-import React, { useState, forwardRef, useMemo } from "react";
+import React, { useState, forwardRef, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaCar, FaChevronDown } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { readBookingDraft, saveBookingDraft } from "@/lib/booking-draft";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -183,6 +184,69 @@ const BookingForm = forwardRef((props, ref) => {
   const [carName, setCarName] = useState("");
   const [isSameDay, setIsSameDay] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftLoaded, setDraftLoaded] = useState(false);
+  const [savedDraft, setSavedDraft] = useState({});
+  const [storageError, setStorageError] = useState("");
+
+  useEffect(() => {
+    try {
+      const draft = readBookingDraft();
+      setSavedDraft(draft);
+      setPickCity(typeof draft.pickCity === "string" ? draft.pickCity : "");
+      setPickArea(typeof draft.pickArea === "string" ? draft.pickArea : "");
+      setPickCustom(typeof draft.pickCustom === "string" ? draft.pickCustom : "");
+      setDropCity(typeof draft.dropCity === "string" ? draft.dropCity : "");
+      setDropArea(typeof draft.dropArea === "string" ? draft.dropArea : "");
+      setDropCustom(typeof draft.dropCustom === "string" ? draft.dropCustom : "");
+
+      const savedDate = typeof draft.pickupDate === "string" ? draft.pickupDate : "";
+      setPickupDate(savedDate);
+      setPickupTime(typeof draft.pickupTime === "string" ? draft.pickupTime : "");
+      setCarName(typeof draft.carName === "string" ? draft.carName : "");
+      setIsSameDay(isToday(savedDate));
+    } catch (error) {
+      console.error("Unable to load saved booking details:", error);
+      setSavedDraft({});
+      setStorageError("Saved booking details could not be loaded.");
+    } finally {
+      setDraftLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!draftLoaded) return;
+
+    try {
+      saveBookingDraft({
+        ...savedDraft,
+        pickCity,
+        pickArea,
+        pickCustom,
+        dropCity,
+        dropArea,
+        dropCustom,
+        pickupDate,
+        pickupTime,
+        carName,
+      });
+      setStorageError("");
+    } catch (error) {
+      console.error("Unable to save booking details:", error);
+      setStorageError("Booking details could not be saved in this browser.");
+    }
+  }, [
+    draftLoaded,
+    savedDraft,
+    pickCity,
+    pickArea,
+    pickCustom,
+    dropCity,
+    dropArea,
+    dropCustom,
+    pickupDate,
+    pickupTime,
+    carName,
+  ]);
 
   // Time slots: recalculate whenever same-day flag changes
   const timeSlots = useMemo(() => generateTimeSlots(isSameDay), [isSameDay]);
@@ -261,6 +325,11 @@ const BookingForm = forwardRef((props, ref) => {
         className="bg-white w-full max-w-4xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-6 sm:p-10 flex flex-col gap-6 max-h-[95vh] overflow-y-auto"
       >
         <h2 className="text-3xl font-bold text-yellow-600 text-center">Book Your Ride</h2>
+        {storageError && (
+          <p role="alert" className="text-center text-sm text-red-600">
+            {storageError}
+          </p>
+        )}
 
         {/* Pickup Location */}
         <CityAreaPicker

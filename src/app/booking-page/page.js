@@ -1,4 +1,4 @@
-import BookingClient from "./BookingClient.js";
+import BookingClient from "@/features/booking/components/BookingClient";
 import { Suspense } from "react";
 
 export default function BookingPage() {

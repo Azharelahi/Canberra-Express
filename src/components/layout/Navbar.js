@@ -3,13 +3,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
-  const [showLoginHint, setShowLoginHint] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
-  const { data: session, status } = useSession();
   const pathname = usePathname();
 
   const navLinks = [
@@ -19,37 +16,6 @@ const Navbar = () => {
     { name: "Contact Us", href: "/contact-us" },
     { name: "FAQ", href: "/faq-page" },
   ];
-
-  const getFirstName = (fullName) => fullName?.split(" ")[0] || "";
-
-const AuthButton = ({ className = "" }) => {
-  if (status === "loading") return null;
-  return session?.user ? (
-    <button
-      onClick={() => signOut()}
-      className={`px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 font-semibold rounded-xl sm:rounded-2xl
-                 bg-[#FFF7E8] text-yellow-600 border border-yellow-400/40 shadow-md shadow-yellow-400/20
-                 hover:-translate-y-0.5 hover:scale-[1.04] hover:shadow-xl hover:shadow-yellow-400/40
-                 active:scale-[0.95] transition-all duration-300 ${className}`}
-    >
-      {getFirstName(session.user.name)}
-    </button>
-  ) : (
-   <button
-  onClick={() => signIn("google")}
-  disabled
-  className={`px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 font-semibold rounded-xl sm:rounded-2xl
-             bg-[#FFF7E8] text-yellow-600 border border-yellow-400/40 shadow-md shadow-yellow-400/20
-             hover:-translate-y-0.5 hover:scale-[1.04] hover:shadow-xl hover:shadow-yellow-400/40
-             active:scale-[0.95] transition-all duration-300
-             disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
-             ${className}`}
->
-  Sign In
-</button>
-  );
-};
-
 
   return (
     <nav className="bg-cream-white shadow-md sticky top-0 z-50 w-full">
@@ -81,12 +47,10 @@ const AuthButton = ({ className = "" }) => {
                 {link.name}
               </Link>
             ))}
-            <AuthButton className="ml-4" />
           </div>
 
           {/* Mobile Menu */}
           <div className="md:hidden flex items-center gap-2">
-            <AuthButton />
             <button
               onClick={toggleMenu}
               className="text-black focus:outline-none z-[60]"
