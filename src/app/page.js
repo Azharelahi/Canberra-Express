@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import HeroSection from "@/features/home/components/HeroSection";
 import CompanyDescription from "@/features/home/components/CompanyDescription";
-import BookingForm from "@/features/home/components/BookingForm";
+import BookingForm from "@/features/booking/components/BookingForm";
 import WhyChoose from "@/features/home/components/WhyChoose";
 
 const page = () => {

@@ -7,7 +7,7 @@ import {
   clearBookingDraft,
   readBookingDraft,
   saveBookingDraft,
-} from "@/lib/booking-draft";
+} from "@/features/booking/lib/booking-draft";
 
 export default function BookingClient() {
   const searchParams = useSearchParams();

@@ -47,18 +47,32 @@ The Playwright configuration starts the development server automatically. Set
 ```text
 public/                   Static files served from the site root
 src/
-  app/                    App Router pages, layouts, and API routes
-    api/bookings/         Booking email endpoint
-  components/
-    layout/               Shared navigation, footer, and layout components
-  features/               Public page and booking UI
-  lib/                    Shared utilities and booking email service
+  app/                    App Router pages, layouts, and API route adapters
+  components/             Shared UI used by multiple features
+    layout/               Site navigation, footer, and layout components
+  features/               Self-contained product areas
+    booking/
+      components/         Booking forms and booking flow UI
+      lib/                Booking-only browser helpers and domain logic
+      server/             Booking-only server services
+    home/
+      components/         Homepage-specific sections
+  lib/                    Small utilities shared across features
 tests/                    Playwright end-to-end tests
 ```
 
-Keep URL and route-specific files in `src/app`, reusable site-wide UI in
-`src/components`, and product-specific UI and logic in `src/features`. Static
-assets belong in `public/`.
+Keep URL and route-specific files in `src/app`; these should stay thin and
+delegate feature behavior to `src/features`. Put reusable site-wide UI in
+`src/components`, and reusable helpers with no single feature owner in
+`src/lib`. Keep each feature's components and feature-specific logic together
+under `src/features/<feature>` (for example, auth, analytics, or location can
+each get their own folder when added). Static assets belong in `public/`.
+
+When adding a feature, start with only the folders it needs. Add `components/`
+for its UI, `lib/` for browser-safe helpers and domain logic, and `server/` for
+server-only integrations. Keep API route handlers in `src/app/api` and have
+them call the owning feature's server code. Shared code can move to `src/lib`
+or `src/components` once multiple features use it.
 
 ## Production
 

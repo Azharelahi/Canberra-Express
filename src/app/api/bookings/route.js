@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sendBookingEmails } from "@/lib/server/booking-email";
+import { sendBookingEmails } from "@/features/booking/server/booking-email";
 
 export const runtime = "nodejs";
 
