@@ -118,7 +118,7 @@ function emailLayout({ preheader, eyebrow, title, intro, content, footer }) {
               </td></tr>
               <tr><td style="padding:19px 30px 22px;border-top:1px solid ${BRAND.border};background:#FBFAF6;">
                 <p style="margin:0;color:${BRAND.text};font-size:12px;font-weight:700;line-height:1.6;">${escapeHtml(footer)}</p>
-                <p style="margin:7px 0 0;color:${BRAND.muted};font-size:11px;line-height:1.7;">OZLYFT · Canberra rides and transfers<br>Need help? <a href="tel:+61451107931" style="color:${BRAND.ink};font-weight:700;text-decoration:underline;">+61 451 107 931</a> &nbsp;|&nbsp; <a href="mailto:ozlyft@gmail.com" style="color:${BRAND.ink};font-weight:700;text-decoration:underline;">ozlyft@gmail.com</a></p>
+                <p style="margin:7px 0 0;color:${BRAND.muted};font-size:11px;line-height:1.7;">OZLYFT &#183; Canberra rides and transfers<br>Need help? <a href="tel:+61451107931" style="color:${BRAND.ink};font-weight:700;text-decoration:underline;">+61 451 107 931</a> &nbsp;|&nbsp; <a href="mailto:ozlyft@gmail.com" style="color:${BRAND.ink};font-weight:700;text-decoration:underline;">ozlyft@gmail.com</a></p>
                 <p style="margin:12px 0 0;color:#92938D;font-size:10px;line-height:1.6;">This is an automated email. Please do not reply directly.</p>
               </td></tr>
             </table>
@@ -170,7 +170,7 @@ export async function sendBookingEmails(booking) {
 
   const adminHtml = emailLayout({
     preheader: `New booking request from ${booking.clientName} for ${booking.pickupDate}.`,
-    eyebrow: "Action required · New request",
+    eyebrow: "Action required &#183; New request",
     title: "A new ride request is waiting.",
     intro: "A customer has submitted a booking request. Review the route and contact them to confirm availability.",
     content: `
@@ -192,7 +192,7 @@ export async function sendBookingEmails(booking) {
     transporter.sendMail({
       from,
       to: booking.clientEmail,
-      subject: `OZLYFT | Request received · ${booking.pickupDate}`,
+      subject: `OZLYFT | Request received &#183; ${booking.pickupDate}`,
       text: customerText,
       html: customerHtml,
     }),
@@ -200,7 +200,7 @@ export async function sendBookingEmails(booking) {
       from,
       to: adminEmail,
       cc: process.env.BOOKING_ADMIN_CC || undefined,
-      subject: `OZLYFT | New request · ${booking.clientName} · ${booking.pickupDate}`,
+      subject: `OZLYFT | New request &#183; ${booking.clientName} &#183; ${booking.pickupDate}`,
       text: adminText,
       html: adminHtml,
     }),
