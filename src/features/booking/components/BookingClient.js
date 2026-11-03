@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { Check, CheckCircle2, Home } from "lucide-react";
 import {
   clearBookingDraft,
   readBookingDraft,
@@ -12,6 +14,7 @@ import {
 export default function BookingClient() {
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [showReceipt, setShowReceipt] = useState(false);
 
   const pickAddress = searchParams.get("pickAddress") || "";
   const dropAddress = searchParams.get("dropAddress") || "";
@@ -34,6 +37,12 @@ export default function BookingClient() {
     pickupTime: "",
     carName: "",
   });
+
+  useEffect(() => {
+    if (!isSubmitted) return;
+    const receiptTimer = window.setTimeout(() => setShowReceipt(true), 2400);
+    return () => window.clearTimeout(receiptTimer);
+  }, [isSubmitted]);
 
   useEffect(() => {
     let savedDraft = {};
@@ -122,8 +131,10 @@ export default function BookingClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-8">
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="booking-details-page min-h-screen px-4 py-8 sm:px-8 sm:py-10">
+      <div className="max-w-5xl mx-auto">
+        <BookingProgress currentStep={isSubmitted ? 3 : 2} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -177,7 +188,7 @@ export default function BookingClient() {
           className="flex flex-col justify-center bg-white shadow-xl rounded-2xl p-6 sm:p-8"
         >
           <AnimatePresence>
-            {isSubmitted ? (
+            {isSubmitted ? showReceipt ? <BookingReceipt booking={bookingData} /> : (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -309,7 +320,70 @@ export default function BookingClient() {
             )}
           </AnimatePresence>
         </motion.div>
+        </div>
       </div>
     </div>
+  );
+}
+
+function BookingProgress({ currentStep }) {
+  const steps = ["Trip details", "Your details", "Request sent"];
+
+  return (
+    <ol className="booking-flow-progress" aria-label="Booking progress">
+      {steps.map((label, index) => {
+        const step = index + 1;
+        const isComplete = step < currentStep;
+        const isCurrent = step === currentStep;
+
+        return (
+          <li
+            className={`booking-progress-item${isComplete ? " complete" : ""}${isCurrent ? " current" : ""}`}
+            key={label}
+            aria-current={isCurrent ? "step" : undefined}
+          >
+            <span className="booking-progress-marker">{isComplete ? <Check size={15} /> : step}</span>
+            <span className="booking-progress-label">{label}</span>
+            {step < steps.length && <span className={`booking-progress-line${isComplete ? " complete" : ""}`} />}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+function BookingReceipt({ booking }) {
+  const date = booking.pickupDate
+    ? new Date(`${booking.pickupDate}T12:00:00`).toLocaleDateString("en-AU", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "Not provided";
+
+  return (
+    <motion.section
+      className="booking-receipt"
+      role="status"
+      aria-live="polite"
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+    >
+      <div className="receipt-heading">
+        <span className="receipt-check"><CheckCircle2 size={25} /></span>
+        <div><p className="receipt-eyebrow">Request received</p><h2>Your trip details</h2></div>
+      </div>
+      <p className="receipt-message">Thanks, {booking.clientName}. We will contact you shortly to confirm your ride.</p>
+      <dl className="receipt-details">
+        <div><dt>Pickup</dt><dd>{booking.pickAddress}</dd></div>
+        <div><dt>Drop-off</dt><dd>{booking.dropAddress}</dd></div>
+        <div><dt>Date and time</dt><dd>{date} at {booking.pickupTime}</dd></div>
+        <div><dt>Vehicle</dt><dd>{booking.carName}</dd></div>
+        <div><dt>Contact</dt><dd>{booking.clientEmail}<br />{booking.clientPhone}</dd></div>
+      </dl>
+      <Link href="/" className="receipt-home"><Home size={17} /> Back to home</Link>
+    </motion.section>
   );
 }

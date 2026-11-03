@@ -701,6 +701,38 @@ input:focus,select:focus { border-color: #b18b00; }
   .hero-content { width: 100%; padding-block: 2rem 4.5rem; }
   .hero-copy { margin-inline: auto; }
 }
+.booking-details-page { background: #f7f6f1; }
+.booking-flow-progress { display: flex; align-items: center; max-width: 760px; margin: 0 auto 1.5rem; padding: 1rem 1.25rem; border: 1px solid #e9e4d4; border-radius: 18px; background: #fffefa; box-shadow: 0 8px 25px rgba(25,26,24,.06); list-style: none; }
+.booking-progress-item { display: flex; min-width: 0; flex: 1 1 0; align-items: center; gap: .55rem; color: #77786f; }
+.booking-progress-item:last-child { flex: 0 0 auto; }
+.booking-progress-marker { display: grid; width: 30px; height: 30px; flex: 0 0 30px; place-items: center; border: 1px solid #d8d7cf; border-radius: 50%; background: #fff; color: #77786f; font-size: .75rem; font-weight: 700; }
+.booking-progress-label { white-space: nowrap; font-size: .78rem; font-weight: 600; }
+.booking-progress-item.current { color: #171817; }.booking-progress-item.current .booking-progress-marker { border-color: #f2c21a; background: #f2c21a; color: #171817; box-shadow: 0 0 0 4px rgba(242,194,26,.16); }
+.booking-progress-item.complete .booking-progress-marker { border-color: #171817; background: #171817; color: white; }
+.booking-progress-line { height: 2px; min-width: 1rem; flex: 1 1 auto; margin: 0 .35rem; border-radius: 2px; background: #e4e2d9; }
+.booking-progress-line.complete { background: #d5ae1e; }
+.booking-celebration { min-height: 390px; }
+.celebration-check { display: grid; width: 96px; height: 96px; place-items: center; border: 1px solid #e9d784; border-radius: 50%; background: #fff6cf; color: #171817; box-shadow: 0 12px 35px rgba(113,87,0,.16); }
+.booking-receipt { width: 100%; padding: .25rem; }
+.receipt-heading { display: flex; align-items: center; gap: .85rem; }
+.receipt-check { display: grid; width: 48px; height: 48px; flex: 0 0 48px; place-items: center; border-radius: 15px; background: #fff4c6; color: #171817; }
+.receipt-eyebrow { margin: 0 0 .25rem; color: #74601b; font-size: .66rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+.receipt-heading h2 { margin: 0; color: #171817; font-family: Georgia,"Times New Roman",serif; font-size: 1.65rem; line-height: 1.15; }
+.receipt-message { margin: 1rem 0 1.25rem; color: #52534e; font-size: .86rem; line-height: 1.65; }
+.receipt-details { margin: 0; border-top: 1px solid #e8e5db; }
+.receipt-details > div { display: grid; grid-template-columns: minmax(85px,.65fr) 1.35fr; gap: .75rem; padding: .72rem 0; border-bottom: 1px solid #e8e5db; }
+.receipt-details dt { color: #73746d; font-size: .76rem; font-weight: 650; }
+.receipt-details dd { margin: 0; color: #20211e; font-size: .82rem; font-weight: 600; line-height: 1.55; overflow-wrap: anywhere; }
+.receipt-home { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; margin-top: 1.2rem; padding: 0 1rem; border-radius: 12px; background: #171817; color: white; font-size: .82rem; font-weight: 700; text-decoration: none; transition: transform .2s ease,background .2s ease; }
+.receipt-home:hover { transform: translateY(-2px); background: #30322f; }
+@media (max-width: 520px) {
+  .booking-flow-progress { gap: .2rem; padding: .85rem .65rem; }
+  .booking-progress-item { gap: .35rem; }
+  .booking-progress-marker { width: 26px; height: 26px; flex-basis: 26px; font-size: .68rem; }
+  .booking-progress-label { font-size: .62rem; }
+  .booking-progress-line { min-width: .45rem; margin-inline: .15rem; }
+  .receipt-details > div { grid-template-columns: 78px 1fr; }
+}
 
 /* Card typography and motion */
 .reason-card { min-height: 248px; padding: 1.5rem 1.35rem; border: 1px solid #e5e1d5; border-radius: 20px; background-color: #fffdf7; box-shadow: 0 8px 24px rgba(25,26,24,.045); transition: transform .28s cubic-bezier(.2,.75,.25,1),box-shadow .28s ease,border-color .28s ease; }
